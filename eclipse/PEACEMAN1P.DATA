@@ -121,10 +121,6 @@ SUMMARY   ==============================================================
 FOPR
 FOPT
 FWCT
-FWPR
-FWIR
-
-/
 
 SCHEDULE  ==============================================================
 -- Specify output of graphics result files for cell data, and times which
