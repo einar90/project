@@ -89,7 +89,7 @@ DYV
 
 DZ
 -- Z-direction grid block sizes
-    100*100  /
+    100*10  /
 
 TOPS
 -- Depth of top face of topmost grid blocks
@@ -280,8 +280,8 @@ SCHEDULE
 --
 WELSPECS
 --  Name  Grp I  J  Depth    Phase Rad
-    PROD  G1  2  5  3600.00  OIL   1*  /
-    INJ   G1  1  5  3725.00  WATER 1*  /
+    PROD  G1  1  1  3590.00  OIL   1*  /
+    INJ   G1  10 10  3590.00  WATER 1*  /
 /
 
 COMPDAT
