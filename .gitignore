@@ -12,7 +12,7 @@
 # these rules might exclude image files for figures etc.
 # *.ps
 # *.eps
-# *.pdf
+*.pdf
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
@@ -87,3 +87,31 @@ sympy-plots-for-*.tex/
 
 # xindy
 *.xdy
+
+# Eclipse output files
+*.SMSPEC
+*.UNSMRY
+*.PRT
+*.ECLEND
+*.GRID
+*.INSPEC
+*.DBG
+*.EGRID
+*.INIT
+*.MSG
+*.RSSPEC
+*.UNRST
+
+# LaTeX output files
+*.log
+*.pdf
+*.aux
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.bbl
+*.blg
+*.bib~
+
+# Sublime workspace
+*.sublime-workspace
