@@ -118,33 +118,25 @@ RPTRST
     BASIC=5 NORST=1 FREQ=6 /
 
 WELSPECS
---wname  group  i  j   Z(bhp)  prefPhase
-   WP1     G   10  2    1*      OIL   /
+--  Name  Grp I  J  Depth    Phase Rad
+    PROD  G1  1  1  3590.00  OIL   1*  /
+    INJ   G1  10 10  3590.00  WATER 1*  /
 /
 
 COMPDAT
---wname  ic  jc  k_hi k_lo open/shut 2*Don’tCare well_diam  Default...
-   WP1   10   2    1   2     OPEN       2*           0.5  4*      /
+--  Name  I  J  K1 K2           DIAM
+    PROD  1  1  1  1  OPEN  2*  0.3750 /
+    INJ   10 10 1  1  OPEN  2*  0.3750 /
 /
 
 WCONPROD
---wname open/shut ctrlmode orat 4*Default bhpmin Rest default...
-   WP1     OPEN     ORAT   2000    4*      3350  /
-/
--- Milestone dates, e.g. to write results
-DATES
-   1 JUL 2004  /
-   1 JAN 2005  /
+-- Production well; Controlled by RESV fluid volume rate target=9000; BHP lower limit = 1500
+    PROD  OPEN  RESV  4*  9000.00000  1500.000    3*  /
 /
 
--- Change production rate to 4000 STB/day
-WCONPROD
---wname open/shut ctrlmode orat 4*Default bhpmin Rest default...
-   WP1     OPEN     ORAT   4000    4*      3350  /
-/
-
-DATES
-   1 JUL 2005  /
+WCONINJE
+--  Water injector; controlled by BHP target 3700
+    INJ  WATER  OPEN  BHP  2*  3700  3*  /
 /
 
 END
