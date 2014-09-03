@@ -4,6 +4,8 @@
 -- Based on minimal example found at
 --   http://folk.uib.no/fciop/index_htm_files/ResSimNotes.pdf
 --
+-- Most properties (rock, fluid) are from ODEH
+--
 
 RUNSPEC  ==============================================================
 TITLE
@@ -26,7 +28,7 @@ START
 
 
 GRID      ===========================================================
--- Turn off writing of data to report file
+
 NOECHO
 
 DX
@@ -99,8 +101,7 @@ DENSITY
 
 SOLUTION   =============================================================
 EQUIL
--- DD = Datum depth, the depth to which all reports will be referenced.
--- DD     Pressure@DD  OWC   Pcow(OWC)    Default rest of data items
+-- DatumS     Pressure@DD  OWC   Pcow(OWC)    Default rest of data items
    5000       4800      6000    0.0           6*     /
 
 
@@ -111,10 +112,6 @@ FOPT
 FWCT
 
 SCHEDULE  ==============================================================
--- Specify output of graphics result files for cell data, and times which
--- to write these. (Details to come later)
-RPTRST
-    BASIC=5 NORST=1 FREQ=6 /
 
 WELSPECS
 --  Name  Grp I  J  Depth    Phase Rad
