@@ -117,10 +117,24 @@ EQUIL
 
 
 SUMMARY   ==============================================================
+-- List data vectors which we want stored for graphics post-processing
 
+-- Field Oil Production Rate
+FOPR
+-- Field Oil Production Total
+FOPT
+-- Field Water Cut
+FWCT
+-- Field Pressure (averaged reservoir pressure)
 FPR
-WOPR
-
+-- Field Oil In Place
+FOIP
+-- Field Water Production Rate
+FWPR
+-- Field Water Injection Rate
+FWIR
+-- Well Water Cut for all wells
+WWCT  /
 
 SCHEDULE  ==============================================================
 -- Specify output of graphics result files for cell data, and times which
