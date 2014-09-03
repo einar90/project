@@ -1,0 +1,171 @@
+--
+--                     Peaceman 1978 Simulation
+--                     ************************
+--                     10x10x1 grid
+--                     1 injector, 1 producer
+--                     PVT data etc. from SPE7 are used
+--
+-- Specifiaction:
+-- **************
+-- Grid:
+--   10x10x1
+--
+
+RUNSPEC
+TITLE
+PEACEMAN 1978 10X10X1
+
+DIMENS
+--  X  Y  Z
+    10  10  1  /
+
+NONNC
+
+WATER
+
+FIELD
+
+WELLDIMS
+-- Well dimension data
+--  1: Max number of wells in model       = 2
+--  2: Max number of connections per well = 1
+--  3: Max number of groups in the model  = 1
+--  4: Max number of wells in each group  = 2
+    2  1  1  2 /
+
+START
+    1  JAN  1990  /
+
+NSTACK
+    25  /
+
+UNIFOUT
+UNIFIN
+
+
+GRID
+NOECHO
+
+GRIDFILE
+    2  /
+
+DXV
+-- Vector of X-direction grid block sizes
+    10*100  /
+
+DYV
+-- Vector of Y-direction grid block sizes
+    10*100  /
+
+DZ
+-- Z-direction grid block sizes
+    100*10  /
+
+TOPS
+-- Depth of top face of topmost grid blocks
+    100*3590  /
+
+EQUALS
+    PORO    0.207  /
+    PERMX   300    /
+    PERMY   300    /
+    PERMZ   30     /
+/
+
+INIT
+
+RPTGRID
+-- Grid output controls (for debugging purposes)
+    23*0   1  /
+
+PROPS
+
+PVTW
+-- PVT Properties of water
+--  P_ref  B_w       c_w        mu_w       "Viscosibility"
+    14.7   1.0142    3.00E-06   0.96000    0.00E+00 /
+
+--GRAVITY
+-- 26.6500  1.009107  0.66300 /
+
+DENSITY
+-- Fluid densities at surface conditions
+--  Oil    Water  Gas
+    1*     1*     1*  /
+
+ROCK
+-- Rock compressibility
+--  P_ref         c_r
+    1*            1* /
+
+
+SWFN
+-- Water saturation functions
+--  S_w    k_rw   P_cow
+    0.2200 0.0000 6.3000
+    0.3000 0.0700 3.6000
+    0.4000 0.1500 2.7000
+    0.5000 0.2400 2.2500
+    0.6000 0.3300 1.8000
+    0.8000 0.6500 0.9000
+    0.9000 0.8300 0.4500
+    1.0000 1.0000 000000
+/
+
+RPTPROPS
+-- Properties output control
+    1   1   1   1   1   1   1   0   1   1   /
+
+SOLUTION
+
+--DATUM
+  3600.000 /
+
+RPTSOL
+-- Solution output control
+    1   1   1   1   1   0   2   1   0   /
+
+SUMMARY
+WBHP
+
+SCHEDULE
+
+--DRSDT
+--   1.000E+20 /
+
+--
+--  WELSPECS and COMPDAT define well information in both
+--  standard and LGC models.
+--
+WELSPECS
+--  Name  Grp I  J  Depth    Phase Rad
+    PROD  G1  1  1  3590.00  WATER 1*  /
+    INJ   G1  10 10 3590.00  WATER 1*  /
+/
+
+COMPDAT
+--  Name  I  J  K1 K2
+    PROD  1  1  1  1  OPEN  /
+    INJ   10 10 1  1  OPEN  /
+/
+
+WCONPROD
+-- Production well; Controlled by RESV fluid volume rate target=9000; BHP lower limit = 1500
+    PROD  OPEN  RESV  4*  3000.00000  1500.000    /
+/
+
+WCONINJE
+--  Water injector; controlled by BHP target 3700
+    INJ  WATER  OPEN  RESV  1*  3000  /
+/
+
+RPTSCHED
+-- Schedule output control
+    1   1   1   1   0   0   2   1   1   0   1   2   0   1   1   /
+
+TSTEP
+-- 15 intervals of 100 days
+    30*50
+/
+
+END
