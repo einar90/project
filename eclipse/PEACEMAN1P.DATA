@@ -18,8 +18,7 @@ WATER
 FIELD
 
 WELLDIMS
--- #wells  #cell-connections  Next three values are defaulted
-   4            5                3* /
+    2  1  1  2  /
 
 
 START
