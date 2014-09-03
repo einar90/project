@@ -2,29 +2,26 @@
 --                     Peaceman 1978 Simulation
 --                     ************************
 -- Based on minimal example found at
--- chrome-extension://oemmndcbldboiebfnladdacbdfmadadm/http://folk.uib.no/fciop/index_htm_files/ResSimNotes.pdf
+--   http://folk.uib.no/fciop/index_htm_files/ResSimNotes.pdf
 --
 
 RUNSPEC  ==============================================================
--- Title is used as header on output, to identify run
 TITLE
     Peaceman 1978 recreation 2 phase
 
 DIMENS
-   10   3    3  /
+   10  10  1  /
 
 OIL
 WATER
 
 FIELD
 
--- Specify maximum values for well data (# means “max number of”)
 WELLDIMS
 -- #wells  #cell-connections  Next three values are defaulted
    4            5                3* /
 
 
--- Start date, i.e. “Day 0” in simulation
 START
    1 JAN 2004 /
 
@@ -34,31 +31,23 @@ GRID      ===========================================================
 NOECHO
 
 DX
-    90*1000 /
+   100*100 /
 
 DY
-    90*1000 /
+   100*100 /
 
 DZ
-    90*50 /
+   100*100 /
 
--- Which depth (measured from sea level) the cell tops are. We assume a
--- horizontal reservoir, and input depths which are consistent with the
--- DZ-values we defined above.
 TOPS
-  30*5000 30*5050 30*5100  /
+  100*5000  /
 
-PERMX
-   90*200 /
-PERMY
-   90*200 /
-PERMZ
-   90*200 /
-
-PORO
-  30*0.3
-  30*0.23
-  30*0.18 /
+EQUALS
+    PORO    0.207  /
+    PERMX   300    /
+    PERMY   300    /
+    PERMZ   30     /
+/
 
 -- Request to write an INIT (initial) file. Contains all data used to
 -- initialize the model
@@ -70,7 +59,7 @@ ECHO
 PROPS    ===============================================================
 
 SWOF
--- Sw  Krw     Krow  Pcow
+-- Sw     Krw     Krow    Pcow
    0.220  0.0000  1.0000  0
    0.300  0.0700  0.4000  0
    0.400  0.1500  0.1250  0
