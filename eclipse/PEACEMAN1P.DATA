@@ -1,157 +1,175 @@
 --
 --                     Peaceman 1978 Simulation
 --                     ************************
---                     10x10x1 grid
---                     1 injector, 1 producer
---                     PVT data etc. from SPE7 are used
---
--- Specifiaction:
--- **************
--- Grid:
---   10x10x1
+-- Based on minimal example found at
+-- chrome-extension://oemmndcbldboiebfnladdacbdfmadadm/http://folk.uib.no/fciop/index_htm_files/ResSimNotes.pdf
 --
 
-RUNSPEC
+RUNSPEC  ==============================================================
+-- Title is used as header on output, to identify run
 TITLE
-PEACEMAN 1978 10X10X1
+    Peaceman 1978 recreation 2 phase
 
 DIMENS
---  X  Y  Z
-    10  10  1  /
+   10   3    3  /
 
-NONNC
-
+OIL
 WATER
 
 FIELD
 
+-- Specify maximum values for well data (# means “max number of”)
 WELLDIMS
--- Well dimension data
---  1: Max number of wells in model       = 2
---  2: Max number of connections per well = 1
---  3: Max number of groups in the model  = 1
---  4: Max number of wells in each group  = 2
-    2  1  1  2 /
+-- #wells  #cell-connections  Next three values are defaulted
+   4            5                3* /
 
+
+-- Start date, i.e. “Day 0” in simulation
 START
-    1  JAN  1990  /
-
-NSTACK
-    25  /
-
-UNIFOUT
-UNIFIN
+   1 JAN 2014 /
 
 
-GRID
+GRID      ===========================================================
+-- Turn off writing of data to report file
 NOECHO
 
-GRIDFILE
-    2  /
+DX
+    90*1000 /
 
-DXV
--- Vector of X-direction grid block sizes
-    10*100  /
-
-DYV
--- Vector of Y-direction grid block sizes
-    10*100  /
+DY
+    90*1000 /
 
 DZ
--- Z-direction grid block sizes
-    100*10  /
+    90*50 /
 
+-- Which depth (measured from sea level) the cell tops are. We assume a
+-- horizontal reservoir, and input depths which are consistent with the
+-- DZ-values we defined above.
 TOPS
--- Depth of top face of topmost grid blocks
-    100*3590  /
+  30*5000 30*5050 30*5100  /
 
-EQUALS
-    PORO    0.207  /
-    PERMX   300    /
-    PERMY   300    /
-    PERMZ   30     /
-/
+PERMX
+   90*200 /
+PERMY
+   90*200 /
+PERMZ
+   90*200 /
 
+PORO
+  30*0.3
+  30*0.23
+  30*0.18 /
+
+-- Request to write an INIT (initial) file. Contains all data used to
+-- initialize the model
 INIT
 
-RPTGRID
--- Grid output controls (for debugging purposes)
-    23*0   1  /
+-- Turn report writing back on
+ECHO
 
-PROPS
+PROPS    ===============================================================
+
+SWOF
+-- Sw  Krw     Krow  Pcow
+   0.220  0.0000  1.0000  0
+   0.300  0.0700  0.4000  0
+   0.400  0.1500  0.1250  0
+   0.500  0.2400  0.0649  0
+   0.600  0.3300  0.0048  0
+   0.800  0.6500  0.0     0
+   0.900  0.8300  0.0     0
+   1.000  1.0000  0.0     0  /
 
 PVTW
--- PVT Properties of water
---  P_ref  B_w       c_w        mu_w       "Viscosibility"
-    14.7   1.0142    3.00E-06   0.96000    0.00E+00 /
+-- Pref     Bw       Cw     ViscW
+   4014.7  1.029   3.13E-6   0.31      0 /
 
---GRAVITY
--- 26.6500  1.009107  0.66300 /
+-- PVT properties for oil
+PVDO
+-- P      Bo     viscO
+   3337   1.2600   1.042
+   3725   1.2555   1.072
+   4139.5 1.2507   1.096
+   4573.2 1.2463   1.118
+   5053.9 1.24173  1.151
+   5487.5 1.2377   1.174
+   5813.9 1.2356   1.2    /
 
-DENSITY
--- Fluid densities at surface conditions
---  Oil    Water  Gas
-    1*     64.79  1*  /
+RSCONST
+-- Dead oil: Rs (Gas resolution factor) is constant
+-- Rs  Bubble-point-pressure
+   0.4       3337.0  /
 
 ROCK
--- Rock compressibility
---  P_ref         c_r
-    3600.00       0.40E-05 /
+-- Pref    Cr
+   14.7    3.0D-6          /
 
-RPTPROPS
--- Properties output control
-    1   1   1   1   1   1   1   0   1   1   /
+-- Fluid densities at surface conditions
+DENSITY
+-- Oil    Water   Gas
+   49.1   64.79  0.06054  /
 
-SOLUTION
+SOLUTION   =============================================================
+EQUIL
+-- DD = Datum depth, the depth to which all reports will be referenced.
+-- DD     Pressure@DD  OWC   Pcow(OWC)    Default rest of data items
+   5000       4800      6000    0.0           6*     /
 
---DATUM
-  3600.000 /
 
-RPTSOL
--- Solution output control
-    1   1   1   1   1   0   2   1   0   /
+SUMMARY   ==============================================================
+-- List data vectors which we want stored for graphics post-processing
 
-SUMMARY
-WBHP
+-- Field Oil Production Rate
+FOPR
+-- Field Oil Production Total
+FOPT
+-- Field Water Cut
+FWCT
+-- Field Pressure (averaged reservoir pressure)
+FPR
+-- Field Oil In Place
+FOIP
+-- Field Water Production Rate
+FWPR
+-- Field Water Injection Rate
+FWIR
+-- Well Water Cut for all wells
+WWCT  /
 
-SCHEDULE
+SCHEDULE  ==============================================================
+-- Specify output of graphics result files for cell data, and times which
+-- to write these. (Details to come later)
+RPTRST
+    BASIC=5 NORST=1 FREQ=6 /
 
---DRSDT
---   1.000E+20 /
-
---
---  WELSPECS and COMPDAT define well information in both
---  standard and LGC models.
---
 WELSPECS
---  Name  Grp I  J  Depth    Phase Rad
-    PROD  G1  1  1  3590.00  WATER 1*  /
-    INJ   G1  10 10 3590.00  WATER 1*  /
+--wname  group  i  j   Z(bhp)  prefPhase
+   WP1     G   10  2    1*      OIL   /
 /
 
 COMPDAT
---  Name  I  J  K1 K2
-    PROD  1  1  1  1  OPEN  /
-    INJ   10 10 1  1  OPEN  /
+--wname  ic  jc  k_hi k_lo open/shut 2*Don’tCare well_diam  Default...
+   WP1   10   2    1   2     OPEN       2*           0.5  4*      /
 /
 
 WCONPROD
--- Production well; Controlled by RESV fluid volume rate target=9000; BHP lower limit = 1500
-    PROD  OPEN  RESV  4*  3000.00000  1500.000    /
+--wname open/shut ctrlmode orat 4*Default bhpmin Rest default...
+   WP1     OPEN     ORAT   2000    4*      3350  /
+/
+-- Milestone dates, e.g. to write results
+DATES
+   1 JUL 2004  /
+   1 JAN 2005  /
 /
 
-WCONINJE
---  Water injector; controlled by BHP target 3700
-    INJ  WATER  OPEN  RESV  1*  3000  /
+-- Change production rate to 4000 STB/day
+WCONPROD
+--wname open/shut ctrlmode orat 4*Default bhpmin Rest default...
+   WP1     OPEN     ORAT   4000    4*      3350  /
 /
 
-RPTSCHED
--- Schedule output control
-    1   1   1   1   0   0   2   1   1   0   1   2   0   1   1   /
-
-TSTEP
--- 15 intervals of 100 days
-    30*50
+DATES
+   1 JUL 2005  /
 /
 
 END
