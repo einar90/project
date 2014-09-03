@@ -87,7 +87,7 @@ DYV
 -- Vector of Y-direction grid block sizes
     10*100  /
 
-DZV
+DZ
 -- Z-direction grid block sizes
     100*100  /
 
