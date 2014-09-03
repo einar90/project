@@ -87,9 +87,9 @@ DYV
 -- Vector of Y-direction grid block sizes
     10*100  /
 
-DZ
+DZV
 -- Z-direction grid block sizes
-    100  /
+    100*100  /
 
 TOPS
 -- Depth of top face of topmost grid blocks
