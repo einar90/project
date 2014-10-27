@@ -56,7 +56,7 @@ DYV
     10*100  /
 
 DZ
-    100*10  /
+    100*100  /
 
 TOPS
     100*3600.0  /
@@ -140,12 +140,12 @@ COMPDAT
 /
 
 WCONPROD
--- Production well; Controlled by RESV fluid volume rate target=9000; BHP lower limit = 1500
+-- Production well; Controlled by RESV fluid volume rate target=9000
     PROD  OPEN  WRAT  1*  1000.0  3*   /
 /
 
 WCONINJE
---  Water injector; controlled by BHP target 3700
+--  Water injector; controlled by BHP target 3600
     INJ  WATER  OPEN  RATE  1000 1* 3600.0    /
 /
 
