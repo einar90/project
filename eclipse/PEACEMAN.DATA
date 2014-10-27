@@ -172,7 +172,7 @@ WCONPROD
 
 WCONINJE
 --  Water injector; controlled by BHP target 3700
-    INJ  WATER  OPEN  RATE  1000   /
+    INJ  WATER  OPEN  RATE  1000 1* 1.0    /
 /
 
 RPTSCHED
