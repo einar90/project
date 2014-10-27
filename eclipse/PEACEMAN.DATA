@@ -139,7 +139,7 @@ COMPDAT
     INJ   10 10 1  1  OPEN  2*  0.3750 /
 /
 
-INPUT
-    "COMMON.SCHED" /
+INCLUDE
+    'COMMON.SCHED' /
 
 END      =================================================================
