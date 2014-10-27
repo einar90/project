@@ -31,9 +31,21 @@ EQLOPTS
     QUIESC  MOBILE  /
 
 TABDIMS
+-- Table dimensions
+--  1: Number of saturation tables using SGFN                 = 1
+--  2: Number of PVT tables using PVTG, PVTO etc              = 1
+--  3: Max number of saturation nodes in any saturation table = 15
+--  4: Max number of pressure nodes in any PVT table          = 15
+--  5: Max number of FIP regions defined using FIPNUM         = 1
+--  6: Max number of R_s nodes in a live oil PVT table        = 15
     1  1  15  15  1  15   /
 
 WELLDIMS
+-- Well dimension data
+--  1: Max number of wells in model       = 2
+--  2: Max number of connections per well = 1
+--  3: Max number of groups in the model  = 1
+--  4: Max number of wells in each group  = 2
     2  1  1  2 /
 
 START
@@ -68,7 +80,7 @@ EQUALS
     PERMZ   30     /
 /
 
-INIT
+INIT     -- Write INIT file.
 
 RPTGRID
     AQUCON  /
@@ -76,24 +88,30 @@ RPTGRID
 PROPS   ==================================================================
 
 PVTW
+-- PVT Properties of water
 --  P_ref  B_w       c_w        mu_w       "Viscosibility"
     14.7   1.0142    3.00E-06   0.96000    0.00E+00 /
 
+--GRAVITY
+-- 26.6500  1.009107  0.66300 /
+
 DENSITY
+-- Fluid densities at surface conditions
 --  Oil    Water  Gas
     49.1   64.79  0.06054  /
 
 ROCK
+-- Rock compressibility
 --  P_ref         c_r
     3600.00       0.40E-05 /
 
 BOX
     1 10 1 10 1 1 /
 
-KRW -- Water relative permeability scaling
+KRW
     100*1.0 /
 
-KRWR -- Water relative permeability endpoint scaling
+KRWR
     100*1.0 /
 
 RPTPROPS
@@ -113,7 +131,8 @@ EQUIL
 --  gas from an RSVD table.
 --  8: Initialization type for black oil with wet gas. Zero -> R_v = R_v@GOC
 --  9: Accuracy of initial fluids in place calculation.
-    3600.0  3600.0  6*  10 /
+--  3600.00 3610.00 3700.00 0.00000 0.00000 0.00000     1      0      10 /
+    3600.0  3600.0       1*      1*      1*      1*          1*     1*     10 /
 
 RPTSOL
     RESTART=2 POIL SOIL SWAT SGAS FIP=1 /
@@ -139,12 +158,12 @@ COMPDAT
 /
 
 WCONPROD
--- Production well; Controlled by RESV fluid volume rate target=1000
+-- Production well; Controlled by RESV fluid volume rate target=9000; BHP lower limit = 1500
     PROD  OPEN  WRAT  1*  1000.0  3*   /
 /
 
 WCONINJE
---  Water injector; controlled by rate 1000; BHP target 3600
+--  Water injector; controlled by BHP target 3700
     INJ  WATER  OPEN  RATE  1000 1* 3600.0    /
 /
 
@@ -153,7 +172,7 @@ RPTSCHED
    WELLS=1  SUMMARY=1 CPU=2  WELSPECS  NEWTON=1 /
 
 TSTEP
--- 50 intervals of 100 days
+-- 15 intervals of 100 days
     50*10
 /
 
