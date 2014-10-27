@@ -14,8 +14,6 @@ PEACEMAN 1978 10X10X1
 DIMENS
     10  10  1  /
 
-ENDSCALE
-/
 
 NONNC
 
@@ -112,12 +110,6 @@ ROCK
 --  P_ref         c_r
     3600.00       0.40E-05 /
 
-SWATINIT
-    100*0.9
-/
-
-KRW
-    100*0.55 /
 
 
 
