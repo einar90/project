@@ -79,7 +79,7 @@ DZ
     100*10  /
 
 TOPS
-    100*3590  /
+    100*0  /
 
 EQUALS
     PORO    0.207  /
@@ -140,7 +140,7 @@ EQUIL
 --  8: Initialization type for black oil with wet gas. Zero -> R_v = R_v@GOC
 --  9: Accuracy of initial fluids in place calculation.
 --  3600.00 3610.00 3700.00 0.00000 0.00000 0.00000     1      0      10 /
-    1600       1600       1*      1*      1*      1*          1*     1*     10 /
+    0       0       1*      1*      1*      1*          1*     1*     10 /
 
 RPTSOL
     RESTART=2 POIL SOIL SWAT SGAS FIP=1 /
@@ -155,8 +155,8 @@ SCHEDULE =================================================================
 
 WELSPECS
 --  Name  Grp I  J  Depth    Phase Rad
-    PROD  G1  1  1  3590.00  WATER   1*  /
-    INJ   G1  10 10  3590.00  WATER 1*  /
+    PROD  G1  1  1  0.00  WATER   1*  /
+    INJ   G1  10 10  0.00  WATER 1*  /
 /
 
 COMPDAT
@@ -167,12 +167,12 @@ COMPDAT
 
 WCONPROD
 -- Production well; Controlled by RESV fluid volume rate target=9000; BHP lower limit = 1500
-    PROD  OPEN  WRAT  1*  1000.0  3*  1600.0  /
+    PROD  OPEN  WRAT  1*  1000.0  3*  1.0  /
 /
 
 WCONINJE
 --  Water injector; controlled by BHP target 3700
-    INJ  WATER  OPEN  RATE  1000 1* 1600.0    /
+    INJ  WATER  OPEN  RATE  1000 1* 1.0    /
 /
 
 RPTSCHED
