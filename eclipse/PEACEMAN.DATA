@@ -61,17 +61,8 @@ DZ
 TOPS
     100*3600.0  /
 
-EQUALS
-    PORO    0.207  /
-    PERMX   300    /
-    PERMY   300    /
-    PERMZ   30     /
-/
-
-INIT     -- Write INIT file.
-
-RPTGRID
-    AQUCON  /
+INCLUDE
+    'COMMON.GRPR' /
 
 PROPS   ==================================================================
 
