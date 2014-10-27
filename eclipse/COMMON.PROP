@@ -1,0 +1,14 @@
+PVTW
+--  P_ref  B_w       c_w        mu_w       "Viscosibility"
+    14.7   1.0142    3.00E-06   0.96000    0.00E+00 /
+
+DENSITY
+--  Oil    Water  Gas
+    49.1   64.79  0.06054  /
+
+ROCK
+--  P_ref         c_r
+    3600.00       0.40E-05 /
+
+RPTPROPS
+    SWFN  PVTW  DENSITY  PCW  ENDPT  SWCR SWL SWU /
