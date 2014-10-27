@@ -139,7 +139,6 @@ EQUIL
 --  gas from an RSVD table.
 --  8: Initialization type for black oil with wet gas. Zero -> R_v = R_v@GOC
 --  9: Accuracy of initial fluids in place calculation.
-    3600.00 3610.00 3700.00 0.00000 0.00000 0.00000     1      0      10 /
     0       1       1*      1*      1*      1*          1*     1*      0 /
 
 RPTSOL
@@ -167,12 +166,12 @@ COMPDAT
 
 WCONPROD
 -- Production well; Controlled by RESV fluid volume rate target=9000; BHP lower limit = 1500
-    PROD  OPEN  RESV  4*  9000.00000  1500.000    3*  /
+    PROD  OPEN  WRAT  1*  1000.0  3*  1.0  /
 /
 
 WCONINJE
 --  Water injector; controlled by BHP target 3700
-    INJ  WATER  OPEN  BHP  2*  3700  3*  /
+    INJ  WATER  OPEN  RATE  1000   /
 /
 
 RPTSCHED
@@ -181,7 +180,7 @@ RPTSCHED
 
 TSTEP
 -- 15 intervals of 100 days
-    15*100
+    20*100
 /
 
 END      =================================================================
