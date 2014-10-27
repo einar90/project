@@ -1,0 +1,17 @@
+WCONPROD
+-- Production well; Controlled by RESV fluid volume rate target=9000
+    PROD  OPEN  WRAT  1*  1000.0  3*   /
+/
+
+WCONINJE
+--  Water injector; controlled by BHP target 3600
+    INJ  WATER  OPEN  RATE  1000 1* 3600.0    /
+/
+
+RPTSCHED
+   PRESSURE  SOIL  SWAT  SGAS  RESTART=2  FIP=1  
+   WELLS=1  SUMMARY=1 CPU=2  WELSPECS  NEWTON=1 /
+
+TSTEP
+    50*10
+/
