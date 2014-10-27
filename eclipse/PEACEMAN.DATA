@@ -116,8 +116,8 @@ ROCK
 --    100*1.0
 --/
 
---KRW
---    100*0.55 /
+KRW
+    100*0.55 /
 
 
 RPTPROPS
@@ -139,9 +139,6 @@ EQUIL
 --  9: Accuracy of initial fluids in place calculation.
     3600.00 3610.00 3700.00 0.00000 0.00000 0.00000     1      0      10 /
     0       1       1*      1*      1*      1*          1*     1*      0 /
-
-SWAT 
-    100*1 /
 
 RPTSOL
     RESTART=2 POIL SOIL SWAT SGAS FIP=1 /
