@@ -1,23 +1,22 @@
 clear all; close all; clc;
 
 q = 1000; % bbl/day
-mu = 0.96; % cp
-k = 300.0e-3; % F
+mu = 0.96; % cP
+k = 300.0e-3; % mD
 h = 100.0; % ft
+factor = q*mu / (k*h);
 
 %% Eclipse 10x10
-p_10x10 = load('eclipse/10x10-pressure.dat');
+p_10x10 = load('eclipse/10x10-pressure.dat'); % psia
 p_0 = p_10x10(1,1); % Well-block pressure
 
-% Diagonal pressures for plotting
-for i=2:3
-    p_diag(i) = (p_10x10(i,i)-p_0)/(q*mu/k/h); 
-    p_xedge(i) = (p_10x10(1,i)-p_0)/(q*mu/k/h); 
-    p_yedge(i) = (p_10x10(i,1)-p_0)/(q*mu/k/h);
-    x(i) = sqrt(2*i^2);
+x = []; p = [];
+for i=1:4
+  for j=1:5
+    x = [x sqrt(i^2+j^2)];
+    p = [p (p_10x10(i,j)-p_0)/factor];
+  end
 end
-
-semilogx(x,p_diag,'.')
-hold on;
-semilogx(x,p_xedge,'x')
-axis([0 6 0 .6])
+    
+semilogx(x,p,'.')
+axis([0 6 0 2])
