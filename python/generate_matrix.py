@@ -43,31 +43,23 @@ delta[-1] = -1
 
 # Solve system ================================================================
 P = np.linalg.solve(A, delta)
-print P
 
+# Calculating pressure difference from producer
 P_delta = []
 for p in P:
     P_delta.append(p - P[0])
 
-r = []
-for i in range(M+1):
-    for j in range(M+1):
-        r.append(np.sqrt(i**2 + j**2))
-
+# Creating contour plot
+P_delta = np.reshape(P_delta, [M+1, M+1])
+P = np.reshape(P, [M+1, M+1])
 print P_delta
-print r
-print len(P_delta)
-print len(r)
 
-# Dropping elements at well block
-r.pop(0) 
-P_delta.pop(0)
-
-fig = pl.figure()
-ax = pl.gca()
-ax.scatter(r, P_delta)
-ax.set_xscale('log')
-pl.xlim([0,6])
-pl.ylim([0,.6])
-
+# fig = pl.figure()
+# ax = pl.gca()
+# ax.scatter(r, P_delta)
+# ax.set_xscale('log')
+# pl.xlim([0,6])
+# pl.ylim([0,.6])
+pl.imshow(P)
+pl.colorbar(orientation='vertical')
 pl.show()
