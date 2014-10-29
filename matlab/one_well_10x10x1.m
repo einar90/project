@@ -1,6 +1,6 @@
 clear all; clc;
 %% Define grid, rock and fluid data
-dim = 20;
+dim = 10;
 G = cartGrid([dim, dim, 1]);
 G = computeGeometry(G, 'Verbose', true);
 rock.perm = repmat(100 .* milli*darcy, [G.cells.num, 1]);
@@ -32,7 +32,7 @@ gravity off
 resSol = incompTPFA(resSol, G, T, fluid, 'wells', W);
 
 %% Create 2D matrix from pressure solution vector
-P = reshape(resSol.pressure, dim, dim);
+P = reshape(convertTo(resSol.pressure, atm), dim, dim);
 
 %% Pressures on diagonal from producer towards center
 for i = 2:dim/2
@@ -40,9 +40,28 @@ for i = 2:dim/2
   r(i-1) = sqrt(2*(i^2));
 end
 
+%% Pressure line for plotting
+sm3PerDay2ccPerSec = 11.57;
+k = 100*0.001;
+h = 100;
+q = 1*sm3PerDay2ccPerSec;
+mu = 1;
+factor = k*h/(q*mu);
+p_plot = (P - P(1,1)).*factor;
+
+for i=1:dim
+    for j=1:dim
+        x(i,j) = sqrt((i-1)^2 + (j-1)^2);
+    end
+end
+
+% Cut matrices
+p_plot = p_plot(2:3,2:3);
+x = x(2:3,2:3);
+
 %% Regression line
-pfit = polyfit(r, diagP, 1);
-pval = polyval(pfit, r);
+pfit = polyfit(x, p_plot, 1);
+pval = polyval(pfit, x);
 
 %% Report results
 subplot(1,2,1)
@@ -51,9 +70,9 @@ subplot(1,2,1)
   view(2), axis tight, colorbar
   
 subplot(1,2,2)
-  semilogx(r, diagP, '*')
+  plot(x, p_plot, '*')
   title('Pressure vs. radius')
   xlabel('$$r/\Delta x = \sqrt{i^2 + j^2}$$','interpreter','latex')
   ylabel('$$P$$' ,'interpreter','latex')
   ylim([0 max(diagP)]);
-  xlim([1, max(r)])
+  xlim([0, 6])
