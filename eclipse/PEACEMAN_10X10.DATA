@@ -101,10 +101,9 @@ WELSPECS
 /
 
 COMPDAT
--- Default well diam = 1ft = 0.3048 m
 --  Name  I  J  K1 K2           DIAM
-    PROD  1  1  1  1  OPEN  /
-    INJ   10 10 1  1  OPEN  /
+    PROD  1  1  1  1  OPEN  2*  0.3 /
+    INJ   10 10 1  1  OPEN  2*  0.3 /
 /
 
 INCLUDE
