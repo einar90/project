@@ -1,0 +1,25 @@
+Parameter           | Value  
+============================================
+DIMENS                $10\times10\times1$ 
+DX                    30 m 
+DY                    30 m 
+DZ                    30 m 
+TOPS                  1000 m 
+PORO                  0.207 
+PERM                  300 mD 
+KRW                   1.0 
+KRWR                  1.0 
+PVTW $P_{ref}$        1.014 bar 
+$B_{w}$               1.0 rm3/sm3 
+$c_{w}$               4.0e-5 1/bars 
+$\mu_{w}$             0.5 cP 
+$\rho_{w}$            1000 kg/m3 
+$c_{r}$               4.934e-5 
+Datum depth           1000 m 
+Pressure at datum     100 bar 
+PROD depth            1000 m 
+INJ depth             1000 m 
+Well diam.            0.3 m 
+$q_{prod}$            150 sm3/day 
+$q_{inj}$             150 sm3/day 
+$P_{inj}$             100 bars 
