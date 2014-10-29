@@ -37,52 +37,37 @@ for i in range((M+1)**2):
         else:
             A[i][j] = eq[i].count([col_i, col_j])
 
-print A
-
-
 # Populate delta vector =======================================================
 delta[0] = 1
 delta[-1] = -1
-print delta
-
 
 # Solve system ================================================================
 P = np.linalg.solve(A, delta)
-P = np.reshape(P, (M+1, M+1))
 print P
 
-# Compute pressure drops ======================================================
-P_diff = np.zeros([M+1, M+1], dtype=float)
+P_delta = []
+for p in P:
+    P_delta.append(p - P[0])
+
+r = []
 for i in range(M+1):
     for j in range(M+1):
-        P_diff[i, j] = P[i, j] - P[0, 0]
+        r.append(np.sqrt(i**2 + j**2))
 
-print P_diff
-
-# Compute radius matrix =======================================================
-r = np.zeros([M+1, M+1], dtype=float)
-for i in range(M+1):
-    for j in range(M+1):
-        r[i, j] = np.sqrt(i**2 + j**2)
-
+print P_delta
 print r
+print len(P_delta)
+print len(r)
 
-# Plotting ====================================================================
-r_plot = []
-P_plot = []
-for i in range(1, 3):
-    r_plot.append(r[i, i])
-    P_plot.append(P_diff[i, i])
-
-print 'r to be plotted:'
-print r_plot
-
-print 'p to be plotted:'
-print P_plot
+# Dropping elements at well block
+r.pop(0) 
+P_delta.pop(0)
 
 fig = pl.figure()
-ax = fig.add_subplot(2, 1, 1)
-ax.scatter(r_plot, P_plot)
+ax = pl.gca()
+ax.scatter(r, P_delta)
 ax.set_xscale('log')
+pl.xlim([0,6])
+pl.ylim([0,.6])
 
 pl.show()
