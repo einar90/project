@@ -1,14 +1,24 @@
 PVTW
---  P_ref  B_w       c_w        mu_w       "Viscosibility"
-    14.7   1.0142    3.00E-06   0.96000    0.00E+00 /
+-- B_w = 1.0 rm3/sm3
+-- c_w = 0.0 1/bars
+-- mu_w = 0.5 cP
+-- viscobility = 0.0
+--  P_ref  B_w   c_w   mu_w   "Viscosibility"
+    1.014  1*    1*    1*     1* /
 
 DENSITY
---  Oil    Water  Gas
-    49.1   64.79  0.06054  /
+-- oil = 600 kg/m3
+-- water = 999.014 kg/m3
+-- gas = 1 kg/m3
+--  Oil  Water Gas
+    1*   1*    1*  /
 
 ROCK
---  P_ref         c_r
-    3600.00       0.40E-05 /
+-- P_ref = 1.0132 barsa
+-- c_r = 0.0 1/bars
+--  P_ref c_r
+    1*    1* /
 
 RPTPROPS
     SWFN  PVTW  DENSITY  PCW  ENDPT  SWCR SWL SWU /
+    

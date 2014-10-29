@@ -1,11 +1,9 @@
 WCONPROD
--- Production well; Controlled by RESV fluid volume rate target=9000
-    PROD  OPEN  WRAT  1*  1000.0  3*   /
+    PROD  OPEN  WRAT  1*  150.0   /
 /
 
 WCONINJE
---  Water injector; controlled by BHP target 3600
-    INJ  WATER  OPEN  RATE  1000 1* 3600.0    /
+    INJ  WATER  OPEN  RATE  150 1* 100    /
 /
 
 RPTSCHED

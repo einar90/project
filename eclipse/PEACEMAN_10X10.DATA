@@ -22,7 +22,7 @@ NONNC
 
 WATER
 
-FIELD
+METRIC
 
 EQLDIMS
     1  100  2  1  2  /
@@ -50,16 +50,20 @@ GRIDFILE
     2  /
 
 DXV
-    10*100  /
+-- 10x30m
+    10*30  /
 
 DYV
-    10*100  /
+-- 10x30m
+    10*30  /
 
 DZ
-    100*100  /
+-- 100x30m
+    100*30  /
 
 TOPS
-    100*3600.0  /
+-- 1000m depth
+    100*1000.0  /
 
 INCLUDE
     'COMMON.GRPR' /
@@ -91,15 +95,16 @@ INCLUDE
 SCHEDULE =================================================================
 
 WELSPECS
---  Name  Grp I  J  Depth    Phase Rad
-    PROD  G1  1  1  3600.00  WATER   1*  /
-    INJ   G1  10 10  3600.00  WATER 1*  /
+--  Name  Grp I  J   Depth    Phase Rad
+    PROD  G1  1  1   1000.00  WATER  /
+    INJ   G1  10 10  1000.00  WATER  /
 /
 
 COMPDAT
+-- Default well diam = 1ft = 0.3048 m
 --  Name  I  J  K1 K2           DIAM
-    PROD  1  1  1  1  OPEN  2*  0.3750 /
-    INJ   10 10 1  1  OPEN  2*  0.3750 /
+    PROD  1  1  1  1  OPEN  /
+    INJ   10 10 1  1  OPEN  /
 /
 
 INCLUDE
