@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-M = 10
+M = 20
 A = np.zeros([(M+1)**2, (M+1)**2], dtype=float)
 delta = np.zeros((M+1)**2, dtype=float)
 
@@ -60,32 +60,49 @@ for i in range(M+1):
     for j in range(M+1):
         r[i, j] = np.sqrt(float(i)**2.0 + float(j)**2.0)
 
-r_vector = np.reshape(r, [(M+1)**2, ])  # To be used for regression line
+# Creating plots ==============================================================
 
-# Creating regression line ====================================================
-r_reg = np.reshape(r, [(M+1)**2])[1:(M+1)**2-1]
-r_reg = np.log10(r_reg)
+# Cutting matrices
+r = r[0:(M+1)/2, 0:(M+1)/2]
+P_delta = P_delta[0:(M+1)/2, 0:(M+1)/2]
 
-P_reg = np.reshape(P_delta, [(M+1)**2])[1:(M+1)**2-1]
+# Relinearizing matrices
+r = np.reshape(r, [((M+1)/2)**2, ])
+P_delta = np.reshape(P_delta, [((M+1)/2)**2, ])
 
-reg = np.polyfit(r_reg, P_reg, 1)  # Create regression line
-reg_poly = np.poly1d(reg)  # Polynomial for regression
-print (reg_poly(0), reg_poly(5))
+# Removing first element (represents the well-block)
+r = r[1:]
+P_delta = P_delta[1:]
 
+# Create the regression line and polynomial
+reg = np.polyfit(np.log(r), P_delta, deg=1)
+reg_poly = np.poly1d(reg)
+
+# r vector for extended plotting
+reg_r = [i/10.0 for i in range(1, 61)]
+print 'Delta P = 0 at r = ', np.exp(np.roots(reg_poly)[0])
 
 # Creating plots ==============================================================
 fig, (ax1, ax2) = plt.subplots(1, 2)
 
 ax1.imshow(P)
 ax1.set_title('Pressure')
-# fig.colorbar(ax1)
 
 ax2.scatter(r, P_delta)
-# ax2.plot(r_reg, reg_poly(r_reg))
+ax2.semilogx(reg_r, reg_poly(np.log(reg_r)))
 ax2.set_title('Pressure drop')
 ax2.set_xscale('log')
 ax2.set_xlim(1e-1, .6e1)
-ax2.set_ylim(0, 0.6)
+ax2.set_ylim(0, .6)
 
 plt.draw()
 plt.show()
+
+# Writing data to files
+print P
+print reg_r
+print P_delta
+save = raw_input('Save arrays to file? (y/n)  ')
+if save == 'y':
+    np.savetxt('scatter.dat', (r, P_delta), delimiter=',')
+    np.savetxt('regression.dat', (reg_r, reg_poly(np.log(reg_r))), delimiter=',')
