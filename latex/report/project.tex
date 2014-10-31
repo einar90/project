@@ -1,9 +1,29 @@
 \input{../preambles/preamble.tex}
 \input{../preambles/preamble-addon-figures.tex}
+\input{../preambles/preamble-addon-glossaries.tex}
 
 \author{Einar Baumann}
 \title{Project Report}
 
 \begin{document}
-    \maketitle
+
+\maketitle
+
+\clearpage
+\tableofcontents
+
+\clearpage
+\listoffigures
+
+\clearpage
+\input{parts/intro.tex}
+
+\clearpage
+\printnomenclature
+\printnoidxglossaries
+
+\clearpage
+\bibliography{Remote}{}
+\bibliographystyle{apalike}
+
 \end{document}
