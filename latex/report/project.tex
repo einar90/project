@@ -1,29 +1,36 @@
 \input{../preambles/preamble.tex}
 \input{../preambles/preamble-addon-figures.tex}
 \input{../preambles/preamble-addon-glossaries.tex}
+\input{../preambles/preamble-addon-listings.tex}
 
-\author{Einar Baumann}
-\title{Project Report}
+
 
 \begin{document}
 
-\maketitle
+\input{parts/frontpage.tex}
+\input{parts/content-lists.tex}
 
-\clearpage
-\tableofcontents
-
-\clearpage
-\listoffigures
-
+% BEGIN main contents =========================================================
 \clearpage
 \input{parts/intro.tex}
+\input{parts/litterature-review.tex}
+% END main contents ===========================================================
 
+% BEGIN Nomenclature and glossaries ===========================================
 \clearpage
 \printnomenclature
 \printnoidxglossaries
+% END Nomenclature and glossaries =============================================
 
+% BEGIN Bibliography ==========================================================
 \clearpage
 \bibliography{Remote}{}
 \bibliographystyle{apalike}
+% END Bibliography ============================================================
+
+% BEGIN Appendix ==============================================================
+\appendix
+\input{parts/appendix-listings.tex}
+% END Appendix ================================================================
 
 \end{document}

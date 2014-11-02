@@ -1,9 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-M = 20
+M = 50
 A = np.zeros([(M+1)**2, (M+1)**2], dtype=float)
 delta = np.zeros((M+1)**2, dtype=float)
+
+print '============================================================'
+print 'Solving for M = ', M
+print '============================================================'
 
 # Create schema ===============================================================
 eq = []
@@ -60,6 +64,10 @@ for i in range(M+1):
     for j in range(M+1):
         r[i, j] = np.sqrt(float(i)**2.0 + float(j)**2.0)
 
+# Exact calculation of r_0 ====================================================
+print 'Pressure drop: ', P[M, M] - P[0, 0]
+print 'Exact solution: ', np.sqrt(2) * M * np.exp(-0.6190 - np.pi * (P[M, M]-P[0, 0]))
+
 # Creating plots ==============================================================
 
 # Cutting matrices
@@ -80,7 +88,7 @@ reg_poly = np.poly1d(reg)
 
 # r vector for extended plotting
 reg_r = [i/10.0 for i in range(1, 61)]
-print 'Delta P = 0 at r = ', np.exp(np.roots(reg_poly)[0])
+print 'Graphical solution: r_0 = ', np.exp(np.roots(reg_poly)[0])
 
 # Creating plots ==============================================================
 fig, (ax1, ax2) = plt.subplots(1, 2)
@@ -99,9 +107,6 @@ plt.draw()
 plt.show()
 
 # Writing data to files
-print P
-print reg_r
-print P_delta
 save = raw_input('Save arrays to file? (y/n)  ')
 if save == 'y':
     np.savetxt('scatter.dat', (r, P_delta), delimiter=',')

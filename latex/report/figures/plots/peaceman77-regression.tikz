@@ -10,7 +10,8 @@
         xlabel={$r/\Delta x = \sqrt{i^2 + j^2}$},
         ylabel={$\left( p_D \right)_{ij} - \left( p_D \right)_{0} = \left( p_{ij} - p_{0} \right) \frac{kh}{q\mu}$}
     ]
-        \addplot[scatter, only marks] table[x=r,y=dp, col sep=comma]{data/scatter.dat};
-        \addplot[no marks] table[x=r,y=dp, col sep=comma]{data/regression.dat};
+        \addplot[scatter, only marks] table[x=r,y=dp, col sep=comma]{data/scatter-10x10.dat};
+        \addplot[no marks] table[x=r,y=dp, col sep=comma]{data/regression-10x10.dat};
+    \draw[-latex] (axis cs:.2124,.1) node [anchor=east,above] {$r_o/\Delta x$} to (axis cs:.2124,0);
     \end{axis}
 \end{tikzpicture}

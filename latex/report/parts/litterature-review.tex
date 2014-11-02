@@ -1,0 +1,34 @@
+% -*- root: ../project.tex -*-
+
+\section{Litterature review} % (fold)
+\label{sec:litterature_review}
+\hl{This section contains a review of papers concerning the topic.}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[]{figures/plots/peaceman77-regression.pdf}
+    \caption{Plot of numerical solution of pressure plotted agains radius from producing well. Calculations are done using the program in Listing~\ref{lst:peaceman77_solver}. The equation is solved for a $10\times 10$ grid.}
+    \label{fig:peaceman77_pressure_vs_radius}
+\end{figure}
+
+\begin{table}
+    \centering
+    \caption{Computed equivalent radius of well-block $r_o$ for various values of M. $\Delta p_D$ is the dimensionless pressure drop between producer and injector, $(p_D)_{M,M} - (p_D)_{o,o}$. $r_o/\Delta x$ (exact) refers to the solution using \hl{equation}; $r_o / \Delta x$ (regression) refers to the point where the regression line crosses the $x$-axis (see Figure~\ref{fig:peaceman77_pressure_vs_radius}).}
+    \begin{tabular}{rccc}
+        \toprule
+        $M$ & $\Delta p_D$ & $r_o/\Delta x$ (exact) & $r_o / \Delta x$ (regression)\\
+        \midrule
+        3   & 0.78571 & 0.1936 & 0.297 \\
+        5   & 0.94346 & 0.1965 & 0.225 \\
+        10  & 1.16209 & 0.1978 & 0.212 \\
+        15  & 1.29078 & 0.1980 & 0.210 \\
+        20  & 1.38222 & 0.1981 & 0.208 \\
+        32  & 1.53173 & 0.1981 & 0.207 \\
+        50  & 1.67375 & 0.1982 & 0.207 \\
+        100 & 1.89436 & 0.1982 & 0.208 \\
+        \bottomrule
+    \end{tabular}
+    \label{tbl:label}
+\end{table}
+
+% section litterature_review (end)
