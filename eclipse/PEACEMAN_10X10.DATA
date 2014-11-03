@@ -12,7 +12,7 @@ TITLE
 PEACEMAN 1978 10X10X1
 
 DIMENS
-    10  10  1  /
+    11  11  1  /
 
 ENDSCALE
 /
@@ -51,33 +51,39 @@ GRIDFILE
 
 DXV
 -- 10x30m
-    10*30  /
+    11*30  /
 
 DYV
 -- 10x30m
-    10*30  /
+    11*30  /
 
 DZ
 -- 100x30m
-    100*30  /
+    121*30  /
 
 TOPS
 -- 1000m depth
-    100*1000.0  /
+    121*1000.0  /
 
 INCLUDE
     'COMMON.GRPR' /
 
 PROPS   ==================================================================
 
-BOX
-    1 10 1 10 1 1 /
+--BOX
+--    1 11 1 11 1 1 /
 
 KRW
-    100*1.0 /
+    121*1.0 /
 
 KRWR
-    100*1.0 /
+    121*1.0 /
+
+--SWFN
+--    .1 0 0
+--     1 1 0 /
+
+
 
 INCLUDE
     'COMMON.PROP' /
@@ -97,13 +103,13 @@ SCHEDULE =================================================================
 WELSPECS
 --  Name  Grp I  J   Depth    Phase Rad
     PROD  G1  1  1   1000.00  WATER  /
-    INJ   G1  10 10  1000.00  WATER  /
+    INJ   G1  11 11  1000.00  WATER  /
 /
 
 COMPDAT
 --  Name  I  J  K1 K2           DIAM
-    PROD  1  1  1  1  OPEN  2*  0.3 /
-    INJ   10 10 1  1  OPEN  2*  0.3 /
+    PROD  1  1  1  1  OPEN  2*  0.3048 /
+    INJ   11 11 1  1  OPEN  2*  0.3048 /
 /
 
 INCLUDE
