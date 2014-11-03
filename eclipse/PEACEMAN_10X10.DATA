@@ -76,8 +76,8 @@ BOX
 KRW
     121*1.0 /
 
-KRWR
-    121*1.0 /
+--KRWR
+--    121*1.0 /
 
 INCLUDE
     'COMMON.PROP' /
