@@ -3,8 +3,8 @@ PVTW
 -- c_w = 4.0e-5 1/bars
 -- mu_w = 0.5 cP
 -- viscobility = 0.0
---  P_ref  B_w   c_w     mu_w   "Viscosibility"
-    1.014  1*    4.0E-5  1*      1* /
+--  P_ref  B_w   c_w      mu_w   "Viscosibility"
+    100.0  1*    4.0E-25  1*      1* /
 
 DENSITY
 -- oil = 600 kg/m3
