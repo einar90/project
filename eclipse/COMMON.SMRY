@@ -6,3 +6,18 @@ FWIT
 
 WBHP
     'INJ'  'PROD'  /
+
+WBP
+    'INJ' 'PROD' /
+
+WBP4
+    'INJ' 'PROD' /
+
+WBP5
+    'INJ' 'PROD' /
+
+WBP9
+    'INJ' 'PROD' /
+
+CTFAC
+    'PROD' 1 1 1 /
