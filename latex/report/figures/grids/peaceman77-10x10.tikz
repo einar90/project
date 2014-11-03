@@ -1,0 +1,11 @@
+% -*- root: ../../project.tex -*-
+
+\begin{tikzpicture}
+    \foreach \x in {-1,0,...,11} {
+        \draw[] (\x,-2) to (\x,12);
+        \node[] at (\x-.5,-2) {\x};
+    }
+    \foreach \y in {-1,0,...,11} {
+        \draw[] (-2,\y) to (12,\y);
+    }
+\end{tikzpicture}

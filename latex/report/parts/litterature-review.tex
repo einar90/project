@@ -10,20 +10,49 @@ In numerical reservoir simulation, the \gls{wi}\footnote{The term \gls{cf} is al
 
 The well index is used when calculating the flow rate into the well. For single-phase flow the it may be written as
 \begin{equation}
+    \label{eq:peaceman-wi1}
     q = \frac{WI}{\mu} \left( p_{wb} - p_{wf} \right)
 \end{equation}
 where $q$\nomenclature{$q$}{volumetric flow rate} is the volumetric flow rate into the well \nomenclature{$\mu$}{viscosity}\nomenclature{$WI$}{well index}\cite{Peaceman2003New}.
 
-For a single well in a two-dimensional reservoir reservoir, Darcy's law for radial one-phase flow can be expressed as
+For a single well in a two-dimensional reservoir reservoir, Darcy's law for radial one-phase flow in the absence of skin effect can be expressed as
 \begin{equation}
     q = \frac{kA}{\mu} \frac{\mathrm{d}p}{\mathrm{d}r}
 \end{equation}
 which after separating variables, integrating from $p_{wf}$ to $p$ and solving for $p$ gives us
 \begin{equation}
-    p = p_{wf} + \frac{q\mu}{2\pi kh} \ln{\frac{r}{r_w}}
+    \label{eq:dake-radial-pressure}
+    p_e = p_{wf} + \frac{q\mu}{2\pi kh} \ln{\frac{r_e}{r_w}}
 \end{equation}
-where $h$\nomenclature{$h$}{formation thickness} is the formation thickness \nomenclature{$k$}{permeability}\nomenclature{$r$}{radius}\nomenclature{$r_w$}{wellbore radius}\cite{Dake1978Developments}.
+where $p_e$ is the effective pressure at the ``drainage radius'' $r_e$ \cite{Dake1978Developments} obtained from
+\begin{equation}
+    \label{eq:peaceman-pe}
+    p_e = p_{wb} + F_i \sum_{i=1}^{4}\left( p_i - p_{wb} \right)
+\end{equation}
+where $F$ is a factor determining the influence of $p_i$ on $p_e$ in the horizontal plane, and is taken as zero \cite{Schwabe1967Prediction,Peaceman1978Interpretation}. Thus, equation equation \eqref{eq:dake-radial-pressure} is reduced to
+\begin{equation}
+    \label{eq:peaceman-pwb}
+    p_{wb} = p_{wf} + \frac{q\mu}{2\pi kh} \ln{\frac{r_{eq}}{r_w}}
+\end{equation}
+where $r_{eq}$ is the equivalent wellblock radius, the radius at which the single well radial-flow equation gives the same pressure as the wellblock pressure\cite{Peaceman1978Interpretation,Peaceman2003New}.
+\nomenclature{$p_e$}{effective pressure at drainage radius}
+\nomenclature{$h$}{formation thickness}
+\nomenclature{$k$}{permeability}
+\nomenclature{$r$}{radius}
+\nomenclature{$r_w$}{wellbore radius}
+\nomenclature{$r_{eq}$}{equivalent wellblock radius}
+
+Substitution of equation \eqref{eq:peaceman-pwb} into equation \eqref{eq:peaceman-wi1} and solved for $WI$ yields
+\begin{equation}
+    \label{eq:peaceman-wi2}
+    WI = \frac{2\pi kh}{\ln{r_{eq}/r_w}}
+\end{equation}
 % subsection well_indices (end)
+
+\subsection{Equivalent Wellblock Radius} % (fold)
+\label{sub:equivalent_wellblock_radius}
+
+% subsection equivalent_wellblock_radius (end)
 
 \begin{figure}[htbp]
     \centering
