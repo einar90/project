@@ -2,7 +2,28 @@
 
 \section{Litterature review} % (fold)
 \label{sec:litterature_review}
-\hl{This section contains a review of papers concerning the topic.}
+For simplicity only equations dealing for single-phase, two-dimensional, steady-state flow in a homogeneous reservoir will be discussed in this section.
+
+\subsection{Well Indexes} % (fold)
+\label{sub:well_indices}
+In numerical reservoir simulation, the \gls{wi}\footnote{The term \gls{cf} is also used by some authors\cite{Peaceman2003New,Schlumberger2013Eclipse}.} is used to relate the flowing well pressure, $p_{wf}$\nomenclature{$p_{wf}$}{flowing well pressure},  to the numerical wellblock pressure, $p_{wb}$\nomenclature{$p_{wb}$}{wellblock pressure}. The well index takes into account the wellblock geometry and the location and orientation of the well segment in the gridblock, as well as rock properties \cite{Peaceman2003New}.
+
+The well index is used when calculating the flow rate into the well. For single-phase flow the it may be written as
+\begin{equation}
+    q = \frac{WI}{\mu} \left( p_{wb} - p_{wf} \right)
+\end{equation}
+where $q$\nomenclature{$q$}{volumetric flow rate} is the volumetric flow rate into the well \nomenclature{$\mu$}{viscosity}\nomenclature{$WI$}{well index}\cite{Peaceman2003New}.
+
+For a single well in a two-dimensional reservoir reservoir, Darcy's law for radial one-phase flow can be expressed as
+\begin{equation}
+    q = \frac{kA}{\mu} \frac{\mathrm{d}p}{\mathrm{d}r}
+\end{equation}
+which after separating variables, integrating from $p_{wf}$ to $p$ and solving for $p$ gives us
+\begin{equation}
+    p = p_{wf} + \frac{q\mu}{2\pi kh} \ln{\frac{r}{r_w}}
+\end{equation}
+where $h$\nomenclature{$h$}{formation thickness} is the formation thickness \nomenclature{$k$}{permeability}\nomenclature{$r$}{radius}\nomenclature{$r_w$}{wellbore radius}\cite{Dake1978Developments}.
+% subsection well_indices (end)
 
 \begin{figure}[htbp]
     \centering

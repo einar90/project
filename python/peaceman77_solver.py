@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-M = 50
+M = 9
 A = np.zeros([(M+1)**2, (M+1)**2], dtype=float)
 delta = np.zeros((M+1)**2, dtype=float)
 
@@ -53,6 +53,8 @@ P = np.linalg.solve(A, delta)
 P_delta = []
 for p in P:
     P_delta.append(p - P[0])
+
+np.savetxt('pressure_difference.dat', P_delta)
 
 # Reshaping pressure matrices to fit on the modelled MxM grid =================
 P_delta = np.reshape(P_delta, [M+1, M+1])

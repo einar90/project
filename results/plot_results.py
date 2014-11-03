@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-N = 10
+N = 11
 
 # Parameters
 k = 300.0  # mD
@@ -13,13 +13,15 @@ total_conversion_factor = 8.5298e-3
 dimensionless_pressure_factor = k*h/q/mu*total_conversion_factor
 
 # Loading data from files
-P_ecl = np.loadtxt('eclipse/10x10-pressure.dat')*dimensionless_pressure_factor
+P_ecl = np.loadtxt('eclipse/11x11-pressure.dat')*dimensionless_pressure_factor
 
 # Calculating pressure difference matrix
 P_ecl_delta = np.zeros([N, N])
 for i in range(N):
     for j in range(N):
         P_ecl_delta[i, j] = P_ecl[i, j] - P_ecl[0, 0]
+
+np.savetxt('ecl_pressure_delta.dat', P_ecl_delta)
 
 # Cutting pressure difference matrix
 P_ecl_delta = P_ecl_delta[0:N/2, 0:N/2]
@@ -59,7 +61,7 @@ ax1.scatter(r, P_ecl_delta)
 ax1.semilogx(reg_r, reg_ecl_poly(np.log(reg_r)))
 ax1.set_xscale('log')
 ax1.set_title('Pressure drop (ECL)')
-# ax1.set_xlim(1e-1, .6e1)
+ax1.set_xlim(1e-1, .6e1)
 ax1.set_ylim(0, 1.5)
 
 # ax2.scatter(r, P_delta)
@@ -71,3 +73,4 @@ ax1.set_ylim(0, 1.5)
 
 plt.draw()
 plt.show()
+
