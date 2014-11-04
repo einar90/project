@@ -1,15 +1,15 @@
 % -*- root: ../../project.tex -*-
 
-\begin{tikzpicture}[xscale=.7,yscale=.7]
+\begin{tikzpicture}[xscale=.5,yscale=.5]
     \draw[] (-2,-1.5) to (-2,12.5);
     \foreach \x in {-1,0,...,11} {
         \draw[] (\x,-1.5) to (\x,12.5);
-        \node[anchor=north] at (\x-.5,-1.5) {\x};
+        \node[anchor=north] at (\x-.5,-1.5) {\footnotesize\x};
     }
     \draw[] (-2.5,12) to (11.5,12);
     \foreach \y in {-1,0,...,11} {
         \draw[] (-2.5,\y) to (11.5,\y);
-        \node[anchor=east] at (-2.5,\y+.5) {
+        \node[anchor=east] at (-2.5,\y+.5) {\footnotesize
             \pgfmathparse{\y}
             \pgfmathprintnumber[]{\pgfmathresult}
         };
