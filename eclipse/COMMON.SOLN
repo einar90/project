@@ -10,7 +10,7 @@ EQUIL
 --  gas from an RSVD table.
 --  8: Initialization type for black oil with wet gas. Zero -> R_v = R_v@GOC
 --  9: Accuracy of initial fluids in place calculation.
-    1000.0  100 900 5*     1* /
+    1015.0  100 900 5*     1* /
 
 RPTSOL
     RESTART=2 POIL SOIL SWAT SGAS FIP=1 /
