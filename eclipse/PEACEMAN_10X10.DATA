@@ -113,8 +113,8 @@ COMPDAT
 /
 
 WPIMULT
-    'PROD'  .5 /
-    'INJ'   .5 /
+    'PROD'  .25 /
+    'INJ'   .25 /
 /
 
 INCLUDE
