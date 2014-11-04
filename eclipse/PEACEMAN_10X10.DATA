@@ -51,11 +51,11 @@ GRIDFILE
 
 DXV
 -- 10x30m
-    11*30  /
+    15 9*30 15  /
 
 DYV
 -- 10x30m
-    11*30  /
+    15 9*30 15  /
 
 DZ
 -- 100x30m
@@ -113,6 +113,7 @@ COMPDAT
 /
 
 WPIMULT
+-- Scaling well connection factor because the well is in a corner
     'PROD'  .25 /
     'INJ'   .25 /
 /
