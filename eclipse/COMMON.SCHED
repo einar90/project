@@ -13,9 +13,3 @@ RPTSCHED
 TSTEP
     50*10
 /
-
-WPIMULT
-    'PROD'  .5 /
-    'INJ'   .5 /
-/
-

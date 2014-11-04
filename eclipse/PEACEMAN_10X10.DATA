@@ -112,6 +112,11 @@ COMPDAT
     INJ   11 11 1  1  OPEN  2*  0.3048 /
 /
 
+WPIMULT
+    'PROD'  .5 /
+    'INJ'   .5 /
+/
+
 INCLUDE
     'COMMON.SCHED' /
 
