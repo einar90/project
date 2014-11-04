@@ -1,11 +1,21 @@
 % -*- root: ../../project.tex -*-
 
-\begin{tikzpicture}
+\begin{tikzpicture}[xscale=.7,yscale=.7]
+    \draw[] (-2,-1.5) to (-2,12.5);
     \foreach \x in {-1,0,...,11} {
-        \draw[] (\x,-2) to (\x,12);
-        \node[] at (\x-.5,-2) {\x};
+        \draw[] (\x,-1.5) to (\x,12.5);
+        \node[anchor=north] at (\x-.5,-1.5) {\x};
     }
+    \draw[] (-2.5,12) to (11.5,12);
     \foreach \y in {-1,0,...,11} {
-        \draw[] (-2,\y) to (12,\y);
+        \draw[] (-2.5,\y) to (11.5,\y);
+        \node[anchor=east] at (-2.5,\y+.5) {
+            \pgfmathparse{\y}
+            \pgfmathprintnumber[]{\pgfmathresult}
+        };
     }
+
+    \draw [very thick,dashed] (-.5,.5) to (9.5,.5) to (9.5,10.5) to (-.5,10.5) to (-.5,.5);
+    \draw [very thick] (-.5,.5) circle (1mm);
+    \draw [very thick,fill=black] (9.5,10.5) circle (1mm);
 \end{tikzpicture}
