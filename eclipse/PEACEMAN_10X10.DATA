@@ -131,7 +131,6 @@ COMPDATL
 
 COMPDAT
 --  Name  I  J  K1 K2           DIAM
-    PROD  1  1  1  1  OPEN  2*  0.3048 /
     INJ   10 10 1  1  OPEN  2*  0.3048 /
 /
 
