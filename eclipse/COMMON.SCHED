@@ -1,9 +1,9 @@
 WCONPROD
-    PROD  OPEN  WRAT  1*  10   /
+    PROD  OPEN  WRAT  1*  150.0   /
 /
 
 WCONINJE
-    INJ  WATER  OPEN  RATE  10 1* 200    /
+    INJ  WATER  OPEN  RATE  150 1* 200    /
 /
 
 RPTSCHED
