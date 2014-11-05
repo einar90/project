@@ -39,6 +39,9 @@ WELLDIMS
 START
     1  JAN  2014  /
 
+NSTACK
+    150  /
+
 UNIFOUT
 UNIFIN
 
@@ -110,6 +113,15 @@ CTFAC
 /
 
 SCHEDULE =================================================================
+
+NUPCOL
+   25 /
+
+TUNING
+-- Setting LITMAX to 150 and MXWSIT to 50
+   10* /
+   10* /
+   2*  150  1*  50  /
 
 WELSPECL
 --  WELL -- GROUP -- LOCAL GRID -- LOCATION --  BHP  -- PREF
