@@ -118,7 +118,7 @@ COMPDAT
 /
 
 WPIMULT
- Scaling well connection factor because the well is in a corner
+-- Scaling well connection factor because the well is in a corner
     'PROD'  .25 /
     'INJ'   .25 /
 /
