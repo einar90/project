@@ -70,7 +70,7 @@ INCLUDE
 CARFIN
 -- Local grid refinement
 -- Name    I1-I2  J1-J2  K1-K2  NX  NY  NZ  NWMAX
-   'LGRP'  1  1   1  1   1  1   4   4   1   1
+   'LGRP'  1  1   1  1   1  1   4   4   1   1     /
 
 ENDFIN
 
