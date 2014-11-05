@@ -1,7 +1,7 @@
 % -*- root: ../../project.tex -*-
 
 \begin{tikzpicture}[xscale=.7,yscale=.7]
-    \draw[fill=black] ( 0, 0) circle (1mm) node [above,anchor=south west] {0};
+    \draw[fill=black] ( 0, 0) circle (1mm) node [above,anchor=south west] {$wb$};
     \draw[fill=black] ( 2, 0) circle (1mm) node [above,anchor=south west] {1};
     \draw[fill=black] ( 0, 2) circle (1mm) node [above,anchor=south west] {2};
     \draw[fill=black] (-2, 0) circle (1mm) node [above,anchor=south west] {3};
