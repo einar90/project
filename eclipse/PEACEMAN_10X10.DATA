@@ -40,7 +40,7 @@ START
     1  JAN  2014  /
 
 NSTACK
-    300  /
+    25  /
 
 UNIFOUT
 UNIFIN
@@ -120,13 +120,13 @@ NUPCOL
 TUNING
    3* 0.05 /
    10* /
-   300 1*  300  1*  50  /
+   25 1*  25  1*  50  /
 
 TUNINGL
 -- Tuning for local grids
    3* 0.05 /
    10* /
-   300 1*  300  1*  50  /
+   25 1*  25  1*  50  /
 
 
 WELSPECL
