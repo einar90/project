@@ -137,7 +137,7 @@ WELSPECL
 
 WELSPECS
 --  Name  Grp I  J   Depth    Phase Rad
-    INJ   G1  10 10  1015.00  WATER  3* NO /
+    INJ   G1  10 10  1015.00  WATER  3*  /
 /
 
 COMPDATL
