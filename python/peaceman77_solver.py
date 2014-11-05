@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-M = 20
+M = 10
 A = np.zeros([(M+1)**2, (M+1)**2], dtype=float)
 delta = np.zeros((M+1)**2, dtype=float)
 
