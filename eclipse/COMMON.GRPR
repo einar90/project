@@ -7,5 +7,5 @@ EQUALS
 
 INIT
 
-RPTGRID
-    AQUCON  /
+--RPTGRID
+--    AQUCON  /

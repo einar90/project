@@ -12,6 +12,6 @@ EQUIL
 --  9: Accuracy of initial fluids in place calculation.
     1015.0  100 900 5*     1* /
 
-RPTSOL
-    RESTART=2 POIL SOIL SWAT SGAS FIP=1 /
+--RPTSOL
+--    RESTART=2 POIL SOIL SWAT SGAS FIP=1 /
 

@@ -118,14 +118,12 @@ NUPCOL
    25 /
 
 TUNING
--- Setting LITMAX to 150 and MXWSIT to 50
    3* 0.05 /
    10* /
    300 1*  300  1*  50  /
 
 TUNINGL
 -- Tuning for local grids
--- Setting LITMAX to 150 and MXWSIT to 50
    3* 0.05 /
    10* /
    300 1*  300  1*  50  /
