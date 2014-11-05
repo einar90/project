@@ -67,6 +67,13 @@ TOPS
 INCLUDE
     'COMMON.GRPR' /
 
+CARFIN
+-- Local grid refinement
+-- Name    I1-I2  J1-J2  K1-K2  NX  NY  NZ  NWMAX
+   'LGRP'  1  1   1  1   1  1   4   4   1   1
+
+ENDFIN
+
 PROPS   ==================================================================
 
 --BOX
@@ -104,11 +111,23 @@ CTFAC
 
 SCHEDULE =================================================================
 
+WELSPECL
+--  WELL -- GROUP -- LOCAL GRID -- LOCATION --  BHP  -- PREF
+--  NAME -- NAME  --    NAME    --   I  J   -- DEPTH -- PHASE
+    'PROD'  'G1'       'LGRP'        1  1      1015     'WATER'  /
+/
+
 WELSPECS
 --  Name  Grp I  J   Depth    Phase Rad
-    PROD  G1  1  1   1015.00  WATER  3* NO /
     INJ   G1  10 10  1015.00  WATER  3* NO /
 /
+
+COMPDATL
+-- WELL -- LOCAL --  LOCATION  --- OPEN - SAT - CONN - WELL  -- KH - S - D - PEN
+-- NAME -- GRID  -- IX JY K1 K2 -- SHUT - TAB - FACT - DIAM  --    -   -   - DRN
+  'PROD'  'LGRP'    1  1  1  1    'OPEN'  1*    1*     0.3048   4*  /
+/
+
 
 COMPDAT
 --  Name  I  J  K1 K2           DIAM
