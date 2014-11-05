@@ -117,3 +117,4 @@ sympy-plots-for-*.tex/
 *.sublime-workspace
 *.m~
 *.nls
+python/pressure_difference.dat

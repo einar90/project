@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-M = 9
+M = 20
 A = np.zeros([(M+1)**2, (M+1)**2], dtype=float)
 delta = np.zeros((M+1)**2, dtype=float)
 
@@ -87,6 +87,7 @@ P_delta = P_delta[1:]
 # Create the regression line and polynomial
 reg = np.polyfit(np.log(r), P_delta, deg=1)
 reg_poly = np.poly1d(reg)
+print 'Regression polynomial: ', reg_poly
 
 # r vector for extended plotting
 reg_r = [i/10.0 for i in range(1, 61)]

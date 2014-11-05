@@ -19,9 +19,14 @@ For a single well in a two-dimensional reservoir reservoir, Darcy's law for radi
 \begin{equation}
     q = \frac{kA}{\mu} \frac{\mathrm{d}p}{\mathrm{d}r}
 \end{equation}
-which after separating variables, integrating from $p_{wf}$ to $p$ and solving for $p$ gives us
+which after separating variables, integrating from $p_{wf}$ to $p$ and solving for $p$ gives us the radial flow equation
 \begin{equation}
     \label{eq:dake-radial-pressure}
+    p = p_{wf} + \frac{q\mu}{2\pi kh} \ln{\frac{r}{r_w}}
+\end{equation}
+and
+\begin{equation}
+    \label{eq:dake-radial-pressure-re}
     p_e = p_{wf} + \frac{q\mu}{2\pi kh} \ln{\frac{r_e}{r_w}}
 \end{equation}
 where $p_e$ is the effective pressure at the ``drainage radius'' $r_e$ \cite{Dake1978Developments} obtained from
@@ -29,7 +34,7 @@ where $p_e$ is the effective pressure at the ``drainage radius'' $r_e$ \cite{Dak
     \label{eq:peaceman-pe}
     p_e = p_{wb} + F_i \sum_{i=1}^{4}\left( p_i - p_{wb} \right)
 \end{equation}
-where $F$ is a factor determining the influence of $p_i$ on $p_e$ in the horizontal plane, and is taken as zero \cite{Schwabe1967Prediction,Peaceman1978Interpretation}. $p_i$ represents the blocks surrounding the wellblock (illustrated in Figure~\ref{fig:peaceman-block-numbering}). Thus, equation equation \eqref{eq:dake-radial-pressure} is reduced to
+where $F$ is a factor determining the influence of $p_i$ on $p_e$ in the horizontal plane, and is taken as zero \cite{Schwabe1967Prediction,Peaceman1978Interpretation}. $p_i$ represents the blocks surrounding the wellblock (illustrated in Figure~\ref{fig:peaceman-block-numbering}). Thus, equation equation \eqref{eq:dake-radial-pressure-re} is reduced to
 \begin{equation}
     \label{eq:peaceman-pwb}
     p_{wb} = p_{wf} + \frac{q\mu}{2\pi kh} \ln{\frac{r_{eq}}{r_w}}
@@ -56,18 +61,26 @@ Substitution of equation \eqref{eq:peaceman-pwb} into equation \eqref{eq:peacema
 \end{figure}
 % subsection well_indices (end)
 
+
+
+
+
 \subsection{Equivalent Wellblock Radius} % (fold)
 \label{sub:equivalent_wellblock_radius}
-The correct value for the equivalent wellblock radius $r_{eq}$ may be found by examining a numerical solution to the \hl{differential flow equation} on an $M\times M$ grid like the one shown in Figure~\ref{fig:peaceman-grid}. 
+The correct value for the equivalent wellblock radius $r_{eq}$ may be found by examining a numerical solution to the \hl{differential flow equation} on an $M\times M$ square grid like the one shown in Figure~\ref{fig:peaceman-grid}.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[]{figures/grids/peaceman77-10x10.pdf}
-    \caption{$10\times 10$ grid used with the five-point stencil.}
+    \caption{$10\times 10$ grid used with the five-point stencil. The circle in the lower-left corner represents a producing well; the dot in the upper-right corner represents an injector.}
     \label{fig:peaceman-grid}
 \end{figure}
 
-\subsubsection{Derivation of the differential flow equation} % (fold)
+
+
+
+
+\subsubsection{Derivation of the discretized differential flow equation} % (fold)
 \label{ssub:derivation}
 To derive the discrete form of the \hl{differential flow equation}, we  start with the continuity equation for two-dimensional, single-phase, compressible flow \cite{Peaceman1977Fundamentals}
 \begin{equation}
@@ -108,18 +121,19 @@ To acquire a discretized form of equation \eqref{eq:differential-flow}, we apply
         \frac{\partial^2 p_{i,j}}{\partial y^2} = \frac{p_{i,j-1} -2p_{i,j} + p_{i,j+1}}{\Delta y^2} + O(\Delta y^2)
     \end{equation}
 \end{subequations}
-where $O(\Delta x^2)$ and $O(\Delta x^2)$ are the error-terms. Substituting this and $A=\Delta x \Delta y$ into \eqref{eq:differential-flow} gives us the discretized form 
+where $O(\Delta x^2)$ and $O(\Delta x^2)$ are the error-terms. Substituting this and $A=\Delta x \Delta y$ into \eqref{eq:differential-flow} and taking $\Delta x = \Delta y$ gives us the discretized form
 \begin{equation}
     \label{eq:differential-flow-discretized}
-    \frac{kh \Delta y}{\mu \Delta x} \left( p_{i-1,j} -2p_{i,j} + p_{i+1,j} \right) + \frac{kh \Delta x}{\mu \Delta y} \left( p_{i,j-1} -2p_{i,j} + p_{i,j+1} \right) = -q_{i,j}
+    \frac{kh}{\mu} \left( p_{i-1,j} -2p_{i,j} + p_{i+1,j} \right) + \frac{kh}{\mu} \left( p_{i,j-1} -2p_{i,j} + p_{i,j+1} \right) = -q_{i,j}
 \end{equation}
 
-We then take $\Delta x = \Delta y$ and define 
+We then define
 \begin{equation}
     p_D = \frac{kh}{q\mu} p
 \end{equation}
 to get the dimensionless form of equation \eqref{eq:differential-flow-discretized} \cite{Peaceman1978Interpretation}
 \begin{equation}
+    \label{eq:differential-flow-discretzed-dimensionless}
      (p_D)_{i-1,j} -2(p_D)_{i,j} + (p_D)_{i+1,j} \;\;\; + \;\;\; (p_D)_{i,j-1} -2(p_D)_{i,j} + (p_D)_{i,j+1}  = \delta_{i,j}
 \end{equation}
 where
@@ -147,18 +161,55 @@ Substitution of these conditions gives us an $(M+1)\times (M+1)$ equation system
 % subsubsection derivation (end)
 
 
+
+
+
+
 \subsubsection{Approximate calculation of equivalent radius} % (fold)
 \label{ssub:approximate_calculation_of_equivalent_radius}
+A plot of the solution to the discretized \hl{differential flow equation} on the $10 \times 10$ grid in Figure~\ref{fig:peaceman-grid} is shown in Figure~\ref{fig:peaceman77_pressure_vs_radius}. By extrapolating  the regression line to the horizontal line $p_{i,j}-p_{0,0}=0$, i.e. where $r=r_{eq}$, we get that
+\begin{equation}
+    r_{eq} = 0.2 \Delta x
+\end{equation}
+This result is used for a new interpretation of the wellblock pressure: it is the steady-state flowing pressure at $r=r_{eq}=0.2 \Delta x$ \cite{Peaceman1978Interpretation}.
 
+We can also see in Figure~\ref{fig:peaceman77_pressure_vs_radius} that the pressure calculated for the block adjacent to the wellblock, i.e. at $r/\Delta x=1$, is on the straight line. Thus we can substitute $r=\Delta x$ into the radial flow equation \eqref{eq:dake-radial-pressure} to obtain the equation for the pressure in the adjacent block
+\begin{equation}
+    \label{eq:peaceman-pressure-adjacent}
+    p_1 = p_{wb} + \frac{q\mu}{2\pi kh} \ln{\frac{\Delta x}{r_{eq}}}
+\end{equation}
+We now use equation \eqref{eq:differential-flow-discretized}, numbering as shown in Figure~\ref{fig:peaceman-block-numbering}
+\begin{equation}
+    \label{eq:peaceman-pressure-adjacent-discrete}
+    \frac{kh}{\mu} \left( p_1 + p_2 + p_3 + p_4 -4p_{wb}  \right) = q
+\end{equation}
+where, by symmetry,
+\begin{equation}
+    \label{eq:peaceman-adjacent-symmetry}
+    p_1=p_2=p_3=p_4.
+\end{equation}
+Combining equations \eqref{eq:peaceman-pressure-adjacent}, \eqref{eq:peaceman-pressure-adjacent-discrete} and \eqref{eq:peaceman-adjacent-symmetry} gives us
+\begin{equation}
+    \ln{\frac{\Delta x}{r_{eq}}} = \frac{\pi}{2}
+\end{equation}
+or
+\begin{equation}
+    r_{eq} = \Delta x \exp{\left( -\frac{\pi}{2} \right)} = 0.208 \Delta x
+\end{equation}
+which fits well with the results from the intersection of the regression line for $M\times M$ grids where $M\geq 20$ (see Table~\ref{tbl:peaceman-results}).
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[]{figures/plots/peaceman77-regression.pdf}
-    \caption{Plot of numerical solution of pressure plotted agains radius from producing well. Calculations are done using the program in Listing~\ref{lst:peaceman77_solver}. The equation is solved for a $10\times 10$ grid.}
+    \caption{Plot of numerical solution of pressure plotted agains radius from producing well. Calculations are done using the program in Listing~\ref{lst:peaceman77_solver}. The equation is solved on a $10\times 10$ grid like the one shown in Figure~\ref{fig:peaceman-grid}.}
     \label{fig:peaceman77_pressure_vs_radius}
 \end{figure}
 
 % subsubsection approximate_calculation_of_equivalent_radius (end)
+
+
+
+
 
 \subsubsection{Exact calculation of equivalent radius} % (fold)
 \label{ssub:exact_calculation_of_equivalent_radius}
@@ -182,7 +233,7 @@ Substitution of these conditions gives us an $(M+1)\times (M+1)$ equation system
         100 & 1.89436 & 0.1982 & 0.208 \\
         \bottomrule
     \end{tabular}
-    \label{tbl:label}
+    \label{tbl:peaceman-results}
 \end{table}
 
 % subsection equivalent_wellblock_radius (end)
