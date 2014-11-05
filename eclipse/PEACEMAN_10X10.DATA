@@ -40,7 +40,7 @@ START
     1  JAN  2014  /
 
 NSTACK
-    150  /
+    300  /
 
 UNIFOUT
 UNIFIN
@@ -122,6 +122,14 @@ TUNING
    10* /
    10* /
    2*  150  1*  50  /
+
+TUNINGL
+-- Tuning for local grids
+-- Setting LITMAX to 150 and MXWSIT to 50
+   3* 0.05 /
+   10* /
+   2*  300  1*  150  /
+
 
 WELSPECL
 --  WELL -- GROUP -- LOCAL GRID -- LOCATION --  BHP  -- PREF
