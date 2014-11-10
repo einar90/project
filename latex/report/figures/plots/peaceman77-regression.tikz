@@ -8,10 +8,10 @@
         ymin=0,
         ymax=.6,
         xlabel={$r/\Delta x = \sqrt{i^2 + j^2}$},
-        ylabel={$\frac{kh}{q\mu}\left( p_{i,j} - p_{0,0} \right) = \left( p_D \right)_{i,j} - \left( p_D \right)_{0,0}$}
+        ylabel={$\frac{kh}{q\mu}\left( p_{i,j} - p_{0,0} \right) = \Phi_{i,j} - \Phi_{0,0}$}
     ]
-        \addplot[scatter, only marks] table[x=r,y=dp, col sep=comma]{data/scatter-10x10.dat};
+        \addplot[scatter, only marks, scatter/use mapped color={fill=black}] table[x=r,y=dp, col sep=comma]{data/scatter-10x10.dat};
         \addplot[no marks] table[x=r,y=dp, col sep=comma]{data/regression-10x10.dat};
-    \draw[-latex] (axis cs:.2124,.1) node [anchor=east,above] {$r_o/\Delta x$} to (axis cs:.2124,0);
+    \draw[-latex] (axis cs:.2124,.1) node [anchor=east,above] {$r_{eq}/\Delta x$} to (axis cs:.2124,0);
     \end{axis}
 \end{tikzpicture}
