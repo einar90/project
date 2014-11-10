@@ -1,0 +1,180 @@
+% -*- root: ../project.tex -*-
+
+\section{Theory} % (fold)
+\label{sec:theory}
+For simplicity only equations dealing for single-phase, two-dimensional, steady-state flow in a homogeneous reservoir will be discussed in this section.
+
+\subsection{Well Indexes} % (fold)
+\label{sub:well_indices}
+In numerical reservoir simulation, the \gls{wi}\footnote{The term \gls{cf} is also used by some authors\cite{Peaceman2003New,Schlumberger2013Eclipse}.} is used to relate the flowing well pressure, $p_{wf}$,  to the numerical wellblock pressure, $p_{wb}$. The well index takes into account the wellblock geometry and the location and orientation of the well segment in the gridblock, as well as rock properties \cite{Peaceman2003New}.
+\nomenclature{$p$}{pressure}
+\nomenclature{$p_{wf}$}{flowing well pressure}
+\nomenclature{$p_{wb}$}{wellblock pressure}
+
+The well index is used when calculating the flow rate into the well. For single-phase radial flow the it may be written as
+\begin{equation}
+    \label{eq:peaceman-wi1}
+    q = \frac{WI}{\mu} \left( p_{wb} - p_{wf} \right)
+\end{equation}
+where $q$ is the volumetric flow rate into the well \cite{Peaceman2003New}.
+\nomenclature{$q$}{volumetric flow rate $[\mathrm{m^3/s}]$}
+\nomenclature{$\mu$}{viscosity}
+\nomenclature{$WI$}{well index}
+
+For a single well in a two-dimensional reservoir reservoir, Darcy's law for radial one-phase flow in the absence of skin effect can be expressed as
+\begin{equation}
+    q = \frac{kA}{\mu} \frac{\mathrm{d}p}{\mathrm{d}r}
+\end{equation}
+which after separating variables, integrating from $p_{wf}$ to $p$ and solving for $p$ gives us the radial flow equation
+\begin{equation}
+    \label{eq:dake-radial-pressure}
+    p = p_{wf} + \frac{q\mu}{2\pi kh} \ln{\frac{r}{r_w}}
+\end{equation}
+and
+\begin{equation}
+    \label{eq:dake-radial-pressure-re}
+    p_e = p_{wf} + \frac{q\mu}{2\pi kh} \ln{\frac{r_e}{r_w}}
+\end{equation}
+where $p_e$ is the effective pressure at the ``drainage radius'' $r_e$ \cite{Dake1978Developments} obtained from
+\begin{equation}
+    \label{eq:peaceman-pe}
+    p_e = p_{wb} + F_i \sum_{i=1}^{4}\left( p_i - p_{wb} \right)
+\end{equation}
+where $F$ is a factor determining the influence of $p_i$ on $p_e$ in the horizontal plane, and is taken as zero \cite{Schwabe1967Prediction,Peaceman1978Interpretation}. $p_i$ represents the blocks surrounding the wellblock (illustrated in Figure~\ref{fig:peaceman-block-numbering}). Thus, equation equation \eqref{eq:dake-radial-pressure-re} is reduced to
+\begin{equation}
+    \label{eq:peaceman-pwb}
+    p_{wb} = p_{wf} + \frac{q\mu}{2\pi kh} \ln{\frac{r_{eq}}{r_w}}
+\end{equation}
+where $r_{eq}$ is the equivalent wellblock radius, the radius at which the single well radial-flow equation gives the same pressure as the wellblock pressure\cite{Peaceman1978Interpretation,Peaceman2003New}.
+\nomenclature{$p_e$}{effective pressure at drainage radius $r_e$}
+\nomenclature{$r_e$}{drainage radius}
+\nomenclature{$h$}{formation thickness}
+\nomenclature{$k$}{permeability}
+\nomenclature{$r$}{radius}
+\nomenclature{$r_w$}{wellbore radius}
+\nomenclature{$r_{eq}$}{equivalent wellblock radius}
+\nomenclature{$F_i$}{factor determining the influence of $p_i$ on $p_e$}
+\nomenclature{$A$}{cross-sectional area}
+
+Substitution of equation \eqref{eq:peaceman-pwb} into equation \eqref{eq:peaceman-wi1} and solved for $WI$ yields
+\begin{equation}
+    \label{eq:peaceman-wi2}
+    WI = \frac{2\pi kh}{\ln{r_{eq}/r_w}}
+\end{equation}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[]{figures/grids/peaceman77-blocks.pdf}
+    \caption{Illustration of the block numbering for equation \eqref{eq:peaceman-pe}.}
+    \label{fig:peaceman-block-numbering}
+\end{figure}
+% subsection well_indices (end)
+
+
+
+
+
+\subsection{Equivalent Wellblock Radius} % (fold)
+\label{sub:equivalent_wellblock_radius}
+The correct value for the equivalent wellblock radius $r_{eq}$ may be found by examining a numerical solution to the \hl{differential flow equation} on an $M\times M$ square grid like the one shown in Figure~\ref{fig:peaceman-grid}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[]{figures/grids/peaceman77-10x10.pdf}
+    \caption{$10\times 10$ grid used with the five-point stencil. The circle in the lower-left corner represents a producing well; the dot in the upper-right corner represents an injector.}
+    \label{fig:peaceman-grid}
+\end{figure}
+
+\subsubsection{Derivation of the discretized differential flow equation} % (fold)
+\label{ssub:derivation}
+To derive the discrete form of the \hl{differential flow equation}, we  start with the continuity equation for two-dimensional, single-phase, compressible flow \cite{Peaceman1977Fundamentals}
+\begin{equation}
+    \label{eq:continuity-2d}
+    - \frac{\partial}{\partial x} \left( h\rho v_x \right) - \frac{\partial}{\partial y} \left( h\rho v_y \right) + hQ = h \frac{\partial }{\partial t} \left( \phi \rho \right)
+\end{equation}
+\nomenclature{$\rho$}{density}
+\nomenclature{$v_x$}{flow velocity in $x$-direction}
+\nomenclature{$v_y$}{flow velocity in $y$-direction}
+\nomenclature{$\phi$}{porosity}
+\nomenclature{$Q$}{mass rate of injection per unit volume of reservoir $[\mathrm{kg/m^3s}]$}
+where $Q$ is the mass rate of injection/production per unit volume of reservoir
+\begin{equation}
+    \label{eq:mass-rate}
+    Q = \frac{q\rho}{Ah}.
+\end{equation}
+Substituting equation \eqref{eq:mass-rate} and applying steady state conditions reduces equation \eqref{eq:continuity-2d} to
+\begin{equation}
+    - \frac{\partial}{\partial x} \left( h\rho v_x \right) - \frac{\partial}{\partial y} \left( h\rho v_y \right) + \frac{q\rho}{A} = 0
+\end{equation}
+substituting Darcy's law in the $x$- and $y$-directions \cite{Peaceman1977Fundamentals}
+\begin{subequations}
+    \begin{equation}
+        v_x = -\frac{k}{\mu} \frac{\partial p}{\partial x}
+    \end{equation}
+    \begin{equation}
+        v_y = -\frac{k}{\mu} \frac{\partial p}{\partial y}
+    \end{equation}
+\end{subequations}
+and assuming constant $h,\rho,k$ and $\mu$ gives us the \hl{differential flow equation} for 2-dimensional incompressible flow in a homogeneous reservoir
+\begin{equation}
+    \label{eq:differential-flow}
+    \frac{khA}{\mu} \frac{\partial^2 p}{\partial x^2}  + \frac{khA}{\mu} \frac{\partial^2 p}{\partial y^2} = -q
+\end{equation}
+
+To acquire a discretized form of equation \eqref{eq:differential-flow}, we apply a central Taylor expansion to the pressure differential to get
+\begin{subequations}
+    \begin{equation}
+        \frac{\partial^2 p_{i,j}}{\partial x^2} = \frac{p_{i-1,j} -2p_{i,j} + p_{i+1,j}}{\Delta x^2} + O(\Delta x^2)
+    \end{equation}
+    \begin{equation}
+        \frac{\partial^2 p_{i,j}}{\partial y^2} = \frac{p_{i,j-1} -2p_{i,j} + p_{i,j+1}}{\Delta y^2} + O(\Delta y^2)
+    \end{equation}
+\end{subequations}
+where $O(\Delta x^2)$ and $O(\Delta x^2)$ are the error-terms. Substituting this and $A=\Delta x \Delta y$ into \eqref{eq:differential-flow} and taking $\Delta x = \Delta y$ gives us the discretized form
+\begin{equation}
+    \label{eq:differential-flow-discretized}
+    \frac{kh}{\mu} \left( p_{i-1,j} -2p_{i,j} + p_{i+1,j} \right) + \frac{kh}{\mu} \left( p_{i,j-1} -2p_{i,j} + p_{i,j+1} \right) = -q_{i,j}
+\end{equation}
+\nomenclature{$\Delta x$}{grid spacing in $x$-direction}
+\nomenclature{$\Delta y$}{grid spacing in $y$-direction}
+\nomenclature{$p_{i,j}$}{pressure in block $(i,j)$}
+
+We then define the dimensionless pressure
+\begin{equation}
+      \Phi = \frac{kh}{q\mu} p
+\end{equation}
+to get the dimensionless form of equation \eqref{eq:differential-flow-discretized} \cite{Peaceman1978Interpretation}
+\begin{equation}
+    \label{eq:differential-flow-discretzed-dimensionless}
+     \Phi_{i-1,j} -2 \Phi_{i,j} + \Phi_{i+1,j} \;\;\; + \;\;\; \Phi_{i,j-1} -2\Phi_{i,j} + \Phi_{i,j+1}  = \delta_{i,j}
+\end{equation}
+where
+\begin{equation}
+    \delta_{i,j} = 0 \;\mathrm{for}\; i,j \neq 0,0 \;\mathrm{or}\; M,M, \;\;\;\;\;\;
+    \delta_{0,0} = 1, \;\;\;\;\;\;
+    \delta_{M,M} = -1.
+\end{equation}
+\nomenclature{$\Psi$}{dimensionless pressure}
+\nomenclature{$\Psi_{i,j}$}{dimensionless pressure in block $(i,j)$}
+
+The following reflection conditions are used:
+\begin{equation}
+    \begin{rcases}
+        p_{-1,j} &= p_{1,j} \\
+        p_{M+1,j} &= p_{M-1,j}
+    \end{rcases} \; \mathrm{for} \; 0\leq j \leq M
+\end{equation}
+and
+\begin{equation}
+    \begin{rcases}
+        p_{i,-1} &= p_{i,1} \\
+        p_{i,M+1} &= p_{i,M-1}
+    \end{rcases} \; \mathrm{for} \; 0\leq i \leq M
+\end{equation}
+Substitution of these conditions gives us an $(M+1)\times (M+1)$ equation system which may be solved directly. An implementation of a general solver for this set of equations is shown in Listing~\ref{lst:peaceman77_solver} in Appendix~\ref{sec:program_listings}.
+% subsubsection derivation (end)
+
+% subsection equivalent_wellblock_radius (end)
+
+
+% section theory (end)
