@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-M = 10
+M = 32
 A = np.zeros([(M+1)**2, (M+1)**2], dtype=float)
 delta = np.zeros((M+1)**2, dtype=float)
 
@@ -74,18 +74,18 @@ print 'Exact solution: ', np.sqrt(2) * M * np.exp(-0.6190 - np.pi * (P[M, M]-P[0
 
 # Cutting matrices
 r = r[0:(M+1)/2, 0:(M+1)/2]
-P_delta = P_delta[0:(M+1)/2, 0:(M+1)/2]
+P_delta_cut = P_delta[0:(M+1)/2, 0:(M+1)/2]
 
 # Relinearizing matrices
 r = np.reshape(r, [((M+1)/2)**2, ])
-P_delta = np.reshape(P_delta, [((M+1)/2)**2, ])
+P_delta_cut = np.reshape(P_delta_cut, [((M+1)/2)**2, ])
 
 # Removing first element (represents the well-block)
 r = r[1:]
-P_delta = P_delta[1:]
+P_delta_cut = P_delta_cut[1:]
 
 # Create the regression line and polynomial
-reg = np.polyfit(np.log(r), P_delta, deg=1)
+reg = np.polyfit(np.log(r), P_delta_cut, deg=1)
 reg_poly = np.poly1d(reg)
 print 'Regression polynomial: ', reg_poly
 
@@ -96,10 +96,11 @@ print 'Graphical solution: r_0 = ', np.exp(np.roots(reg_poly)[0])
 # Creating plots ==============================================================
 fig, (ax1, ax2) = plt.subplots(1, 2)
 
-ax1.imshow(P)
+cntplot = ax1.contour(P_delta, 20, colors='k')
+plt.clabel(cntplot, fontsize=9, inline=1)
 ax1.set_title('Pressure')
 
-ax2.scatter(r, P_delta)
+ax2.scatter(r, P_delta_cut)
 ax2.semilogx(reg_r, reg_poly(np.log(reg_r)))
 ax2.set_title('Pressure drop')
 ax2.set_xscale('log')
@@ -112,5 +113,5 @@ plt.show()
 # Writing data to files
 save = raw_input('Save arrays to file? (y/n)  ')
 if save == 'y':
-    np.savetxt('scatter.dat', (r, P_delta), delimiter=',')
+    np.savetxt('scatter.dat', (r, P_delta_cut), delimiter=',')
     np.savetxt('regression.dat', (reg_r, reg_poly(np.log(reg_r))), delimiter=',')
