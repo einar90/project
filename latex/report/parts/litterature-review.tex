@@ -213,6 +213,7 @@ which fits well with the results from the intersection of the regression line fo
 
 \subsubsection{Exact calculation of equivalent radius} % (fold)
 \label{ssub:exact_calculation_of_equivalent_radius}
+It is also possible to calculate $r_{eq}$ exactly without using regression (as shown in Figure~\ref{fig:peaceman77_pressure_vs_radius}) \cite{Peaceman1978Interpretation}. This is done by solving the dimensionless numerical steady-state pressure equation \eqref{eq:differential-flow-discretzed-dimensionless}
 
 % subsubsection exact_calculation_of_equivalent_radius (end)
 
@@ -235,6 +236,13 @@ which fits well with the results from the intersection of the regression line fo
     \end{tabular}
     \label{tbl:peaceman-results}
 \end{table}
+
+\begin{figure}[htbp]
+    \centering
+    \scalebox{0.7}{\input{figures/plots/peaceman77-contour_32x32.pgf}}
+    \caption{Contour plot of the pressure difference calulated using equation \eqref{eq:differential-flow-discretzed-dimensionless} with $M=32$, solved using the program listing \ref{lst:peaceman77_solver}. The injector is placed in the upper right corner; the producer is placed in the lower left corner. The pressure difference is calculated relative to the block containing the producer.}
+    \label{fig:pressure_drop_contour}
+\end{figure}
 
 % subsection equivalent_wellblock_radius (end)
 
