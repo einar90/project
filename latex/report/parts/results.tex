@@ -3,41 +3,12 @@
 \section{Results} % (fold)
 \label{sec:results}
 
-\subsection{Equivalent wellbore radius from numerical solution of the differential flow equation} % (fold)
-\label{sub:equivalent_wellbore_radius_from_numerical_solution_of_differential_flow_equation}
 
-\subsubsection{Approximate calculation of equivalent radius} % (fold)
-\label{ssub:approximate_calculation_of_equivalent_radius}
-A contour plot of the solution to the discretized \hl{differential flow equation} on the $10 \times 10$ grid in Figure~\ref{fig:peaceman-grid} is shown in Figure~\ref{fig:pressure_drop_contour}, and a plot of the calculated pressure versus radius is shown in Figure~\ref{fig:peaceman77_pressure_vs_radius}. By extrapolating  the regression line in Figure~\ref{fig:peaceman77_pressure_vs_radius} to the horizontal line $p_{i,j}-p_{0,0}=0$, i.e. where $r=r_{eq}$, we get that
-\begin{equation}
-    r_{eq} = 0.2 \Delta x
-\end{equation}
-This result is used for a new interpretation of the wellblock pressure: it is the steady-state flowing pressure at $r=r_{eq}=0.2 \Delta x$ \cite{Peaceman1978Interpretation}.
 
-We can also see from Figure~\ref{fig:peaceman77_pressure_vs_radius} that the pressure calculated for the block adjacent to the wellblock, i.e. at $r/\Delta x=1$, is on the straight line. Thus we can substitute $r=\Delta x$ into the radial flow equation \eqref{eq:dake-radial-pressure} to obtain the equation for the pressure in the adjacent block (using the block numbering shown in Figure~\ref{fig:peaceman-block-numbering})
-\begin{equation}
-    \label{eq:peaceman-pressure-adjacent}
-    p_1 = p_{wb} + \frac{q\mu}{2\pi kh} \ln{\frac{\Delta x}{r_{eq}}}
-\end{equation}
-We now use equation \eqref{eq:differential-flow-discretized},
-\begin{equation}
-    \label{eq:peaceman-pressure-adjacent-discrete}
-    \frac{kh}{\mu} \left( p_1 + p_2 + p_3 + p_4 -4p_{wb}  \right) = q
-\end{equation}
-where, by symmetry,
-\begin{equation}
-    \label{eq:peaceman-adjacent-symmetry}
-    p_1=p_2=p_3=p_4.
-\end{equation}
-Combining equations \eqref{eq:peaceman-pressure-adjacent}, \eqref{eq:peaceman-pressure-adjacent-discrete} and \eqref{eq:peaceman-adjacent-symmetry} gives us
-\begin{equation}
-    \ln{\frac{\Delta x}{r_{eq}}} = \frac{\pi}{2}
-\end{equation}
-or
-\begin{equation}
-    r_{eq} = \Delta x \exp{\left( -\frac{\pi}{2} \right)} = 0.208 \Delta x
-\end{equation}
-which fits well with the results from the intersection of the regression line for $M\times M$ grids when $M\geq 20$ (see Table~\ref{tbl:peaceman-results}).
+
+\subsection{Numerical solution of the differential flow equation} % (fold)
+\label{sub:numerical_solution_of_the_differential_flow_equation}
+
 
 \begin{figure}[htbp]
     \centering
@@ -52,40 +23,6 @@ which fits well with the results from the intersection of the regression line fo
     \caption{Plot of numerical solution of pressure plotted agains radius from producing well. Calculations are done using the program in Listing~\ref{lst:peaceman77_solver}. The equation is solved on a $10\times 10$ grid like the one shown in Figure~\ref{fig:peaceman-grid}.}
     \label{fig:peaceman77_pressure_vs_radius}
 \end{figure}
-
-% subsubsection approximate_calculation_of_equivalent_radius (end)
-
-
-
-
-
-\subsubsection{Exact calculation of equivalent radius} % (fold)
-\label{ssub:exact_calculation_of_equivalent_radius}
-It is also possible to calculate $r_{eq}$ exactly without using regression (as shown in Figure~\ref{fig:peaceman77_pressure_vs_radius}) \cite{Peaceman1978Interpretation}. This is done by solving the numerical dimensionless steady-state pressure equation \eqref{eq:differential-flow-discretized} to acquire the pressure difference between the producer and the injector, $\Delta p$. We then use the equation for the pressure drop between injector and producer in a repeated five-spot pattern \cite{Muskat1946Flow}
-\begin{equation}
-    \label{eq:muskat-pressure-drop}
-    \Delta p = \frac{q\mu}{\pi k h} \left( \ln \frac{d}{r_w} - 0.6190 \right)
-\end{equation}
-\nomenclature{$\Delta p$}{pressure difference}
-\nomenclature{$d$}{diagonal distance between producer and injector}
-where $d$ is the diagonal distance between producer and injector
-\begin{equation}
-    \label{eq:muskat-diagonal}
-    d = \sqrt{2} M \Delta x.
-\end{equation}
-Combining \eqref{eq:muskat-pressure-drop} and \eqref{eq:muskat-diagonal}, inserting $\Delta p = p_{M,M} - p_{0,0}$, replacing $r_w$ with $r_{eq}$ and solving for dimensionless radius yields
-\begin{equation}
-    \label{eq:peaceman77-eqrad-exact}
-    \frac{r_{eq}}{\Delta x} = \sqrt{2}M \exp\left[- \frac{\pi k h}{q\mu} \left( p_{M,M} - p_{0,0} \right) - 0.6190 \right]
-\end{equation}
-or, using dimensionless pressure,
-\begin{equation}
-    \frac{r_{eq}}{\Delta x} = \sqrt{2}M \exp\left[- \pi \left( \Phi_{M,M} - \Phi_{0,0} \right) - 0.6190 \right].
-\end{equation}
-
-Results computed using the program \ref{lst:peaceman77_solver} for various grid sizes are shown in Table~\ref{tbl:peaceman-results}.
-
-% subsubsection exact_calculation_of_equivalent_radius (end)
 
 \begin{table}
     \centering
@@ -106,18 +43,25 @@ Results computed using the program \ref{lst:peaceman77_solver} for various grid 
     \end{tabular}
     \label{tbl:peaceman-results}
 \end{table}
+% subsection numerical_solution_of_the_differential_flow_equation (end)
 
-% subsection equivalent_wellbore_radius_from_numerical_solution_of_differential_flow_equation (end)
 
-\subsection{Equivalent wellbore radius from Schlumberger ECL100 simulation results} % (fold)
-\label{sub:equivalent_wellbore_radius_from_schlumberger_ecl100_simulation_results}
 
-% subsection equivalent_wellbore_radius_from_schlumberger_ecl100_simulation_results (end)
 
-\subsection{Equivalent wellbore radius from Sintef MRST simulation results} % (fold)
-\label{sub:equivalent_wellbore_radius_from_sintef_mrst_simulation_results}
 
-% subsection equivalent_wellbore_radius_from_sintef_mrst_simulation_results (end)
+
+\subsection{Schlumberger ECL100 simulation} % (fold)
+\label{sub:schlumberger_ecl100_simulation_results}
+
+% subsection chlumberger_ecl100_simulation(end)
+
+
+
+
+\subsection{Using pressure from Sintef MRST simulation} % (fold)
+\label{sub:sintef_mrst_simulation}
+
+% subsection sintef_mrst_simulation (end)
 
 
 % section results (end)
