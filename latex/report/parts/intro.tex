@@ -4,13 +4,70 @@
 \label{sec:introduction}
 In reservoir simulation, a number of differential equations are used to describe the flow of fluids. These equations can only be solved analytically for very simple systems involving homogeneous reservoirs with regular boundaries \cite{Peaceman1977Fundamentals}. Because of this, we need to create discrete models for the reservoir and solve the flow equations numerically.
 
+For simplicity, this project is restricted to cases dealing with single-phase, two-dimensional, steady-state flow.
+
+\subsection{Numerical reservoir simulation} % (fold)
+\label{sub:numerical_reservoir_simulation}
+
+
 The reservoir is discretized by dividing it into \emph{grid blocks}. Each block has a set of properties (porosity, permeability, saturations) etc., describing the corresponding area of the reservoir. This is illustrated in Figure~\ref{fig:grid-discretization}. This discretization allows us to flow within the model using a set of easily solved linear equations, each of which describe the state of each block and the flow into- or out of it.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[]{figures/grids/3d_grid_4x3x2.pdf}
-    \caption{Illustration of a continuous reservoir vs. a discretized reservoir. In the continuous reservoir the properties are continuous functions in the spatial dimensions; in the discretized reservoir, each block has a set of properties that does not vary within the it.}
+    \caption{Illustration of a continuous reservoir and a $4\times 4\times 2$ discretization of it. In the continuous reservoir the properties are continuous functions in the spatial dimensions; in the discretized reservoir, each block has a set of properties that does not vary within the it.}
     \label{fig:grid-discretization}
 \end{figure}
+
+
+Wells in a numerical reservoir simulation model are placed inside grid blocks, often called \emph{well blocks}. The horizontal dimension of a well block may be hundreds of meters\footnote{This may be remedied by using local grid refinement (LGR) around the well.}, \emph{much} larger than the wellbore radius. This means that the pressure calculated for the well block will differ greatly from the bottom-hole pressure of the well; this pressure difference is needed to calculate the fluid flow  from the well block into the wellbore.
+
+\subsubsection{Well index (WI)} % (fold)
+\label{ssub:well_index_}
+
+The relationship between the wellbore and the rest of the reservoir is modeled through the use of a \emph{well index} (WI)\footnote{The term ``connection transmissibility factor'' (CF) is also used by some authors\cite{Peaceman2003New,Schlumberger2013Eclipse}.}. The well index relates the well flow rate into or out of any grid block intersected by a well to the difference between the well block pressure $p_{wb}$ and the local flowing wellbore pressure $p_{wf}$ \cite{Wolfsteiner2003Calculation}. For single phase flow this relationship is
+\begin{equation}
+    \label{eq:wolfsteiner-well-index-multiple-blocks}
+    q = \frac{WI}{\mu} \left( p_{wb} - p_{wf} \right)
+\end{equation}
+where $q$ is the volumetric flow rate.
+
+The well index accounts for the geometry of the well block, location and orientation of the well segment in the grid block, and rock properties. For a single vertical well in a 2D areal reservoir \cite{Peaceman2003New},
+\begin{equation}
+    \label{eq:well-index-intro}
+    WI = \frac{2\pi kh}{\ln \left(r_{eq}/r_{w}\right)}
+\end{equation}
+where $r_{eq}$ is the \emph{equivalent wellbore radius} and $r_w$ is the wellbore radius.
+
+The user can often define the values of $WI$ or $r_{eq}$ for each well block in commercial simulators, or the simulator cal calculate it using a default expression \cite{Peaceman2003New}.
+% subsubsection well_index_ (end)
+
+\subsubsection{Equivalent wellbore radius} % (fold)
+\label{ssub:equivalent_wellbore_radius}
+The equivalent wellbore radius, $r_{eq}$, is the radius at which the steady-state flowing pressure for the actual well is equal to the numerically calculated pressure for the well block. Examining the pressures obtained by numerical solution of single-phase flow into a single well shows that $r_{eq} \approx 0.2 \Delta x$; i.e. that the well block pressure is approximately equal to the actual flowing pressure at a radius of $0.2 \Delta x$ \cite{Peaceman1978Interpretation}.
+% subsubsection equivalent_wellbore_radius (end)
+
+\subsubsection{ECL100 implementation} % (fold)
+\label{ssub:ecl100_implementation}
+Schlumberger's ECL100 reservoir simulator uses the following default relationship to calculate the well index, or connection transmissibility factor \cite{Schlumberger2013Eclipse}:
+\begin{equation}
+    WI = \frac{c\theta k h}{\ln \left(r_{eq}/r_w\right)+S}
+\end{equation}
+where $c$ is a unit conversion factor; $\theta$ is the angle of the segment connecting the well in radians ($2\pi$ for a cartesian grid); and $S$ is the skin factor. For dimensionless units and no skin effect, using dimensionless units, it reduces to equation \eqref{eq:well-index-intro}.
+\nomenclature{$c$}{unit conversion factor}
+\nomenclature{$\theta$}{angle of segment connecting the well}
+\nomenclature{$S$}{skin factor}
+
+The equivalent wellbore radius is by default calculated using the following expression:
+\begin{equation}
+    r_{eq} = 0.28 \frac{\sqrt{\Delta x^2 \sqrt{k_y/k_x} + \Delta y^2 \sqrt{k_x/k_y}}}{\sqrt[4]{k_y/k_x}+\sqrt[4]{k_x/k_y}}
+\end{equation}
+which for isotropic conditions $k_x=k_y$ on a square grid $\Delta x= \Delta y$ reduces to
+\begin{equation}
+    r_{eq} = 0.1980 \Delta x
+\end{equation}
+% subsubsection ecl100_implementation (end)
+
+% subsection numerical_reservoir_simulation (end)
 
 % section introduction (end)
