@@ -8,20 +8,14 @@
 
 \subsection{Numerical solution of the differential flow equation} % (fold)
 \label{sub:numerical_solution_of_the_differential_flow_equation}
+A contour plot of the solution to the discretized differential flow equation on the $10 \times 10$ grid in Figure~\ref{fig:peaceman-grid} is shown in Figure~\ref{fig:pressure_drop_contour}. Table~\ref{tbl:peaceman-results} shows $r_{eq}$ found using the regression method outlined in Section~\ref{ssub:approximate_calculation_of_equivalent_radius}, as well as caluculated using equation \eqref{eq:peaceman77-eqrad-exact} for various $M\times M$ grids.
 
 
 \begin{figure}[htbp]
     \centering
-    \scalebox{0.7}{\input{figures/plots/peaceman77-contour_32x32.pgf}}
+    \scalebox{0.7}{\input{figures/plots/peaceman77-contour_10x10.pgf}}
     \caption{Contour plot of the pressure difference calulated using equation \eqref{eq:differential-flow-discretzed-dimensionless} with $M=32$, solved using the program listing \ref{lst:peaceman77_solver}. The injector is placed in the upper right corner; the producer is placed in the lower left corner. The pressure difference is calculated relative to the block containing the producer.}
     \label{fig:pressure_drop_contour}
-\end{figure}
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[]{figures/plots/peaceman77-regression.pdf}
-    \caption{Plot of numerical solution of pressure plotted agains radius from producing well. Calculations are done using the program in Listing~\ref{lst:peaceman77_solver}. The equation is solved on a $10\times 10$ grid like the one shown in Figure~\ref{fig:peaceman-grid}.}
-    \label{fig:peaceman77_pressure_vs_radius}
 \end{figure}
 
 \begin{table}
