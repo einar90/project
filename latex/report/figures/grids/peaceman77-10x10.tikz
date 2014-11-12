@@ -16,6 +16,6 @@
     }
 
     \draw [very thick,dashed] (-.5,.5) to (9.5,.5) to (9.5,10.5) to (-.5,10.5) to (-.5,.5);
-    \draw [very thick] (-.5,.5) circle (1mm);
-    \draw [very thick,fill=black] (9.5,10.5) circle (1mm);
+    \draw [very thick] (-.5,.5) circle (1.5mm);
+    \draw [very thick,fill=black] (9.5,10.5) circle (1.5mm);
 \end{tikzpicture}
