@@ -118,3 +118,4 @@ sympy-plots-for-*.tex/
 *.m~
 *.nls
 python/pressure_difference.dat
+*.ptex

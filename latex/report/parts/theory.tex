@@ -6,7 +6,7 @@ For simplicity only equations dealing for single-phase, two-dimensional, steady-
 
 \subsection{Well Indexes} % (fold)
 \label{sub:well_indices}
-In numerical reservoir simulation, the well index (WI) \footnote{The term ``connection transmissibility factor'' (CF) is also used by some authors\citet{Peaceman2003New,Schlumberger2013Eclipse}.} is used to relate the flowing well pressure, $p_{wf}$,  to the numerical wellblock pressure, $p_{wb}$. The well index takes into account the wellblock geometry and the location and orientation of the well segment in the gridblock, as well as rock properties \citet{Peaceman2003New}.
+In numerical reservoir simulation, the well index (WI)\footnote{The term ``connection transmissibility factor'' (CF) is also used by some authors\cite{Peaceman2003New,Schlumberger2013Eclipse}.} is used to relate the flowing well pressure, $p_{wf}$,  to the numerical wellblock pressure, $p_{wb}$. The well index takes into account the wellblock geometry and the location and orientation of the well segment in the gridblock, as well as rock properties \cite{Peaceman2003New}.
 \nomenclature{$p$}{pressure}
 \nomenclature{$p_{wf}$}{flowing well pressure}
 \nomenclature{$p_{wb}$}{wellblock pressure}
@@ -16,7 +16,7 @@ The well index is used when calculating the flow rate into the well. For single-
     \label{eq:peaceman-wi1}
     q = \frac{WI}{\mu} \left( p_{wb} - p_{wf} \right)
 \end{equation}
-where $q$ is the volumetric flow rate into the well \citet{Peaceman2003New}.
+where $q$ is the volumetric flow rate into the well \cite{Peaceman2003New}.
 \nomenclature{$q$}{volumetric flow rate $[\mathrm{m^3/s}]$}
 \nomenclature{$\mu$}{viscosity}
 \nomenclature{$WI$}{well index}
@@ -35,17 +35,17 @@ and
     \label{eq:dake-radial-pressure-re}
     p_e = p_{wf} + \frac{q\mu}{2\pi kh} \ln{\frac{r_e}{r_w}}
 \end{equation}
-where $p_e$ is the effective pressure at the ``drainage radius'' $r_e$ \citet{Dake1978Developments} obtained from
+where $p_e$ is the effective pressure at the ``drainage radius'' $r_e$ \cite{Dake1978Developments} obtained from
 \begin{equation}
     \label{eq:peaceman-pe}
     p_e = p_{wb} + F_i \sum_{i=1}^{4}\left( p_i - p_{wb} \right)
 \end{equation}
-where $F$ is a factor determining the influence of $p_i$ on $p_e$ in the horizontal plane, and is taken as zero \citet{Schwabe1967Prediction,Peaceman1978Interpretation}. $p_i$ represents the blocks surrounding the wellblock (illustrated in Figure~\ref{fig:peaceman-block-numbering}). Thus, equation equation \eqref{eq:dake-radial-pressure-re} is reduced to
+where $F$ is a factor determining the influence of $p_i$ on $p_e$ in the horizontal plane, and is taken as zero \cite{Schwabe1967Prediction,Peaceman1978Interpretation}. $p_i$ represents the blocks surrounding the wellblock (illustrated in Figure~\ref{fig:peaceman-block-numbering}). Thus, equation equation \eqref{eq:dake-radial-pressure-re} is reduced to
 \begin{equation}
     \label{eq:peaceman-pwb}
     p_{wb} = p_{wf} + \frac{q\mu}{2\pi kh} \ln{\frac{r_{eq}}{r_w}}
 \end{equation}
-where $r_{eq}$ is the equivalent wellblock radius, the radius at which the single well radial-flow equation gives the same pressure as the wellblock pressure\citet{Peaceman1978Interpretation,Peaceman2003New}.
+where $r_{eq}$ is the equivalent wellblock radius, the radius at which the single well radial-flow equation gives the same pressure as the wellblock pressure\cite{Peaceman1978Interpretation,Peaceman2003New}.
 \nomenclature{$p_e$}{effective pressure at drainage radius $r_e$}
 \nomenclature{$r_e$}{drainage radius}
 \nomenclature{$h$}{formation thickness}
@@ -90,7 +90,7 @@ The correct value for the equivalent wellblock radius $r_{eq}$ may be found by e
 
 \subsubsection{Derivation of the discretized differential flow equation} % (fold)
 \label{ssub:derivation}
-To derive the discrete form of the differential flow equation, we  start with the continuity equation for two-dimensional, single-phase, compressible flow \citet{Peaceman1977Fundamentals}
+To derive the discrete form of the differential flow equation, we  start with the continuity equation for two-dimensional, single-phase, compressible flow \cite{Peaceman1977Fundamentals}
 \begin{equation}
     \label{eq:continuity-2d}
     - \frac{\partial}{\partial x} \left( h\rho v_x \right) - \frac{\partial}{\partial y} \left( h\rho v_y \right) + hQ = h \frac{\partial }{\partial t} \left( \phi \rho \right)
@@ -109,7 +109,7 @@ Substituting equation \eqref{eq:mass-rate} and applying steady state conditions 
 \begin{equation}
     - \frac{\partial}{\partial x} \left( h\rho v_x \right) - \frac{\partial}{\partial y} \left( h\rho v_y \right) + \frac{q\rho}{A} = 0
 \end{equation}
-substituting Darcy's law in the $x$- and $y$-directions \citet{Peaceman1977Fundamentals}
+substituting Darcy's law in the $x$- and $y$-directions \cite{Peaceman1977Fundamentals}
 \begin{subequations}
     \begin{equation}
         v_x = -\frac{k}{\mu} \frac{\partial p}{\partial x}
@@ -146,7 +146,7 @@ We then define the dimensionless pressure
 \begin{equation}
       \Phi = \frac{kh}{q\mu} p
 \end{equation}
-to get the dimensionless form of equation \eqref{eq:differential-flow-discretized} \citet{Peaceman1978Interpretation}
+to get the dimensionless form of equation \eqref{eq:differential-flow-discretized} \cite{Peaceman1978Interpretation}
 \begin{equation}
     \label{eq:differential-flow-discretzed-dimensionless}
      \Phi_{i-1,j} -2 \Phi_{i,j} + \Phi_{i+1,j} \;\;\; + \;\;\; \Phi_{i,j-1} -2\Phi_{i,j} + \Phi_{i,j+1}  = \delta_{i,j}
@@ -184,7 +184,7 @@ A plot of calculated pressure drop versus radius is shown in Figure~\ref{fig:pea
 \begin{equation}
     r_{eq} = 0.2 \Delta x
 \end{equation}
-This result is used for a new interpretation of the wellblock pressure: it is the steady-state flowing pressure at $r=r_{eq}=0.2 \Delta x$ \citet{Peaceman1978Interpretation}.
+This result is used for a new interpretation of the wellblock pressure: it is the steady-state flowing pressure at $r=r_{eq}=0.2 \Delta x$ \cite{Peaceman1978Interpretation}.
 
 We can also see from Figure~\ref{fig:peaceman77_pressure_vs_radius} that the pressure calculated for the block adjacent to the wellblock, i.e. at $r/\Delta x=1$, is on the straight line. Thus we can substitute $r=\Delta x$ into the radial flow equation \eqref{eq:dake-radial-pressure} to obtain the equation for the pressure in the adjacent block (using the block numbering shown in Figure~\ref{fig:peaceman-block-numbering})
 \begin{equation}
@@ -223,7 +223,7 @@ which fits well with the results from the intersection of the regression line fo
 
 \subsubsection{Exact calculation of equivalent radius} % (fold)
 \label{ssub:exact_calculation_of_equivalent_radius}
-It is also possible to calculate $r_{eq}$ exactly without using regression (as shown in Figure~\ref{fig:peaceman77_pressure_vs_radius}) \citet{Peaceman1978Interpretation}. This is done by solving the numerical dimensionless steady-state pressure equation \eqref{eq:differential-flow-discretized} to acquire the pressure difference between the producer and the injector, $\Delta p$. We then use the equation for the pressure drop between injector and producer in a repeated five-spot pattern \citet{Muskat1946Flow}
+It is also possible to calculate $r_{eq}$ exactly without using regression (as shown in Figure~\ref{fig:peaceman77_pressure_vs_radius}) \cite{Peaceman1978Interpretation}. This is done by solving the numerical dimensionless steady-state pressure equation \eqref{eq:differential-flow-discretized} to acquire the pressure difference between the producer and the injector, $\Delta p$. We then use the equation for the pressure drop between injector and producer in a repeated five-spot pattern \cite{Muskat1946Flow}
 \begin{equation}
     \label{eq:muskat-pressure-drop}
     \Delta p = \frac{q\mu}{\pi k h} \left( \ln \frac{d}{r_w} - 0.6190 \right)
