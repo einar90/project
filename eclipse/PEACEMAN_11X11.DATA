@@ -1,0 +1,167 @@
+--
+--                     Peaceman 1978 Simulation
+--                     ************************
+--                     10x10x1 grid
+--                     1 injector, 1 producer
+--                     PVT data etc. from SPE7 are used
+--
+
+RUNSPEC ==================================================================
+
+TITLE
+PEACEMAN 1978 10X10X1
+
+DIMENS
+    11  11  1  /
+
+ENDSCALE
+/
+
+
+NONNC
+
+WATER
+
+METRIC
+
+EQLDIMS
+    1  100  2  1  2  /
+
+EQLOPTS
+    QUIESC  MOBILE  /
+
+TABDIMS
+    1  1  15  15  1  15   /
+
+WELLDIMS
+    2  1  1  2 /
+
+START
+    1  JAN  2014  /
+
+UNIFOUT
+UNIFIN
+
+
+GRID    ==================================================================
+NOECHO
+
+GRIDFILE
+    2  /
+
+DXV
+    11*27.27  /
+
+DYV
+    11*27.27  /
+DZ
+    121*10  /
+
+TOPS
+    121*0.0  /
+
+EQUALS
+    PORO    0.207  /
+    PERMX   300    /
+    PERMY   300    /
+    PERMZ   300    /
+/
+
+INIT
+
+
+PROPS   ==================================================================
+
+KRW
+    121*1.0 /
+
+KRWR
+    121*1.0 /
+
+PVTW
+-- B_w = 1.0 rm3/sm3
+-- c_w = 4.0e-10 1/bars
+-- mu_w = 0.5 cP
+-- viscobility = 0.0
+--  P_ref  B_w   c_w      mu_w   "Viscosibility"
+    1.0  1*    4.0E-10  0.5    1* /
+
+DENSITY
+-- oil = 600 kg/m3
+-- water = 1000 kg/m3
+-- gas = 1 kg/m3
+--  Oil  Water Gas
+    1*   1000    1*  /
+
+ROCK
+-- P_ref = 1.0132 barsa
+-- c_r = 4.934e-5 1/bars
+--  P_ref   c_r
+    1.0132  4.934e-5  /
+
+SOLUTION =================================================================
+
+EQUIL
+-- Equilibriation data specifiaction
+--  1: Datum depth
+--  2: Pressure at datum depth
+--  3: Depth of WOC
+--  4: Capillary pressure at contact
+--  5: Depth of GOC
+--  6: Gas-oil cap. pressure at GOC
+--  7: Initialization type for live black oil. Positive -> Calc. dissolved
+--  gas from an RSVD table.
+--  8: Initialization type for black oil with wet gas. Zero -> R_v = R_v@GOC
+--  9: Accuracy of initial fluids in place calculation.
+    0.0  1  0  5*     1* /
+
+
+SUMMARY ==================================================================
+
+FWPR
+FWIR
+
+WBHP
+    'INJ'  'PROD'  /
+
+WBP
+    'INJ' 'PROD' /
+
+SEPARATE
+
+CTFAC
+    'PROD' 1 1 1 /
+    'INJ' 11 11 1 /
+/
+
+SCHEDULE =================================================================
+
+WELSPECS
+--  Name  Grp I  J   Depth    Phase Rad
+    PROD  G1  1  1   5.00  WATER  3*  /
+    INJ   G1  11 11  5.00  WATER  3*  /
+/
+
+COMPDAT
+--  Name  I  J  K1 K2           DIAM
+    PROD  1  1  1  1  OPEN  2*  0.3048 /
+    INJ   11 11 1  1  OPEN  2*  0.3048 /
+/
+
+WCONPROD
+    PROD  OPEN  WRAT  1*  150.0   /
+/
+
+WCONINJE
+    INJ  WATER  OPEN  RATE  150 1* 1    /
+/
+
+RPTSCHED
+   PRESSURE  SOIL  SWAT  SGAS  RESTART=2  FIP=1
+   WELLS=1  SUMMARY=1 CPU=2  WELSPECS  NEWTON=1 /
+
+TSTEP
+    50*10
+/
+
+END      =================================================================
