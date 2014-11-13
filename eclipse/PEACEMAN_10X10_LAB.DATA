@@ -123,7 +123,21 @@ COMPDAT
 --    'INJ'   .25 /
 --/
 
-INCLUDE
-    'COMMON.SCHED' /
+WCONPROD
+    PROD  OPEN  WRAT  1*  500.0   /
+/
+
+WCONINJE
+    INJ  WATER  OPEN  RATE  500.0 1* 200    /
+/
+
+RPTSCHED
+   PRESSURE  SOIL  SWAT  SGAS  RESTART=2  FIP=1
+   WELLS=1  SUMMARY=1 CPU=2  WELSPECS  NEWTON=1 /
+
+TSTEP
+    50*10
+/
+
 
 END      =================================================================
