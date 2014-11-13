@@ -1,0 +1,85 @@
+% -*- root: ../../project.tex -*-
+
+\begin{tikzpicture}[scale=1.25]
+   
+    \foreach \y in {0,1} {
+        \foreach \x in {0,1,2,3} {
+            \draw [] (\x,\y,0) to (\x,\y+1,0) to (\x+1,\y+1,0) to (\x+1,\y,0) to (\x,\y,0) to cycle;
+        }
+    }
+
+    \foreach \y in {0,1} {
+        \foreach \x in {0,1,2} {
+            \draw [densely dotted,gray] (\x,\y+1,-1) to (\x,\y,-1) to (\x+1,\y,-1) to (\x+1,\y+1,-1);
+            \draw [densely dotted,gray] (\x,\y+1,-2) to (\x,\y,-2) to (\x+1,\y,-2) to (\x+1,\y+1,-2);
+            \draw [densely dotted,gray] (\x,\y+1,-3) to (\x,\y,-3) to (\x+1,\y,-3) to (\x+1,\y+1,-3);
+        }
+        \draw [densely dotted, gray] (3,\y,-1) to (4,\y,-1);
+        \draw [densely dotted, gray] (3,\y,-2) to (4,\y,-2);
+        \draw [densely dotted, gray] (3,\y,-3) to (4,\y,-3);
+    }       
+
+    \foreach \x in {0,1,2,3} {
+        \draw [] (\x,2,0) to (\x,2,-3);
+        \draw [densely dotted,gray] (\x,1,0) to (\x,1,-3);
+        \draw [densely dotted,gray] (\x,0,0) to (\x,0,-3);
+    }
+
+    \foreach \z in {-1,-2, -3} {
+        \draw [] (0,2,\z) to (4,2,\z);
+        \draw [] (4,2,\z) to (4,0,\z);
+    }
+
+    \draw [] (4,2,0) to (4,2,-3);
+    \draw [] (4,1,0) to (4,1,-3);
+    \draw [] (4,0,0) to (4,0,-3);
+
+    % Sizes
+    \draw [|-|] (3.0,-0.1, 0.0) to node [anchor=north] {\footnotesize $\Delta x$} (4,-.1,0);
+    \draw [|-|] (4.1, 0.0, 0.0) to node [anchor=west]  {\footnotesize $\Delta y$} (4.1,0,-1);
+    \draw [|-|] (4.1, 0.0,-3.0) to node [anchor=west]  {\footnotesize $\Delta z$} (4.1,1,-3);
+
+    % Axis
+    \draw [->] (-1,0,.5) to (-.5,0,.5) node [anchor=west]       {\footnotesize$x$};
+    \draw [->] (-1,0,.5) to (-1,.5,.5) node [anchor=south]      {\footnotesize$z$};
+    \draw [->] (-1,0,.5) to (-1,0,0)   node [anchor=south west] {\footnotesize$y$};
+
+    % Properties
+    \draw [fill=lightgray,opacity=.5] (0,0,0) rectangle (1,1,0);
+    \draw [fill=lightgray,opacity=.5] (0,1,0) to (0,1,-1) to (1,1,-1) to (1,1,0) to (0,1,0) to cycle;
+    \draw [fill=lightgray,opacity=.5] (1,0,0) to (1,0,-1) to (1,1,-1) to (1,1,0) to (1,0,0) to cycle;
+    \draw [fill=lightgray,opacity=.5] (0,0,0) to (0,0,-1) to (0,1,-1) to (0,1,0) to (0,0,0) to cycle;
+    \draw [fill=lightgray,opacity=.5] (0,0,-1) to (1,0,-1) to (1,1,-1) to (0,1,-1) to (0,0,-1) to cycle;
+    \node [align=center] at (.5,.5,0) {\footnotesize$\phi_{1,1,1}$
+                                     \\\footnotesize$k_{1,1,1}$
+                                     \\\footnotesize$S_{1,1,1}$};
+
+    \draw [fill=lightgray,opacity=.5] (1,0,0) rectangle (2,1,0);
+    \draw [fill=lightgray,opacity=.5] (1,1,0) to (1,1,-1) to (2,1,-1) to (2,1,0) to (1,1,0) to cycle;
+    \draw [fill=lightgray,opacity=.5] (2,0,0) to (2,0,-1) to (2,1,-1) to (2,1,0) to (2,0,0) to cycle;
+    \draw [fill=lightgray,opacity=.5] (1,0,-1) to (2,0,-1) to (2,1,-1) to (1,1,-1) to (1,0,-1) to cycle;
+    \node [align=center] at (1.5,.5,0) {\footnotesize$\phi_{2,1,1}$
+                                     \\\footnotesize$k_{2,1,1}$
+                                     \\\footnotesize$S_{2,1,1}$};
+
+
+
+    % Continous cube ==========================================================
+    \draw [] (-6,0,0) to (-2,0,0) to (-2,0,-3);
+    \draw [densely dotted] (-2,0,-3) to (-6,0,-3) to (-6,0,0);
+    \draw [densely dotted] (-6,0,-3) to (-6,2,-3);
+    \draw [] (-6,0,0) to (-6,2,0) to (-6,2,-3) to (-2,2,-3);
+    \draw [] (-6,2,0) to (-2,2,0);
+    \draw [] (-2,0,0) to (-2,2,0) to (-2,2,-3) to (-2,0,-3);
+    \node [align=center] at (-4,1,0) {\footnotesize $\phi = f(x,y,z)$
+                                    \\\footnotesize $k = f(x,y,z)$
+                                    \\\footnotesize $S = f(x,y,z)$};
+
+
+    % Headers =================================================================
+    \node at (-4, 2.5, -3) {Continous reservoir};
+    \node at ( 2, 2.5, -3) {Discretized resrevoir};
+
+
+
+\end{tikzpicture}

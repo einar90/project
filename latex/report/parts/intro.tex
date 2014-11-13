@@ -2,8 +2,15 @@
 
 \section{Introduction} % (fold)
 \label{sec:introduction}
-In reservoir simulation, a number of differential equations are used to describe the flow of fluids. These equations can only be solved analytically for very simple systems involving homogenous reservoirs with regular boundaries \cite{Peaceman1977Fundamentals}. Because of this, we need to create discrete models for the reservoir and solve the flow equations numerically.
+In reservoir simulation, a number of differential equations are used to describe the flow of fluids. These equations can only be solved analytically for very simple systems involving homogeneous reservoirs with regular boundaries \cite{Peaceman1977Fundamentals}. Because of this, we need to create discrete models for the reservoir and solve the flow equations numerically.
 
-The reservoir is discretized by dividing it into \emph{grid blocks}. Each block has a set of properties (porosity, permeability, saturations) etc., descirbing the corresponding area of the reservoir.
+The reservoir is discretized by dividing it into \emph{grid blocks}. Each block has a set of properties (porosity, permeability, saturations) etc., describing the corresponding area of the reservoir. This is illustrated in Figure~\ref{fig:grid-discretization}. This discretization allows us to flow within the model using a set of equations, each of which describe the state of each block and the flow into- or out of it.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[]{figures/grids/3d_grid_4x3x2.pdf}
+    \caption{Illustration of a continuous reservoir vs. a discretized reservoir. In the continuous reservoir the properties are continuous functions in the spatial dimensions; in the discretized reservoir, each block has a set of properties that does not vary within the it.}
+    \label{fig:grid-discretization}
+\end{figure}
 
 % section introduction (end)
