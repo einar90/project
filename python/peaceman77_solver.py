@@ -48,6 +48,7 @@ delta[-1] = -1
 
 # Solve system ================================================================
 P = np.linalg.solve(A, delta)
+np.savetxt((str(M) + 'x' + str(M) + '-pressure.dat'), np.reshape(P, [M+1, M+1]))
 
 # Calculating pressure difference from producer ===============================
 P_delta = []
