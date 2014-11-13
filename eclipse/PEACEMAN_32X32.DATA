@@ -1,0 +1,126 @@
+--
+--                     Peaceman 1978 Simulation
+--                     ************************
+--                     10x10x1 grid
+--                     1 injector, 1 producer
+--                     PVT data etc. from SPE7 are used
+--
+
+RUNSPEC ==================================================================
+
+TITLE
+PEACEMAN 1978 32X32X1
+
+DIMENS
+    32  32  1  /
+
+ENDSCALE
+/
+
+
+NONNC
+
+WATER
+
+METRIC
+
+EQLDIMS
+    1  100  2  1  2  /
+
+EQLOPTS
+    QUIESC  MOBILE  /
+
+TABDIMS
+    1  1  15  15  1  15   /
+
+WELLDIMS
+    2  1  1  2 /
+
+START
+    1  JAN  2014  /
+
+UNIFOUT
+UNIFIN
+
+
+GRID    ==================================================================
+NOECHO
+
+GRIDFILE
+    2  /
+
+DXV
+    32*9.375  /
+
+DYV
+    32*9.375  /
+DZ
+    1024*10  /
+
+TOPS
+-- 1000m depth
+    1024*1000.0  /
+
+INCLUDE
+    'COMMON.GRPR' /
+
+
+PROPS   ==================================================================
+
+--BOX
+--    1 11 1 11 1 1 /
+
+KRW
+    1024*1.0 /
+
+KRWR
+    1024*1.0 /
+
+--SWFN
+--    .1 0 0
+--     1 1 0 /
+
+
+
+INCLUDE
+    'COMMON.PROP' /
+
+SOLUTION =================================================================
+
+INCLUDE
+    'COMMON.SOLN' /
+
+SUMMARY ==================================================================
+
+INCLUDE
+    'COMMON.SMRY' /
+
+CTFAC
+    'PROD' 1 1 1 /
+    'INJ' 32 32 1 /
+/
+
+SCHEDULE =================================================================
+
+WELSPECS
+--  Name  Grp I  J   Depth    Phase Rad
+    PROD  G1  1  1   1015.00  WATER  3*  /
+    INJ   G1  32 32  1015.00  WATER  3*  /
+/
+
+COMPDAT
+--  Name  I  J  K1 K2           DIAM
+    PROD  1  1  1  1  OPEN  2*  0.3048 /
+    INJ   32 32 1  1  OPEN  2*  0.3048 /
+/
+
+WPIMULT
+-- Scaling well connection factor because the well is in a corner
+    'PROD'  .25 /
+    'INJ'   .25 /
+/
+
+INCLUDE
+    'COMMON.SCHED' /
+
+END      =================================================================
