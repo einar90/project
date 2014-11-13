@@ -4,14 +4,17 @@ import json  # Only used for prettyprinting
 
 pcm_file = 'peaceman/32x32-pressure.dat'   # Peaceman solver results
 ecl_file = 'eclipse/11x11-pressure.dat'    # ECL100 simulation results
+ecll_file = 'eclipse/11x11-pressure-lab.dat'    # ECL100, lab units
 
 p = {
     'ecl': np.loadtxt(ecl_file)*0.986923267,  # bar -> atm
+    'ecll': np.loadtxt(ecll_file),            # atm
     'pcm': np.loadtxt(pcm_file)               # Dimensionless
 }
 
 M = {
     'ecl': int(np.sqrt(p.get('ecl').size))-1,
+    'ecll': int(np.sqrt(p.get('ecl').size))-1,
     'pcm': int(np.sqrt(p.get('pcm').size))-1
 }
 
@@ -24,6 +27,15 @@ props = {
         'dx': 30.0*100.0,        # m -> cm
         'p_prod': p.get('ecl')[0, 0],
         'p_inj':  p.get('ecl')[M.get('ecl'), M.get('ecl')],
+    },
+    'ecll': {
+        'k':  300.0/1000.0,      # mD -> D
+        'h':  30.0,              # cm
+        'q':  50000.0/60.0/60.0, # cc/hr -> cc/sec
+        'mu': 0.5,               # cP
+        'dx': 30.0,              # cm
+        'p_prod': p.get('ecll')[0, 0],
+        'p_inj':  p.get('ecll')[M.get('ecll'), M.get('ecll')],
     },
     'pcm': {                     # Dimensionless
         'k':  1.0,
@@ -49,6 +61,9 @@ def r_eq_exact(M, props):
 r_eq = {
     'ecl': {
         'exact': r_eq_exact(M.get('ecl'), props.get('ecl'))
+    },
+    'ecll': {
+        'exact': r_eq_exact(M.get('ecll'), props.get('ecll'))
     },
     'pcm': {
         'exact': r_eq_exact(M.get('pcm'), props.get('pcm'))
