@@ -4,7 +4,7 @@
 \label{sec:introduction}
 In reservoir simulation, a number of differential equations are used to describe the flow of fluids. These equations can only be solved analytically for very simple systems involving homogeneous reservoirs with regular boundaries \cite{Peaceman1977Fundamentals}. Because of this, we need to create discrete models for the reservoir and solve the flow equations numerically.
 
-The reservoir is discretized by dividing it into \emph{grid blocks}. Each block has a set of properties (porosity, permeability, saturations) etc., describing the corresponding area of the reservoir. This is illustrated in Figure~\ref{fig:grid-discretization}. This discretization allows us to flow within the model using a set of equations, each of which describe the state of each block and the flow into- or out of it.
+The reservoir is discretized by dividing it into \emph{grid blocks}. Each block has a set of properties (porosity, permeability, saturations) etc., describing the corresponding area of the reservoir. This is illustrated in Figure~\ref{fig:grid-discretization}. This discretization allows us to flow within the model using a set of easily solved linear equations, each of which describe the state of each block and the flow into- or out of it.
 
 \begin{figure}[htbp]
     \centering
