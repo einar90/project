@@ -40,7 +40,7 @@ where $p_e$ is the effective pressure at the ``drainage radius'' $r_e$ \cite{Dak
     \label{eq:peaceman-pe}
     p_e = p_{wb} + F_i \sum_{i=1}^{4}\left( p_i - p_{wb} \right)
 \end{equation}
-where $F$ is a factor determining the influence of $p_i$ on $p_e$ in the horizontal plane, and is taken as zero \cite{Schwabe1967Prediction,Peaceman1978Interpretation}. $p_i$ represents the blocks surrounding the wellblock (illustrated in Figure~\ref{fig:peaceman-block-numbering}). Thus, equation equation \eqref{eq:dake-radial-pressure-re} is reduced to
+where $F$ is a factor determining the influence of $p_i$ on $p_e$ in the horizontal plane. $p_i$ represents the blocks surrounding the wellblock (illustrated in Figure~\ref{fig:peaceman-block-numbering}). $F_i$ is taken as zero \cite{Schwabe1967Prediction,Peaceman1978Interpretation}, thus, equation equation \eqref{eq:dake-radial-pressure-re} is reduced to
 \begin{equation}
     \label{eq:peaceman-pwb}
     p_{wb} = p_{wf} + \frac{q\mu}{2\pi kh} \ln{\frac{r_{eq}}{r_w}}
@@ -56,7 +56,7 @@ where $r_{eq}$ is the equivalent wellblock radius, the radius at which the singl
 \nomenclature{$F_i$}{factor determining the influence of $p_i$ on $p_e$}
 \nomenclature{$A$}{cross-sectional area}
 
-Substitution of equation \eqref{eq:peaceman-pwb} into equation \eqref{eq:peaceman-wi1} and solved for $WI$ yields
+Substitution of equation \eqref{eq:peaceman-pwb} into equation \eqref{eq:peaceman-wi1} and solved for $WI$ yields the commonly used expression for the well index
 \begin{equation}
     \label{eq:peaceman-wi2}
     WI = \frac{2\pi kh}{\ln{r_{eq}/r_w}}
@@ -76,8 +76,8 @@ Substitution of equation \eqref{eq:peaceman-pwb} into equation \eqref{eq:peacema
 
 \subsection{Equivalent Wellblock Radius} % (fold)
 \label{sub:equivalent_wellblock_radius}
-The correct value for the equivalent wellblock radius $r_{eq}$ may be found by examining a numerical solution to the differential flow equation on an $M\times M$ square grid like the one shown in Figure~\ref{fig:peaceman-grid}.
-\nomenclature{$M$}{Number of blocks on each side of computing grid}
+The correct value for the equivalent wellblock radius $r_{eq}$ may be found by examining a numerical solution to the \emph{differential flow equation} on an $M\times M$ square grid like the one shown in Figure~\ref{fig:peaceman-grid}.
+\nomenclature{$M$}{number of blocks on each side of computing grid}
 
 \begin{figure}[htbp]
     \centering
@@ -133,7 +133,7 @@ To acquire a discretized form of equation \eqref{eq:differential-flow}, we apply
         \frac{\partial^2 p_{i,j}}{\partial y^2} = \frac{p_{i,j-1} -2p_{i,j} + p_{i,j+1}}{\Delta y^2} + O(\Delta y^2)
     \end{equation}
 \end{subequations}
-where $O(\Delta x^2)$ and $O(\Delta x^2)$ are the error-terms. Substituting this and $A=\Delta x \Delta y$ into \eqref{eq:differential-flow} and taking $\Delta x = \Delta y$ gives us the discretized form
+where $O(\Delta x^2)$ and $O(\Delta x^2)$ are the error-terms. Substituting this and $A=\Delta x \Delta y$ into \eqref{eq:differential-flow} and taking $\Delta x = \Delta y$ gives us the discretized form of the differential flow equation
 \begin{equation}
     \label{eq:differential-flow-discretized}
     \frac{kh}{\mu} \left( p_{i-1,j} -2p_{i,j} + p_{i+1,j} \right) + \frac{kh}{\mu} \left( p_{i,j-1} -2p_{i,j} + p_{i,j+1} \right) = -q_{i,j}
@@ -142,14 +142,14 @@ where $O(\Delta x^2)$ and $O(\Delta x^2)$ are the error-terms. Substituting this
 \nomenclature{$\Delta y$}{grid spacing in $y$-direction}
 \nomenclature{$p_{i,j}$}{pressure in block $(i,j)$}
 
-We then define the dimensionless pressure
+We then define the dimensionless pressure as
 \begin{equation}
       \Phi = \frac{kh}{q\mu} p
 \end{equation}
 to get the dimensionless form of equation \eqref{eq:differential-flow-discretized} \cite{Peaceman1978Interpretation}
 \begin{equation}
     \label{eq:differential-flow-discretzed-dimensionless}
-     \Phi_{i-1,j} -2 \Phi_{i,j} + \Phi_{i+1,j} \;\;\; + \;\;\; \Phi_{i,j-1} -2\Phi_{i,j} + \Phi_{i,j+1}  = \delta_{i,j}
+     \Phi_{i-1,j} + \Phi_{i+1,j} + \Phi_{i,j-1}  + \Phi_{i,j+1} -4 \Phi_{i,j}  = \delta_{i,j}
 \end{equation}
 where
 \begin{equation}
@@ -174,17 +174,36 @@ and
         p_{i,M+1} &= p_{i,M-1}
     \end{rcases} \; \mathrm{for} \; 0\leq i \leq M
 \end{equation}
-Substitution of these conditions gives us an $(M+1)\times (M+1)$ equation system which may be solved directly. An implementation of a general solver for this set of equations is shown in Listing~\ref{lst:peaceman77_solver} in Appendix~\ref{sec:program_listings}.
+Substitution of these conditions gives us an $(M+1)\times (M+1)$ equation system, which may be formulated as
+\begin{equation}
+    \label{eq:equation-system-matrix}
+    \mathbf{Ap}=\boldsymbol{\delta},
+\end{equation}
+and may be solved directly using Gaussian elimination. The matrix structure is sketched in Figure~\ref{fig:matrix-structure}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/other/eq-system-structure_m4.pdf}
+    \caption{Sketch of the equation system \eqref{eq:equation-system-matrix} \hl{generated by} equation \eqref{eq:differential-flow-discretzed-dimensionless} with $M=4$.}
+    \label{fig:matrix-structure}
+\end{figure}
 % subsubsection derivation (end)
 
 
 \subsubsection{Approximate calculation of equivalent radius} % (fold)
 \label{ssub:approximate_calculation_of_equivalent_radius}
-A plot of calculated pressure drop versus radius is shown in Figure~\ref{fig:peaceman77_pressure_vs_radius}. By extrapolating  the regression line in Figure~\ref{fig:peaceman77_pressure_vs_radius} to the horizontal line $p_{i,j}-p_{0,0}=0$, i.e. where $r=r_{eq}$, we get that
+One method for acquiring the correct value of the equivalent radius is by creating a semi-logarithmic plot of the pressure difference $(\Psi_{i,j}-\Psi_{0,0})$ against the radius from the producer $r/\Delta x=\sqrt{i^2+j^2}$ and extrapolate the regression line down to the horizontal line where $(\Psi_{i,j}-\Psi_{0,0})=0$ \cite{Peaceman1978Interpretation}. One such plot is shown in Figure~\ref{fig:peaceman77_pressure_vs_radius}. We then get that
 \begin{equation}
     r_{eq} = 0.2 \Delta x
 \end{equation}
 This result is used for a new interpretation of the wellblock pressure: it is the steady-state flowing pressure at $r=r_{eq}=0.2 \Delta x$ \cite{Peaceman1978Interpretation}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[]{figures/plots/peaceman77-regression.pdf}
+    \caption{Plot of numerical solution of pressure plotted agains radius from producing well. Calculations are done using the program in Listing~\ref{lst:peaceman77_solver}. The equation is solved on a $10\times 10$ grid like the one shown in Figure~\ref{fig:peaceman-grid}.}
+    \label{fig:peaceman77_pressure_vs_radius}
+\end{figure}
 
 We can also see from Figure~\ref{fig:peaceman77_pressure_vs_radius} that the pressure calculated for the block adjacent to the wellblock, i.e. at $r/\Delta x=1$, is on the straight line. Thus we can substitute $r=\Delta x$ into the radial flow equation \eqref{eq:dake-radial-pressure} to obtain the equation for the pressure in the adjacent block (using the block numbering shown in Figure~\ref{fig:peaceman-block-numbering})
 \begin{equation}
@@ -209,21 +228,14 @@ or
 \begin{equation}
     r_{eq} = \Delta x \exp{\left( -\frac{\pi}{2} \right)} = 0.208 \Delta x
 \end{equation}
-which fits well with the results from the intersection of the regression line for $M\times M$ grids when $M\geq 20$ (see Table~\ref{tbl:peaceman-results}).
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[]{figures/plots/peaceman77-regression.pdf}
-    \caption{Plot of numerical solution of pressure plotted agains radius from producing well. Calculations are done using the program in Listing~\ref{lst:peaceman77_solver}. The equation is solved on a $10\times 10$ grid like the one shown in Figure~\ref{fig:peaceman-grid}.}
-    \label{fig:peaceman77_pressure_vs_radius}
-\end{figure}
+which fits well with value of $r_{eq}$ acquired from inspecting intersection of the regression line.
 % subsubsection approximate_calculation_of_equivalent_radius (end)
 
 
 
 \subsubsection{Exact calculation of equivalent radius} % (fold)
 \label{ssub:exact_calculation_of_equivalent_radius}
-It is also possible to calculate $r_{eq}$ exactly without using regression (as shown in Figure~\ref{fig:peaceman77_pressure_vs_radius}) \cite{Peaceman1978Interpretation}. This is done by solving the numerical dimensionless steady-state pressure equation \eqref{eq:differential-flow-discretized} to acquire the pressure difference between the producer and the injector, $\Delta p$. We then use the equation for the pressure drop between injector and producer in a repeated five-spot pattern \cite{Muskat1946Flow}
+It is also possible to calculate $r_{eq}$ exactly without using the regression method discussed in Section~\ref{ssub:approximate_calculation_of_equivalent_radius} \cite{Peaceman1978Interpretation}. This is done by solving the numerical dimensionless steady-state pressure equation \eqref{eq:differential-flow-discretized} to acquire the pressure difference between the producer and the injector, $\Delta p$. We then use the equation for the pressure drop between injector and producer in a repeated five-spot pattern \cite{Muskat1946Flow}
 \begin{equation}
     \label{eq:muskat-pressure-drop}
     \Delta p = \frac{q\mu}{\pi k h} \left( \ln \frac{d}{r_w} - 0.6190 \right)
@@ -244,8 +256,6 @@ or, using dimensionless pressure,
 \begin{equation}
     \frac{r_{eq}}{\Delta x} = \sqrt{2}M \exp\left[- \pi \left( \Phi_{M,M} - \Phi_{0,0} \right) - 0.6190 \right].
 \end{equation}
-
-Results computed using the program \ref{lst:peaceman77_solver} for various grid sizes are shown in Table~\ref{tbl:peaceman-results}.
 
 % subsubsection exact_calculation_of_equivalent_radius (end)
 

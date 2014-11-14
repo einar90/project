@@ -8,7 +8,10 @@
 
 \subsection{Numerical solution of the differential flow equation} % (fold)
 \label{sub:numerical_solution_of_the_differential_flow_equation}
+All results in this section was computed using the a solver implemented in Python, using the Numpy library. The implementation is shown in Listing~\ref{lst:peaceman77_solver}, Appendix~\ref{sec:program_listings}.
+
 A contour plot of the solution to the discretized differential flow equation on the $10 \times 10$ grid in Figure~\ref{fig:peaceman-grid} is shown in Figure~\ref{fig:pressure_drop_contour}. Table~\ref{tbl:peaceman-results} shows $r_{eq}$ found using the regression method outlined in Section~\ref{ssub:approximate_calculation_of_equivalent_radius}, as well as caluculated using equation \eqref{eq:peaceman77-eqrad-exact} for various $M\times M$ grids.
+
 
 
 \begin{figure}[htbp]
@@ -52,7 +55,7 @@ A contour plot of the solution to the discretized differential flow equation on 
 
 
 
-\subsection{Using pressure from Sintef MRST simulation} % (fold)
+\subsection{Sintef MRST simulation} % (fold)
 \label{sub:sintef_mrst_simulation}
 
 % subsection sintef_mrst_simulation (end)
