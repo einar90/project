@@ -2,8 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import json  # Only used for prettyprinting
 
-pcm_file = 'peaceman/32x32-pressure.dat'   # Peaceman solver results
-ecl_file = 'eclipse/11x11-pressure.dat'    # ECL100 simulation results
+pcm_file = 'peaceman/32x32-pressure.dat'   # Peaceman solver, dimensionless
+ecl_file = 'eclipse/11x11-pressure.dat'    # ECL100, metric units
 ecll_file = 'eclipse/11x11-pressure-lab.dat'    # ECL100, lab units
 
 p = {
