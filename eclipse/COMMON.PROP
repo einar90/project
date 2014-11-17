@@ -18,6 +18,3 @@ ROCK
 -- c_r = 4.934e-5 1/bars
 --  P_ref   c_r
     1.0132  4.934e-5  /
-
---RPTPROPS
---    SWFN  PVTW  DENSITY  PCW  ENDPT  SWCR SWL SWU /

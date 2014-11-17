@@ -3,15 +3,4 @@ EQUIL
 --  1: Datum depth
 --  2: Pressure at datum depth
 --  3: Depth of WOC
---  4: Capillary pressure at contact
---  5: Depth of GOC
---  6: Gas-oil cap. pressure at GOC
---  7: Initialization type for live black oil. Positive -> Calc. dissolved
---  gas from an RSVD table.
---  8: Initialization type for black oil with wet gas. Zero -> R_v = R_v@GOC
---  9: Accuracy of initial fluids in place calculation.
-    1015.0  100 900 5*     1* /
-
---RPTSOL
---    RESTART=2 POIL SOIL SWAT SGAS FIP=1 /
-
+    1015.0  100 900 6* /
