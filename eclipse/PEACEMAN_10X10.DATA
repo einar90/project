@@ -113,8 +113,8 @@ WELSPECS
 
 COMPDAT
 --  Name  I  J  K1 K2           DIAM
-    PROD  1  1  1  1  OPEN  2*  0.30 /
-    INJ   11 11 1  1  OPEN  2*  0.30 /
+    PROD  1  1  1  1  OPEN  2*  0.3048 /
+    INJ   11 11 1  1  OPEN  2*  0.3048 /
 /
 
 --WPIMULT
