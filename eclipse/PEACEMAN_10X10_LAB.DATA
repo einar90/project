@@ -1,10 +1,13 @@
 --
 --                     Peaceman 1978 Simulation
 --                     ************************
---                     10x10x1 grid
+--                     11x11x1 grid
 --                     1 injector, 1 producer
---                     PVT data etc. from SPE7 are used
+--                     Lab units
 --
+-- 10X10 in the filename is due to the convention used in the
+-- Peaceman 1978 paper. MxM in the papers translates to a (M+1)x(M+1)
+-- grid.
 
 RUNSPEC ==================================================================
 
@@ -50,40 +53,26 @@ GRIDFILE
     2  /
 
 DXV
--- 11x30cm
     11*30  /
 
 DYV
--- 11x30cm
     11*30  /
 DZ
--- 121x30cm
     121*30  /
 
 TOPS
--- 1000cm depth
     121*1000.0  /
 
 INCLUDE
     'COMMON.GRPR' /
 
-
 PROPS   ==================================================================
-
---BOX
---    1 11 1 11 1 1 /
 
 KRW
     121*1.0 /
 
 KRWR
     121*1.0 /
-
---SWFN
---    .1 0 0
---     1 1 0 /
-
-
 
 INCLUDE
     'COMMON.PROP' /
@@ -117,12 +106,6 @@ COMPDAT
     INJ   11 11 1  1  OPEN  2*  0.3048 /
 /
 
---WPIMULT
--- Scaling well connection factor because the well is in a corner
---    'PROD'  .25 /
---    'INJ'   .25 /
---/
-
 WCONPROD
     PROD  OPEN  WRAT  1*  50000.0   /
 /
@@ -138,6 +121,5 @@ RPTSCHED
 TSTEP
     50*10
 /
-
 
 END      =================================================================

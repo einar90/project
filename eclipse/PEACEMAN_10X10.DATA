@@ -3,6 +3,7 @@
 --                     ************************
 --                     11x11x1 grid
 --                     1 injector, 1 producer
+--                     metric units
 --
 -- 10X10 in the filename is due to the convention used in the
 -- Peaceman 1978 paper. MxM in the papers translates to a (M+1)x(M+1)
@@ -65,7 +66,6 @@ TOPS
 
 INCLUDE
     'COMMON.GRPR' /
-
 
 PROPS   ==================================================================
 
