@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-M = 32
+M = 10
 A = np.zeros([(M+1)**2, (M+1)**2], dtype=float)
 delta = np.zeros((M+1)**2, dtype=float)
 
@@ -46,73 +46,6 @@ for i in range((M+1)**2):
 delta[0] = 1
 delta[-1] = -1
 
-# Solve system ================================================================
+# Solve system  and save results ==============================================
 P = np.linalg.solve(A, delta)
 np.savetxt((str(M) + 'x' + str(M) + '-pressure.dat'), np.reshape(P, [M+1, M+1]))
-
-# Calculating pressure difference from producer ===============================
-P_delta = []
-for p in P:
-    P_delta.append(p - P[0])
-
-np.savetxt('pressure_difference.dat', P_delta)
-
-# Reshaping pressure matrices to fit on the modelled MxM grid =================
-P_delta = np.reshape(P_delta, [M+1, M+1])
-P = np.reshape(P, [M+1, M+1])
-
-# Creating radius matrix from producer in upper-left corner ===================
-r = np.zeros([M+1, M+1], dtype=float)
-for i in range(M+1):
-    for j in range(M+1):
-        r[i, j] = np.sqrt(float(i)**2.0 + float(j)**2.0)
-
-# Exact calculation of r_0 ====================================================
-print 'Pressure drop: ', P[M, M] - P[0, 0]
-print 'Exact solution: ', np.sqrt(2) * M * np.exp(-0.6190 - np.pi * (P[M, M]-P[0, 0]))
-
-# Creating plots ==============================================================
-
-# Cutting matrices
-r = r[0:(M+1)/2, 0:(M+1)/2]
-P_delta_cut = P_delta[0:(M+1)/2, 0:(M+1)/2]
-
-# Relinearizing matrices
-r = np.reshape(r, [((M+1)/2)**2, ])
-P_delta_cut = np.reshape(P_delta_cut, [((M+1)/2)**2, ])
-
-# Removing first element (represents the well-block)
-r = r[1:]
-P_delta_cut = P_delta_cut[1:]
-
-# Create the regression line and polynomial
-reg = np.polyfit(np.log(r), P_delta_cut, deg=1)
-reg_poly = np.poly1d(reg)
-print 'Regression polynomial: ', reg_poly
-
-# r vector for extended plotting
-reg_r = [i/10.0 for i in range(1, 61)]
-print 'Graphical solution: r_0 = ', np.exp(np.roots(reg_poly)[0])
-
-# Creating plots ==============================================================
-fig, (ax1, ax2) = plt.subplots(1, 2)
-
-cntplot = ax1.contour(P_delta, 20, colors='k')
-plt.clabel(cntplot, fontsize=9, inline=1)
-ax1.set_title('Pressure')
-
-ax2.scatter(r, P_delta_cut)
-ax2.semilogx(reg_r, reg_poly(np.log(reg_r)))
-ax2.set_title('Pressure drop')
-ax2.set_xscale('log')
-ax2.set_xlim(1e-1, .6e1)
-ax2.set_ylim(0, .6)
-
-plt.draw()
-plt.show()
-
-# Writing data to files
-save = raw_input('Save arrays to file? (y/n)  ')
-if save == 'y':
-    np.savetxt('scatter.dat', (r, P_delta_cut), delimiter=',')
-    np.savetxt('regression.dat', (reg_r, reg_poly(np.log(reg_r))), delimiter=',')
