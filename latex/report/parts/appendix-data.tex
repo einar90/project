@@ -1,0 +1,45 @@
+% -*- root: ../project.tex -*-
+
+\section{Data} % (fold)
+\label{sec:data}
+\subsection{Results from numerical solution of the differential flow equation} % (fold)
+\label{sub:results_from_numerical_solution_of_the_differential_flow_equation}
+Results from solution of the differential flow equation for $M=10$. The first row contains the indexes in the horizontal direction. The producer is found in the lower-left corner; the injector is found in the upper-right corner.
+
+{\tiny
+\vspace{.5cm}
+\hspace{-1cm}
+\pgfplotstabletypeset[header=false, sci, sci sep align, sci zerofill]{../../results/peaceman/10x10-pressure.dat}}
+% subsection results_from_numerical_solution_of_the_differential_flow_equation (end)
+
+\subsection{Results from simulation using MRST} % (fold)
+\label{sub:results_from_simulation_using_mrst}
+Results from simulation using the Sintef MRST reservoir simulator. The first row contains the indexes in the horizontal direction. The producer is found in the lower-left corner; the injector is found in the upper-right corner.
+
+{\tiny
+\vspace{.5cm}
+\hspace{-1cm}
+\pgfplotstabletypeset[header=false, sci, sci sep align, sci zerofill]{../../results/mrst/11x11-pressure.dat}}
+% subsection results_from_simulation_using_mrst (end)
+
+\subsection{Results from simulation using ECL100 (metric)} % (fold)
+\label{sub:results_from_simulation_using_ecl100_metric}
+Results from simulation using the Schlumberger ECL100 reservoir simulator with metric units. The first row contains the indexes in the horizontal direction. The producer is found in the lower-left corner; the injector is found in the upper-right corner.
+
+{\tiny
+\vspace{.5cm}
+\hspace{-1cm}
+\pgfplotstabletypeset[header=false, sci, sci sep align, sci zerofill]{../../results/eclipse/11x11-pressure.dat}}
+% subsection results_from_simulation_using_ecl100_metric (end)
+
+\subsection{Results from simulation using ECL100 (lab)} % (fold)
+\label{sub:results_from_simulation_using_ecl100_lab}
+Results from simulation using the Schlumberger ECL100 reservoir simulator with lab units. The first row contains the indexes in the horizontal direction. The producer is found in the lower-left corner; the injector is found in the upper-right corner.
+
+{\tiny
+\vspace{.5cm}
+\hspace{-1cm}
+\pgfplotstabletypeset[header=false, sci, sci sep align, sci zerofill]{../../results/eclipse/11x11-pressure-lab.dat}}
+% subsection results_from_simulation_using_ecl100_lab (end)
+
+% section data (end)
