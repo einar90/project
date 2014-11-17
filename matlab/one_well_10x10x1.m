@@ -1,11 +1,11 @@
 clear all; clc; close all;
 %% Define grid, rock and fluid data
-dim = 10;
-G = cartGrid([dim, dim, 1]);
+dim = 11;
+G = cartGrid([dim, dim, 1], [30, 30, 30]); % dim,dim,1 blocks, 30x30x30m each
 G = computeGeometry(G, 'Verbose', true);
-rock.perm = repmat(100 .* milli*darcy, [G.cells.num, 1]);
-fluid     = initSingleFluid('mu' ,    1*centi*poise     , ...
-                            'rho', 1014*kilogram/meter^3);
+rock.perm = repmat(.3 .*darcy, [G.cells.num, 1]);
+fluid     = initSingleFluid('mu' ,    0.5*centi*poise     , ...
+                            'rho', 1000*kilogram/meter^3);
 T = computeTrans(G, rock, 'Verbose', true);
 
 %% Wells
@@ -15,12 +15,12 @@ W = [];
 %% Production well
 cellsWell1 =  [1];
 W = addWell(W, G, rock, cellsWell1, 'Type', 'rate', ...
-            'Val', -1.0/day(), 'Radius', r, 'name', 'P');
+            'Val', -150.0/day(), 'Radius', r, 'name', 'P');
 
 %% Injection well
 cellsWell2 = [dim^2];
 W = addWell(W, G, rock, cellsWell2, 'Type', 'rate', ...
-            'Val', 1.0/day(), 'Radius', r, 'name', 'I');
+            'Val', 150.0/day(), 'Radius', r, 'name', 'I');
 
 
 %% Generate linear system, initialize solution structure
@@ -33,13 +33,15 @@ resSol = incompTPFA(resSol, G, T, fluid, 'wells', W);
 
 %% Create 2D matrix from pressure solution vector
 P = reshape(convertTo(resSol.pressure, atm), dim, dim);
+save([num2str(dim) 'x' num2str(dim) '-pressure.dat'], 'P', '-ascii')
+
 
 %% Pressure line for plotting
 sm3PerDay2ccPerSec = 11.57;
-k = 100*0.001;
-h = 100;
-q = 1*sm3PerDay2ccPerSec;
-mu = 1;
+k = .3; % D
+h = 30.0*100; % cm
+q = 150.0*sm3PerDay2ccPerSec; % cc/sec
+mu = .5; % cP
 factor = k*h/(q*mu);
 p_plot = (P - P(1,1)).*factor;
 
@@ -53,7 +55,7 @@ end
 
 %% Regression line
 xx = x(1:floor(dim/2),1:floor(dim/2));
-pp = p_plot(1:dim/2,1:dim/2);
+pp = p_plot(floor(1:dim/2),floor(1:dim/2));
 xx = xx(:);
 pp = pp(:);
 pfit = polyfit(log(xx(2:end)), pp(2:end), 1);
@@ -72,6 +74,6 @@ subplot(1,2,2)
   xlabel('$$r/\Delta x = \sqrt{i^2 + j^2}$$','interpreter','latex')
   ylabel('$$P$$' ,'interpreter','latex')
   ylim([0 5]);
-  xlim([10e-2, 2e1])
+  xlim([10e-2, .6e1])
   hold on 
   semilogx(x_reg, pfit(2)+pfit(1).*log(x_reg))
