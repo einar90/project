@@ -66,9 +66,9 @@ TOPS
 
 EQUALS
     PORO    0.207  /
-    PERMX   3000    /
-    PERMY   3000    /
-    PERMZ   3000    /
+    PERMX   1000    /
+    PERMY   1000    /
+    PERMZ   1000    /
 /
 
 INIT
