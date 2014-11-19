@@ -64,8 +64,14 @@ DZ
 TOPS
     169*1000.0  /
 
-INCLUDE
-    'COMMON.GRPR' /
+EQUALS
+    PORO    0.207  /
+    PERMX   3000    /
+    PERMY   3000    /
+    PERMZ   3000    /
+/
+
+INIT
 
 PROPS   ==================================================================
 
