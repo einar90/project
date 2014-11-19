@@ -1,7 +1,7 @@
 --
 --                     Peaceman 1978 Simulation
 --                     ************************
---                     11x11x1 grid
+--                     13x13x1 grid
 --                     1 injector, 1 producer
 --                     metric units
 --
@@ -16,7 +16,7 @@ TITLE
 PEACEMAN 1978 10X10X1
 
 DIMENS
-    12  12  1  /
+    13  13  1  /
 
 ENDSCALE
 /
@@ -54,15 +54,15 @@ GRIDFILE
     2  /
 
 DXV
-    1 10*30 1  /
+    5 10 9*30 10 5  /
 
 DYV
-    1 10*30 1  /
+    5 10 10*30 10 5  /
 DZ
-    144*30  /
+    169*30  /
 
 TOPS
-    144*1000.0  /
+    169*1000.0  /
 
 INCLUDE
     'COMMON.GRPR' /
@@ -70,10 +70,10 @@ INCLUDE
 PROPS   ==================================================================
 
 KRW
-    144*1.0 /
+    169*1.0 /
 
 KRWR
-    144*1.0 /
+    169*1.0 /
 
 INCLUDE
     'COMMON.PROP' /
@@ -90,7 +90,7 @@ INCLUDE
 
 CTFAC
     'PROD' 1 1 1 /
-    'INJ' 12 12 1 /
+    'INJ' 13 13 1 /
 /
 
 SCHEDULE =================================================================
@@ -98,13 +98,13 @@ SCHEDULE =================================================================
 WELSPECS
 --  Name  Grp I  J   Depth    Phase Rad
     PROD  G1  1  1   1015.00  WATER  3*  /
-    INJ   G1  12 12  1015.00  WATER  3*  /
+    INJ   G1  13 13  1015.00  WATER  3*  /
 /
 
 COMPDAT
 --  Name  I  J  K1 K2           DIAM
     PROD  1  1  1  1  OPEN  2*  0.3048 /
-    INJ   12 12 1  1  OPEN  2*  0.3048 /
+    INJ   13 13 1  1  OPEN  2*  0.3048 /
 /
 
 WPIMULT
