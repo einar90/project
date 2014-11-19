@@ -5,20 +5,13 @@ import json  # Only used for prettyprinting
 ecl_file = 'eclipse/11x11-pressure.dat'         # ECL100, metric units
 ecll_file = 'eclipse/11x11-pressure-lab.dat'    # ECL100, lab units
 mrst_file = 'mrst/11x11-pressure.dat'           # MRST, metric units
-pcm_file = 'peaceman/10x10-pressure.dat'        # Peaceman solver, dimensionless
+pcm_file = 'peaceman/10x10-pressure.dat'        # Peaceman, dimensionless
 
 p = {
     'ecl': np.loadtxt(ecl_file)*0.986923267,  # bar -> atm
     'ecll': np.loadtxt(ecll_file),            # atm
     'mrst': np.loadtxt(mrst_file),            # atm
     'pcm': np.loadtxt(pcm_file)               # Dimensionless
-}
-
-M = {
-    'ecl': int(np.sqrt(p.get('ecl').size))-1,
-    'ecll': int(np.sqrt(p.get('ecll').size))-1,
-    'mrst': int(np.sqrt(p.get('mrst').size))-1,
-    'pcm': int(np.sqrt(p.get('pcm').size))-1
 }
 
 props = {
@@ -28,8 +21,9 @@ props = {
         'q':  150.0*11.5740741,   # m3/day -> cc/sec
         'mu': 0.5,                # cP
         'dx': 30.0*100.0,         # m -> cm
+        'M': int(np.sqrt(p.get('ecl').size))-1,
         'p_prod': p.get('ecl')[0, 0],
-        'p_inj':  p.get('ecl')[M.get('ecl'), M.get('ecl')],
+        'p_inj':  p.get('ecl')[-1, -1],
     },
     'ecll': {
         'k':  300.0/1000.0,       # mD -> D
@@ -37,8 +31,9 @@ props = {
         'q':  50000.0/60.0/60.0,  # cc/hr -> cc/sec
         'mu': 0.5,                # cP
         'dx': 30.0,               # cm
+        'M': int(np.sqrt(p.get('ecll').size))-1,
         'p_prod': p.get('ecll')[0, 0],
-        'p_inj':  p.get('ecll')[M.get('ecll'), M.get('ecll')],
+        'p_inj':  p.get('ecll')[-1, -1],
     },
     'mrst': {
         'k':  .3,                 # D
@@ -46,8 +41,9 @@ props = {
         'q':  150.0*11.5740741,   # m3/day -> cc/sec
         'mu': 0.5,                # cP
         'dx': 30.0*100,           # m -> cm
+        'M': int(np.sqrt(p.get('mrst').size))-1,
         'p_prod': p.get('mrst')[0, 0],
-        'p_inj':  p.get('mrst')[M.get('mrst'), M.get('mrst')],
+        'p_inj':  p.get('mrst')[-1, -1],
     },
     'pcm': {                      # Dimensionless
         'k':  1.0,
@@ -55,14 +51,15 @@ props = {
         'q':  1.0,
         'mu': 1.0,
         'dx': 1.0,
+        'M': int(np.sqrt(p.get('pcm').size))-1,
         'p_prod': p.get('pcm')[0, 0],
-        'p_inj':  p.get('pcm')[M.get('pcm'), M.get('pcm')],
+        'p_inj':  p.get('pcm')[-1, -1],
     }
 }
 
 
-def r_eq_exact(M, props):
-    return np.sqrt(2.0) * float(M) * np.exp(
+def r_eq_exact(props):
+    return np.sqrt(2.0) * float(props.get('M')) * np.exp(
         - np.pi * props.get('k') * props.get('h')
         / (props.get('q') * props.get('mu'))
         * (props.get('p_inj') - props.get('p_prod'))
@@ -70,21 +67,21 @@ def r_eq_exact(M, props):
     )
 
 
-def r_eq_regression(M, props, p):
+def r_eq_regression(props, p):
     # calculate dimensionless pressure and pressure difference
     p_D = p * props.get('k') * props.get('h') \
         / (props.get('q') * props.get('mu'))
-    p_diff = (p_D - p_D[0, 0])[0:M/2, 0:M/2]
+    p_diff = (p_D - p_D[0, 0])[0:props.get('M')/2, 0:props.get('M')/2]
 
     # compute radius matrix
-    r = np.zeros([M/2, M/2])
-    for i in range(M/2):
-        for j in range(M/2):
+    r = np.zeros([props.get('M')/2, props.get('M')/2])
+    for i in range(props.get('M')/2):
+        for j in range(props.get('M')/2):
             r[i, j] = np.sqrt(i**2 + j**2)
 
     # linearize matrices and remove well-block
-    r = r.reshape([(M/2)**2, ])[1:]
-    p_diff = p_diff.reshape([(M/2)**2, ])[1:]
+    r = r.reshape([(props.get('M')/2)**2, ])[1:]
+    p_diff = p_diff.reshape([(props.get('M')/2)**2, ])[1:]
 
     # create regression line and -polynomial
     reg = np.polyfit(np.log(r), p_diff, deg=1)
@@ -93,24 +90,23 @@ def r_eq_regression(M, props, p):
     return (intersection, reg_poly, r, p_diff)
 
 
-def make_plots(M, props, p, r_eq, title):
+def make_plots(props, p, r_eq, title):
     # get regression results
-    (intersection, reg_poly, r_reg, p_diff) = r_eq_regression(M, props, p)
+    (intersection, reg_poly, r_reg, p_diff) = r_eq_regression(props, p)
     r_reg_extended = range(1, 60, 1)
     r_reg_extended = [r/10.0 for r in r_reg_extended]
 
     # compute full radius matrix
-    r = np.zeros([M, M])
-    for i in range(M):
-        for j in range(M):
+    r = np.zeros([props.get('M'), props.get('M')])
+    for i in range(props.get('M')):
+        for j in range(props.get('M')):
             r[i, j] = np.sqrt(i**2 + j**2)
 
     # plot regression
-    print r_eq
-    titlestring = title + ', M = ' + str(M) \
+    titlestring = title + ', M = ' + str(props.get('M')) \
                         + '; exact: ' + str(r_eq.get('exact')) \
                         + '; regression: ' + str(r_eq.get('regression'))
-    fig = plt.figure(titlestring)
+    plt.figure(titlestring)
     ax1 = plt.subplot(1, 2, 1)
     ax1.scatter(r_reg, p_diff)
     ax1.semilogx(r_reg_extended, reg_poly(np.log(r_reg_extended)))
@@ -129,45 +125,41 @@ def make_plots(M, props, p, r_eq, title):
 
 r_eq = {
     'ecl': {
-        'exact': r_eq_exact(M.get('ecl'), props.get('ecl')),
+        'exact': r_eq_exact(props.get('ecl')),
         'regression': r_eq_regression(
-            M.get('ecl'), props.get('ecl'), p.get('ecl')
+            props.get('ecl'), p.get('ecl')
         )[0]
     },
     'ecll': {
-        'exact': r_eq_exact(M.get('ecll'), props.get('ecll')),
+        'exact': r_eq_exact(props.get('ecll')),
         'regression': r_eq_regression(
-            M.get('ecll'), props.get('ecll'), p.get('ecll')
+            props.get('ecll'), p.get('ecll')
         )[0]
     },
     'mrst': {
-        'exact': r_eq_exact(M.get('mrst'), props.get('mrst')),
+        'exact': r_eq_exact(props.get('mrst')),
         'regression': r_eq_regression(
-            M.get('mrst'), props.get('mrst'), p.get('mrst')
+            props.get('mrst'), p.get('mrst')
         )[0]
     },
     'pcm': {
-        'exact': r_eq_exact(M.get('pcm'), props.get('pcm')),
+        'exact': r_eq_exact(props.get('pcm')),
         'regression': r_eq_regression(
-            M.get('pcm'), props.get('pcm'), p.get('pcm')
+            props.get('pcm'), p.get('pcm')
         )[0]
     }
 }
 
 
-print 'M: ', M
+print 'M: ', props.get('M')
 print json.dumps(props, sort_keys=True, indent=2)
 print 'Calculated r_eq: '
 print json.dumps(r_eq, sort_keys=True, indent=2)
 
-make_plots(M.get('ecl'), props.get('ecl'), p.get('ecl'), r_eq.get('ecl'),
-           'ECL100 Metric')
-make_plots(M.get('ecll'), props.get('ecll'), p.get('ecll'), r_eq.get('ecll'),
-           'ECL100 Lab')
-make_plots(M.get('mrst'), props.get('mrst'), p.get('mrst'), r_eq.get('mrst'),
-           'MRST')
-make_plots(M.get('pcm'), props.get('pcm'), p.get('pcm'), r_eq.get('pcm'),
-           'Peaceman')
+make_plots(props.get('ecl'), p.get('ecl'), r_eq.get('ecl'), 'ECL100 Metric')
+make_plots(props.get('ecll'), p.get('ecll'), r_eq.get('ecll'), 'ECL100 Lab')
+make_plots(props.get('mrst'), p.get('mrst'), r_eq.get('mrst'), 'MRST')
+make_plots(props.get('pcm'), p.get('pcm'), r_eq.get('pcm'), 'Peaceman')
 
 plt.draw()
 plt.show()
