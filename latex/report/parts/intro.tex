@@ -51,18 +51,21 @@ The equivalent well-bore radius, $r_{eq}$, is the radius at which the steady-sta
  at a radius of $0.2 \Delta x$ \cite{Peaceman1978Interpretation}.
 % subsubsection equivalent_well-bore_radius (end)
 
-\subsubsection{ECL100 implementation} % (fold)
+\subsubsection{ECL100 and MRST implementation} % (fold)
 \label{ssub:ecl100_implementation}
 Schlumberger's ECL100 reservoir simulator uses the following default relationship to calculate the well index:
 \begin{equation}
-    WI = \frac{c\theta k h}{\ln \left(r_{eq}/r_w\right)+S}
+    \label{eq:wi_ecl}
+    WI = \frac{c\theta K h}{\ln \left(r_{eq}/r_w\right)+S}
 \end{equation}
-where $c$ is a unit conversion factor; $\theta$ is the angle of the segment connecting the well in radians ($2\pi$ for a Cartesian grid); and $S$ is the skin factor \cite{Schlumberger2013Eclipse}. For dimensionless units in a Cartesian grid and no skin effect, it reduces to equation \eqref{eq:well-index-intro}.
+where $c$ is a unit conversion factor; $\theta$ is the angle of the segment connecting the well in radians ($2\pi$ for a Cartesian grid); $K$ is the geometric mean of the permeabilities in $x$- and $y$-directions, $K=\sqrt{k_x k_y}$;and $S$ is the skin factor \cite{Schlumberger2013Eclipse}. For dimensionless units in a Cartesian grid and no skin effect, it reduces to equation \eqref{eq:well-index-intro}.
 \nomenclature{$c$}{unit conversion factor}
 \nomenclature{$\theta$}{angle of segment connecting the well}
 \nomenclature{$S$}{skin factor}
 
-The equivalent well-bore radius is by default calculated using the following expression:
+The expression MRST uses to calculate the well index is not stated explicitly in the manual \cite{Lie2014Introduction}, but it is likely the same as equation \eqref{eq:wi_ecl} because both ECL100 and MRST use Peaceman's well model \cite{Lie2014Introduction}.
+
+The equivalent well-bore radius for both ECL100 and MRST is by default calculated using the following expression \cite{Schlumberger2013Eclipse,Lie2014Introduction} originally derived by Peaceman \cite{Peaceman1983Interpretation}:
 \begin{equation}
     r_{eq} = 0.28 \frac{\sqrt{\Delta x^2 \sqrt{k_y/k_x} + \Delta y^2 \sqrt{k_x/k_y}}}{\sqrt[4]{k_y/k_x}+\sqrt[4]{k_x/k_y}}
 \end{equation}
@@ -70,6 +73,8 @@ which for isotropic conditions $k_x=k_y$ on a square grid $\Delta x= \Delta y$ r
 \begin{equation}
     r_{eq} = 0.1980 \Delta x
 \end{equation}
+
+\hl{both based on Peaceman}
 % subsubsection ecl100_implementation (end)
 
 % subsection numerical_reservoir_simulation (end)
