@@ -3,23 +3,34 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import json  # Only used for prettyprinting
 
-ecl_file = 'eclipse/12x12-pressure-corner.dat'         # ECL100, metric units
-ecll_file = 'eclipse/11x11-pressure-lab.dat'    # ECL100, lab units
-mrst_file = 'mrst/11x11-pressure.dat'           # MRST, metric units
-pcm_file = 'peaceman/10x10-pressure.dat'        # Peaceman, dimensionless
+ecl_file = 'eclipse/12x12-pressure-corner.dat'
 
 p = {
     'ecl': np.loadtxt(ecl_file)*0.986923267,  # bar -> atm
-    'ecll': np.loadtxt(ecll_file),            # atm
-    'mrst': np.loadtxt(mrst_file),            # atm
-    'pcm': np.loadtxt(pcm_file)               # Dimensionless
 }
+
+# Set corner points to average of the four corner blocks
+p['ecl'][1, 1] = np.average([p['ecl'][0, 0],
+                             p['ecl'][1, 0],
+                             p['ecl'][0, 1],
+                             p['ecl'][1, 1]])
+
+p['ecl'][-2, -2] = np.average([p['ecl'][-1, -1],
+                               p['ecl'][-2, -1],
+                               p['ecl'][-1, -2],
+                               p['ecl'][-2, -2]])
+
+# Drop outermost rows
+p['ecl'] = np.delete(p['ecl'], 0, 0)
+p['ecl'] = np.delete(p['ecl'], 0, 1)
+p['ecl'] = np.delete(p['ecl'], -1, 0)
+p['ecl'] = np.delete(p['ecl'], -1, 1)
 
 props = {
     'ecl': {
         'k':  300.0/1000.0,       # mD -> D
         'h':  30.0*100.0,         # m -> cm
-        'q':  150.0*115.740741,   # m3/day -> cc/sec
+        'q':  150.0*11.5740741,   # m3/day -> cc/sec
         'mu': 0.5,                # cP
         'dx': 30.0*100.0,         # m -> cm
         'M': int(np.sqrt(p.get('ecl').size))-1,
@@ -44,7 +55,7 @@ def r_eq_regression(props, p):
                / (props.get('q') * props.get('mu')))
     p_diff = (p_D - p_D[0, 0])
     print p_diff
-    p_diff = p_diff[2:6, 2:6]
+    p_diff = p_diff[1:5, 1:5]
 
     print p_diff
 
