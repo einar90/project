@@ -54,10 +54,10 @@ GRIDFILE
     2  /
 
 DXV
-    10 240 9*500 240 10  /
+    7.5 7.5 9*30 7.5 7.5  /
 
 DYV
-    10 240 9*500 240 10  /
+    7.5 7.5 9*30 7.5 7.5  /
 DZ
     169*30  /
 
@@ -119,11 +119,11 @@ WPIMULT
 /
 
 WCONPROD
-    PROD  OPEN  WRAT  1*  150000.0   /
+    PROD  OPEN  WRAT  1*  150   /
 /
 
 WCONINJE
-    INJ  WATER  OPEN  RATE  150000 1* 200    /
+    INJ  WATER  OPEN  RATE  150 1* 200    /
 /
 
 RPTSCHED
