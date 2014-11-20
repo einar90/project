@@ -40,17 +40,20 @@ def r_eq_regression(props, p):
     p_D = p * (props['k'] * props['h']
                / (props['q'] * props['mu']))
     p_diff = (p_D - p_D[0, 0])
-    p_diff = p_diff[1:5, 1:5]
+    
+    # Cutting matrix
+    half = p_diff.shape[0]/2 
+    p_diff = p_diff[1:half, 1:half]
 
     # compute radius matrix
-    r = np.zeros([4, 4])
-    for i in range(1, 5):
-        for j in range(1, 5):
+    r = np.zeros([(half-1), (half-1)])
+    for i in range(1, half):
+        for j in range(1, half):
             r[i-1, j-1] = np.sqrt(i**2 + j**2)
 
     # linearize matrices and remove well-block
-    r = r.reshape([4**2, ])
-    p_diff = p_diff.reshape([4**2, ])
+    r = r.reshape([(half-1)**2, ])
+    p_diff = p_diff.reshape([(half-1)**2, ])
 
     # create regression line and -polynomial
     reg = np.polyfit(np.log(r), p_diff, deg=1)
@@ -65,14 +68,16 @@ def make_plots(props, p, r_eq, title):
     r_reg_extended = range(1, 60, 1)
     r_reg_extended = [r/10.0 for r in r_reg_extended]
 
+    half = p_diff.shape[0]/2 
+
     # compute radius matrix
-    r = np.zeros([4, 4])
-    for i in range(1, 5):
-        for j in range(1, 5):
+    r = np.zeros([half-1, half-1])
+    for i in range(1, half):
+        for j in range(1, half):
             r[i-1, j-1] = np.sqrt(i**2 + j**2)
 
     # plot regression
-    titlestring = title + ', M = ' + str(10) \
+    titlestring = title + ', M = ' + str(p.shape[0]-1) \
                         + '; regression: ' + str(r_eq)
     plt.figure(titlestring)
     ax1 = plt.subplot(1, 2, 1)
@@ -83,7 +88,7 @@ def make_plots(props, p, r_eq, title):
     ax1.set_ylabel('$\Delta p$')
     ax1.set_xscale('log')
     ax1.set_xlim(1e-1, .6e1)
-    ax1.set_ylim(0, .6)
+    ax1.set_ylim(0, 2)
 
     # plot contour
     ax2 = plt.subplot(1, 2, 2)
@@ -105,6 +110,7 @@ print 'Calculated r_eq: '
 print json.dumps(r_eq, sort_keys=True, indent=2)
 
 make_plots(props['ecl'], p['ecl10'], r_eq['ecl10'], 'ECL100 Metric')
+make_plots(props['ecl'], p['ecl20'], r_eq['ecl20'], 'ECL100 Metric')
 
 plt.draw()
 plt.show()
