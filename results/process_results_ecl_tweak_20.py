@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import json  # Only used for prettyprinting
 
-ecl_file = 'eclipse/12x12-pressure-corner.dat'
+ecl_file = 'eclipse/20x20-pressure-corner.dat'
 
 p = {
     'ecl': np.loadtxt(ecl_file)*0.986923267,  # bar -> atm
@@ -54,20 +54,20 @@ def r_eq_regression(props, p):
                / (props.get('q') * props.get('mu')))
     p_diff = (p_D - p_D[0, 0])
     print p_diff
-    p_diff = p_diff[1:5, 1:5]
+    p_diff = p_diff[1:10, 1:10]
 
     print p_diff
 
     # compute radius matrix
-    r = np.zeros([4, 4])
-    for i in range(1, 5):
-        for j in range(1, 5):
+    r = np.zeros([9, 9])
+    for i in range(1, 10):
+        for j in range(1, 10):
             r[i-1, j-1] = np.sqrt(i**2 + j**2)
     print r
 
     # linearize matrices and remove well-block
-    r = r.reshape([4**2, ])
-    p_diff = p_diff.reshape([4**2, ])
+    r = r.reshape([9**2, ])
+    p_diff = p_diff.reshape([9**2, ])
 
     # create regression line and -polynomial
     reg = np.polyfit(np.log(r), p_diff, deg=1)
