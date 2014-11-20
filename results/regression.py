@@ -4,10 +4,12 @@ import json  # Only used for prettyprinting
 
 ecl10_file = 'eclipse/10x10-pressure-corner.dat'
 ecl20_file = 'eclipse/20x20-pressure-corner.dat'
+ecl50_file = 'eclipse/50x50-pressure-corner.dat'
 
 p = {
     'ecl10': np.loadtxt(ecl10_file)*0.986923267,  # bar -> atm
     'ecl20': np.loadtxt(ecl20_file)*0.986923267,  # bar -> atm
+    'ecl50': np.loadtxt(ecl50_file)*0.986923267,  # bar -> atm
 }
 
 props = {
@@ -99,9 +101,11 @@ def make_plots(props, p, r_eq, title):
 
 p['ecl10'] = process_grid_pressures(p['ecl10'])
 p['ecl20'] = process_grid_pressures(p['ecl20'])
+p['ecl50'] = process_grid_pressures(p['ecl50'])
 r_eq = {
     'ecl10': r_eq_regression(props['ecl'], p['ecl10'])[0],
-    'ecl20': r_eq_regression(props['ecl'], p['ecl20'])[0]
+    'ecl20': r_eq_regression(props['ecl'], p['ecl20'])[0],
+    'ecl50': r_eq_regression(props['ecl'], p['ecl50'])[0]
 }
 
 
@@ -111,6 +115,7 @@ print json.dumps(r_eq, sort_keys=True, indent=2)
 
 make_plots(props['ecl'], p['ecl10'], r_eq['ecl10'], 'ECL100 Metric')
 make_plots(props['ecl'], p['ecl20'], r_eq['ecl20'], 'ECL100 Metric')
+make_plots(props['ecl'], p['ecl50'], r_eq['ecl50'], 'ECL100 Metric')
 
 plt.draw()
 plt.show()
