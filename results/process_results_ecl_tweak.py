@@ -9,6 +9,11 @@ p = {
     'ecl': np.loadtxt(ecl_file)*0.986923267,  # bar -> atm
 }
 
+# p['ecl'][1, 1] = p['ecl'][0, 0]
+# p['ecl'][1,1] = (p['ecl'][0,0] + .5*p['ecl'][1,0] + .5*p['ecl'][0,1] + .25*p['ecl'][1,1])/2.25
+# p['ecl'][-2, -2] = p['ecl'][-1, -1]
+# p['ecl'][-2,-2] = (p['ecl'][-1,-1] + .5*p['ecl'][-2,-1] + .5*p['ecl'][-1,-2] + .25*p['ecl'][-2,-2])/2.25
+
 # Set corner points to average of the four corner blocks
 p['ecl'][1, 1] = np.average([p['ecl'][0, 0],
                              p['ecl'][1, 0],
@@ -54,7 +59,6 @@ def r_eq_regression(props, p):
     p_D = p * (props.get('k') * props.get('h')
                / (props.get('q') * props.get('mu')))
     p_diff = (p_D - p_D[0, 0])
-    print p_diff
     p_diff = p_diff[1:5, 1:5]
 
     print p_diff
