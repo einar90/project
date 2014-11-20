@@ -1,0 +1,138 @@
+--
+--                     Peaceman 1978 Simulation
+--                     ************************
+--                     23x23x1 grid
+--                     1 injector, 1 producer
+--                     metric units
+--
+-- 10X10 in the filename is due to the convention used in the
+-- Peaceman 1978 paper. MxM in the papers translates to a (M+1)x(M+1)
+-- grid.
+
+
+RUNSPEC ==================================================================
+
+TITLE
+PEACEMAN 1978 10X10X1
+
+DIMENS
+    23  23  1  /
+
+ENDSCALE
+/
+
+
+NONNC
+
+WATER
+
+METRIC
+
+EQLDIMS
+    1  100  2  1  2  /
+
+EQLOPTS
+    QUIESC  MOBILE  /
+
+TABDIMS
+    1  1  15  15  1  15   /
+
+WELLDIMS
+    2  1  1  2 /
+
+START
+    1  JAN  2014  /
+
+UNIFOUT
+UNIFIN
+
+
+GRID    ==================================================================
+NOECHO
+
+GRIDFILE
+    2  /
+
+DXV
+    3.75 11.25 19*30 11.25 3.75  /
+
+DYV
+    3.75 11.25 19*30 11.25 3.75  /
+DZ
+    169*30  /
+
+TOPS
+    169*1000.0  /
+
+EQUALS
+    PORO    0.207  /
+    PERMX   1000    /
+    PERMY   1000    /
+    PERMZ   1000    /
+/
+
+INIT
+
+PROPS   ==================================================================
+
+KRW
+    169*1.0 /
+
+KRWR
+    169*1.0 /
+
+INCLUDE
+    'COMMON.PROP' /
+
+SOLUTION =================================================================
+
+INCLUDE
+    'COMMON.SOLN' /
+
+SUMMARY ==================================================================
+
+INCLUDE
+    'COMMON.SMRY' /
+
+CTFAC
+    'PROD' 1 1 1 /
+    'INJ' 23 23 1 /
+/
+
+SCHEDULE =================================================================
+
+WELSPECS
+--  Name  Grp I  J   Depth    Phase Rad
+    PROD  G1  1  1   1015.00  WATER  3*  /
+    INJ   G1  23 23  1015.00  WATER  3*  /
+/
+
+COMPDAT
+--  Name  I  J  K1 K2           DIAM
+    PROD  1  1  1  1  OPEN  2*  0.3048 /
+    INJ   23 23 1  1  OPEN  2*  0.3048 /
+/
+
+WPIMULT
+    PROD  0.25 /
+    INJ   0.25 /
+/
+
+WCONPROD
+    PROD  OPEN  WRAT  1*  150   /
+/
+
+WCONINJE
+    INJ  WATER  OPEN  RATE  150 1* 200    /
+/
+
+RPTSCHED
+   PRESSURE  SOIL  SWAT  SGAS  RESTART=2  FIP=1
+   WELLS=1  SUMMARY=1 CPU=2  WELSPECS  NEWTON=1 /
+
+TSTEP
+    50*10
+/
+
+
+END      =================================================================
