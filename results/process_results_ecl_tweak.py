@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import json  # Only used for prettyprinting
 
 ecl_file = 'eclipse/12x12-pressure-corner.dat'
