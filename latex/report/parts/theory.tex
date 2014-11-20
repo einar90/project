@@ -2,16 +2,11 @@
 
 \section{Theory} % (fold)
 \label{sec:theory}
-This section contains a thorough review of the equations discussed in Section~\ref{sec:introduction}. This includes a derivation of the expressions for the well index and equivalent wellbore radius originally derived by Peaceman \cite{Peaceman1978Interpretation}. The discretized form of the differential flow equation -- which is needed to calculate the equivalent wellbore radius -- is also derived.
+This section contains a thorough review of the equations discussed in Section~\ref{sec:introduction}. This includes derivations of the expressions for the well index and equivalent wellbore radius, as well as  the discretized form of the  diffusivity equation needed to calculate the equivalent wellbore radius.
 
 \subsection{Well Indexes} % (fold)
 \label{sub:well_indices}
-In numerical reservoir simulation, the well index (WI) is used to relate the flowing well pressure, $p_{wf}$,  to the numerical wellblock pressure, $p_{wb}$. The well index takes into account the wellblock geometry and the location and orientation of the well segment in the gridblock, as well as rock properties \cite{Peaceman2003New}.
-\nomenclature{$p$}{pressure}
-\nomenclature{$p_{wf}$}{flowing well pressure}
-\nomenclature{$p_{wb}$}{wellblock pressure}
-
-The well index is used when calculating the flow rate into the well. For single-phase radial flow the it may be written as
+The well index is used when calculating the flow rate from the well block into the well. For single-phase radial flow the it may be written as
 \begin{equation}
     \label{eq:peaceman-wi1}
     q = \frac{WI}{\mu} \left( p_{wb} - p_{wf} \right)
@@ -20,6 +15,9 @@ where $q$ is the volumetric flow rate into the well \cite{Peaceman2003New}.
 \nomenclature{$q$}{volumetric flow rate $[\mathrm{m^3/s}]$}
 \nomenclature{$\mu$}{viscosity}
 \nomenclature{$WI$}{well index}
+\nomenclature{$p$}{pressure}
+\nomenclature{$p_{wf}$}{flowing well pressure}
+\nomenclature{$p_{wb}$}{wellblock pressure}
 
 For a single well in a two-dimensional reservoir reservoir, Darcy's law for radial one-phase flow in the absence of skin effect can be expressed as
 \begin{equation}
@@ -76,7 +74,7 @@ Substitution of equation \eqref{eq:peaceman-pwb} into equation \eqref{eq:peacema
 
 \subsection{Equivalent Wellblock Radius} % (fold)
 \label{sub:equivalent_wellblock_radius}
-The correct value for the equivalent wellblock radius $r_{eq}$ may be found by examining a numerical solution to the \emph{differential flow equation} on an $M\times M$ square grid like the one shown in Figure~\ref{fig:peaceman-grid}.
+The correct value for the equivalent wellblock radius $r_{eq}$ may be found by examining a numerical solution to the \emph{ diffusivity equation} on an $M\times M$ square grid like the one shown in Figure~\ref{fig:peaceman-grid}.
 \nomenclature{$M$}{number of blocks on each side of computing grid}
 
 \begin{figure}[htbp]
@@ -88,9 +86,9 @@ The correct value for the equivalent wellblock radius $r_{eq}$ may be found by e
 
 
 
-\subsubsection{Derivation of the discretized differential flow equation} % (fold)
+\subsubsection{Derivation of the discretized diffusivity equation} % (fold)
 \label{ssub:derivation}
-To derive the discrete form of the differential flow equation, we  start with the continuity equation for two-dimensional, single-phase, compressible flow \cite{Peaceman1977Fundamentals}
+To derive the discrete form of the diffusivity equation, we  start with the continuity equation for two-dimensional, single-phase, compressible flow \cite{Peaceman1977Fundamentals}
 \begin{equation}
     \label{eq:continuity-2d}
     - \frac{\partial}{\partial x} \left( h\rho v_x \right) - \frac{\partial}{\partial y} \left( h\rho v_y \right) + hQ = h \frac{\partial }{\partial t} \left( \phi \rho \right)
@@ -118,7 +116,7 @@ substituting Darcy's law in the $x$- and $y$-directions \cite{Peaceman1977Fundam
         v_y = -\frac{k}{\mu} \frac{\partial p}{\partial y}
     \end{equation}
 \end{subequations}
-and assuming constant $h,\rho,k$ and $\mu$ gives us the differential flow equation for 2-dimensional incompressible flow in a homogeneous reservoir
+and assuming constant $h,\rho,k$ and $\mu$ gives us the diffusivity equation for 2-dimensional incompressible flow in a homogeneous reservoir
 \begin{equation}
     \label{eq:differential-flow}
     \frac{khA}{\mu} \frac{\partial^2 p}{\partial x^2}  + \frac{khA}{\mu} \frac{\partial^2 p}{\partial y^2} = -q
@@ -133,7 +131,7 @@ To acquire a discretized form of equation \eqref{eq:differential-flow}, we apply
         \frac{\partial^2 p_{i,j}}{\partial y^2} = \frac{p_{i,j-1} -2p_{i,j} + p_{i,j+1}}{\Delta y^2} + O(\Delta y^2)
     \end{equation}
 \end{subequations}
-where $O(\Delta x^2)$ and $O(\Delta x^2)$ are the error-terms. Substituting this and $A=\Delta x \Delta y$ into \eqref{eq:differential-flow} and taking $\Delta x = \Delta y$ gives us the discretized form of the differential flow equation
+where $O(\Delta x^2)$ and $O(\Delta x^2)$ are the error-terms. Substituting this and $A=\Delta x \Delta y$ into \eqref{eq:differential-flow} and taking $\Delta x = \Delta y$ gives us the discretized form of the diffusivity equation
 \begin{equation}
     \label{eq:differential-flow-discretized}
     \frac{kh}{\mu} \left( p_{i-1,j} -2p_{i,j} + p_{i+1,j} \right) + \frac{kh}{\mu} \left( p_{i,j-1} -2p_{i,j} + p_{i,j+1} \right) = -q_{i,j}
@@ -184,7 +182,7 @@ and may be solved directly using Gaussian elimination. The matrix structure is s
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{figures/other/eq-system-structure_m4.pdf}
-    \caption{Sketch of the equation system \eqref{eq:equation-system-matrix} \hl{generated by} equation \eqref{eq:differential-flow-discretzed-dimensionless} with $M=4$.}
+    \caption{Sketch of the equation system \eqref{eq:equation-system-matrix} resulting from equation \eqref{eq:differential-flow-discretzed-dimensionless} with $M=4$.}
     \label{fig:matrix-structure}
 \end{figure}
 % subsubsection derivation (end)
@@ -254,8 +252,11 @@ Combining \eqref{eq:muskat-pressure-drop} and \eqref{eq:muskat-diagonal}, insert
 \end{equation}
 or, using dimensionless pressure,
 \begin{equation}
+    \label{eq:peaceman77-eqrad-exact-dimensionless}
     \frac{r_{eq}}{\Delta x} = \sqrt{2}M \exp\left[- \pi \left( \Phi_{M,M} - \Phi_{0,0} \right) - 0.6190 \right].
 \end{equation}
+
+Note that Peaceman later argued that the constant term $0.6190$ in Muskat's equation \eqref{eq:muskat-pressure-drop} is inaccurate \cite{Peaceman1983Interpretation}. This is because Muskat \cite{Muskat1946Flow} in his derivation considered an infinite series to be negible. In his 1983 paper, Peaceman includes the five first terms of this series, thus obtaining the more accurate value $0.61738575$. This causes a difference in the fourth significant digits of the reults. This more precise value is not used here in order to replicate the results of Peaceman's 1978 \cite{Peaceman1978Interpretation} paper as closely as possible.
 
 % subsubsection exact_calculation_of_equivalent_radius (end)
 

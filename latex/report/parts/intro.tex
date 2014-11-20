@@ -4,7 +4,7 @@
 \label{sec:introduction}
 In reservoir simulation, a number of differential equations are used to describe the flow of fluids. Solving these equations analytically is only feasible for very simple systems involving homogeneous reservoirs with regular boundaries \cite{Peaceman1977Fundamentals}. Because of this, it is necessary to create discrete models for the reservoirs we want to model, and solve the flow equations numerically.
 
-For simplicity, this project is restricted to cases dealing with single-phase, two-dimensional, steady-state flow under isotropic conditions.
+For simplicity, this project is restricted to cases concerning single-phase, two-dimensional, steady-state flow under isotropic conditions.
 
 \subsection{Numerical reservoir simulation} % (fold)
 \label{sub:numerical_reservoir_simulation}
@@ -20,36 +20,42 @@ The reservoir is discretized by dividing it into \emph{grid blocks}. Each block 
 \end{figure}
 
 
-Wells in a numerical reservoir simulation model are placed inside grid blocks, often called \emph{well blocks}. The horizontal dimension of a well block may be hundreds of meters\footnote{This may be remedied by using local grid refinement (LGR) around the well.}, \emph{much} larger than the well-bore radius. This means that the pressure calculated for the well block will differ greatly from the bottom-hole pressure of the well. This pressure difference is important, because it is needed to calculate the fluid flow  from the well block into the well-bore.
+Wells in a numerical reservoir simulation model are placed inside grid blocks, often called \emph{well blocks}. The horizontal dimension of a well block may be hundreds of meters\footnote{This may be remedied by using local grid refinement (LGR) around the well.}, \emph{much} larger than the wellbore radius. This means that the pressure calculated for the well block will differ greatly from the bottom-hole pressure of the well. This pressure difference is important, because it is needed to calculate the fluid flow  from the well block into the wellbore.
 
-\subsubsection{Well index (WI)} % (fold)
-\label{ssub:well_index_}
-
-The relationship between the well-bore and the rest of the reservoir is modeled through the use of a \emph{well index} (WI)\footnote{The term ``connection transmissibility factor'' (CF) is also used by some authors\cite{Peaceman2003New,Schlumberger2013Eclipse}.}. The well index relates the well flow rate into or out of any grid block intersected by a well to the difference between the well block pressure $p_{wb}$ and the local flowing well-bore pressure $p_{wf}$ \cite{Wolfsteiner2003Calculation}. For single phase flow this relationship is
+\subsection{Well Models} % (fold)
+\label{sub:well_models}
+In numerical reservoir simulation, well models are used to relate the wellblock pressure to the actual wellbore pressure. The most commonly used model is Peaceman's model, utilizing the concept of an ``equivalent wellbore radius'', $r_{eq}$. This model may be stated as
 \begin{equation}
-    \label{eq:wolfsteiner-well-index-multiple-blocks}
-    q = \frac{WI}{\mu} \left( p_{wb} - p_{wf} \right)
+    \label{eq:intro-well-model}
+    p_{wb} = p_{wf} + \frac{q\mu}{2\pi k h} \ln \frac{r_{eq}}{r_{w}}
 \end{equation}
-where $q$ is the volumetric flow rate.
+where $p_{wb}$ is the wellblock pressure and $p_{wf}$ is the flowing wellbore pressure \cite{Peaceman1990Interpretation}.
+% subsection well_models (end)
 
-The well index accounts for the geometry of the well block, location and orientation of the well segment in the grid block, and rock properties. For a single vertical well in a 2D areal reservoir \cite{Peaceman2003New},
+\subsubsection{Well Index (WI)} % (fold)
+\label{ssub:well_index_}
+The components of Peaceman's well model accounting the geometry of the well block, location and orientation of the well segment within the well block and rock properties have been used by several authors (although not Peaceman himself) to define a \emph{well index}\footnote{The term ``connection transmissibility factor'' (CF) is also used by some authors\cite{Peaceman2003New,Schlumberger2013Eclipse}.} \cite{Wolfsteiner2003Calculation}:
 \begin{equation}
     \label{eq:well-index-intro}
     WI = \frac{2\pi kh}{\ln \left(r_{eq}/r_{w}\right)}
 \end{equation}
-where $r_{eq}$ is the \emph{equivalent well-bore radius} and $r_w$ is the well-bore radius.
+Substituting equation \eqref{eq:well-index-intro} into equation \eqref{eq:intro-well-model} and solving for the flow rate, $q$, yields the expression commonly used to calculate the flow rate from a well block into the well:
+\begin{equation}
+    \label{eq:wolfsteiner-well-index-multiple-blocks}
+    q = \frac{WI}{\mu} \left( p_{wb} - p_{wf} \right)
+\end{equation}
 
-The user can often define the values of $WI$ or $r_{eq}$ for each well block in commercial simulators, or the simulator cal calculate it using a default expression \cite{Peaceman2003New}.
+The user can often define the values of $WI$ or $r_{eq}$ for each well block in commercial simulators, or let the simulator calculate it using a default expression \cite{Peaceman2003New}.
 % subsubsection well_index_ (end)
 
-\subsubsection{Equivalent well-bore radius} % (fold)
-\label{ssub:equivalent_well-bore_radius}
-The equivalent well-bore radius, $r_{eq}$, is the radius at which the steady-state flowing pressure for the actual well is equal to the numerically calculated pressure for the well block. Examination of the pressures obtained by numerical solution of single-phase flow into a single well at steady state shows that $r_{eq} \approx 0.2 \Delta x$; i.e. that the well block pressure is approximately equal to the actual flowing pressure calculated using the radial flow equation \cite{Dake1978Developments}
+\subsubsection{Equivalent wellbore radius} % (fold)
+\label{ssub:equivalent_wellbore_radius}
+The equivalent wellbore radius, $r_{eq}$, used in Peaceman's well model, is the radius at which the steady-state flowing pressure for the actual well is equal to the numerically calculated pressure for the well block. Examination of the pressures obtained by numerical solution of single-phase flow into a single well at steady state shows that $r_{eq} \approx 0.2 \Delta x$; i.e. that the well block pressure is approximately equal to the actual flowing pressure calculated using the radial flow equation \cite{Dake1978Developments}
 \begin{equation}
     p = p_{wf} + \frac{q\mu}{2\pi kh} \ln{\frac{r}{r_w}}
 \end{equation}
- at a radius of $0.2 \Delta x$ \cite{Peaceman1978Interpretation}.
-% subsubsection equivalent_well-bore_radius (end)
+ at a radius $r = 0.2 \Delta x$ \cite{Peaceman1978Interpretation}.
+% subsubsection equivalent_wellbore_radius (end)
 
 \subsubsection{ECL100 and MRST implementation} % (fold)
 \label{ssub:ecl100_implementation}
@@ -63,9 +69,9 @@ where $c$ is a unit conversion factor; $\theta$ is the angle of the segment conn
 \nomenclature{$\theta$}{angle of segment connecting the well}
 \nomenclature{$S$}{skin factor}
 
-The expression MRST uses to calculate the well index is not stated explicitly in the manual \cite{Lie2014Introduction}, but it is likely the same as equation \eqref{eq:wi_ecl} because both ECL100 and MRST use Peaceman's well model \cite{Lie2014Introduction}.
+The expression MRST uses to calculate the well index is not stated explicitly in the manual \cite{Lie2014Introduction}, but it is likely the same as equation \eqref{eq:wi_ecl} because both ECL100 and MRST use Peaceman's well model \cite{Lie2014Introduction,Schlumberger2013Eclipse}.
 
-The equivalent well-bore radius for both ECL100 and MRST is by default calculated using the following expression \cite{Schlumberger2013Eclipse,Lie2014Introduction} originally derived by Peaceman \cite{Peaceman1983Interpretation}:
+The equivalent wellbore radius for both ECL100 and MRST is by default calculated using the following expression \cite{Schlumberger2013Eclipse,Lie2014Introduction} originally derived by Peaceman \cite{Peaceman1983Interpretation}:
 \begin{equation}
     r_{eq} = 0.28 \frac{\sqrt{\Delta x^2 \sqrt{k_y/k_x} + \Delta y^2 \sqrt{k_x/k_y}}}{\sqrt[4]{k_y/k_x}+\sqrt[4]{k_x/k_y}}
 \end{equation}
@@ -73,8 +79,6 @@ which for isotropic conditions $k_x=k_y$ on a square grid $\Delta x= \Delta y$ r
 \begin{equation}
     r_{eq} = 0.1980 \Delta x
 \end{equation}
-
-\hl{both based on Peaceman}
 % subsubsection ecl100_implementation (end)
 
 % subsection numerical_reservoir_simulation (end)
