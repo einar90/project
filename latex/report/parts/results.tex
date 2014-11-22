@@ -12,12 +12,12 @@ All results in this section was computed using the a solver implemented in Pytho
 
 A contour plot of the solution to the discretized differential flow equation on the $10 \times 10$ grid in Figure~\ref{fig:peaceman-grid} is shown in Figure~\ref{fig:pressure_drop_contour}. Table~\ref{tbl:peaceman-results} shows $r_{eq}$ found using the regression method outlined in Section~\ref{ssub:approximate_calculation_of_equivalent_radius}, as well as caluculated using equation \eqref{eq:peaceman77-eqrad-exact} for various $M\times M$ grids.
 
-\begin{table}[H]
+\begin{table}[htbp]
     \centering
     \caption{Computed equivalent radius of well-block $r_{eq}$ for various values of $M\times M$ grid sizes. $\Phi_{M,M} - \Phi_{0,0}$ is the dimensionless pressure drop between producer and injector, calculated using using the program in Listing~\ref{lst:peaceman77_solver}; $r_{eq}/\Delta x$ (exact) refers to the solution using equation \eqref{eq:peaceman77-eqrad-exact}; $r_{eq} / \Delta x$ (regression) refers to the point where the regression line crosses the $x$-axis (see Figure~\ref{fig:peaceman77_pressure_vs_radius}).}
-    \begin{tabular}{rccc}
+    \begin{tabular}{r|ccc}
         \toprule
-        $M$ & $\Phi_{M,M} - \Phi_{o,o}$ & $r_{eq}/\Delta x$ (exact) & $r_{eq} / \Delta x$ (regression)\\
+        $M$ & $\Phi_{M,M} - \Phi_{o,o}$ & $r_{eq}/\Delta x$ (exact) & $r_{eq} / \Delta x$ (regression)  \\
         \midrule
         3   & 0.78571 & 0.1936 & 0.297 \\
         5   & 0.94346 & 0.1965 & 0.225 \\
@@ -32,7 +32,7 @@ A contour plot of the solution to the discretized differential flow equation on 
     \label{tbl:peaceman-results}
 \end{table}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \scalebox{0.7}{\input{figures/plots/peaceman77-contour_10x10.pgf}}
     \caption{Contour plot of the pressure difference calulated using equation \eqref{eq:differential-flow-discretzed-dimensionless} with $M=32$, solved using the program listing \ref{lst:peaceman77_solver}. The injector is placed in the upper right corner; the producer is placed in the lower left corner. The pressure difference is calculated relative to the block containing the producer.}
@@ -57,6 +57,22 @@ A contour plot of the solution to the discretized differential flow equation on 
 \label{sub:sintef_mrst_simulation}
 
 % subsection sintef_mrst_simulation (end)
+
+\begin{table}[htbp]
+\centering
+    \caption{Results from simulations using ECL100 and MRST. \hl{exact method not applicable because it is spesifically made for the five-point stencil}}
+    \begin{tabular}{c|cc|cc}
+        \toprule
+            & \multicolumn{2}{c|}{ECL100} & \multicolumn{2}{c}{MRST} \\
+        $M$ &  $r_{eq}/\Delta x$ (exact) & $r_{eq}/\Delta x$ (regression) & $r_{eq}/\Delta x$ (exact) & $r_{eq}/\Delta x$ (regression) \\
+        \midrule
+        10  & $3.4\times 10^{-06}$       & 0.204                          &  $4.2\times 10^{-06}$     & 0.204 \\
+        20  & $4.3\times 10^{-07}$       & 0.206                          &  $5.4\times 10^{-07}$     & 0.206 \\
+        50  & $2.8\times 10^{-08}$       & 0.207                          &  $3.6\times 10^{-08}$     & 0.207 \\
+        \bottomrule
+    \end{tabular}
+    \label{tbl:simulation-results}
+\end{table}
 
 
 % section results (end)

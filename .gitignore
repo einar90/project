@@ -120,3 +120,4 @@ sympy-plots-for-*.tex/
 python/pressure_difference.dat
 *.ptex
 python/*-pressure.dat
+matlab/*-pressure.dat

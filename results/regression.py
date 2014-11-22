@@ -6,10 +6,17 @@ ecl10_file = 'eclipse/10x10-pressure-corner.dat'
 ecl20_file = 'eclipse/20x20-pressure-corner.dat'
 ecl50_file = 'eclipse/50x50-pressure-corner.dat'
 
+mrst10_file = 'mrst/10x10-pressure-corner.dat'
+mrst20_file = 'mrst/20x20-pressure-corner.dat'
+mrst50_file = 'mrst/50x50-pressure-corner.dat'
+
 p = {
-    'ecl10': np.loadtxt(ecl10_file)*0.986923267,  # bar -> atm
-    'ecl20': np.loadtxt(ecl20_file)*0.986923267,  # bar -> atm
-    'ecl50': np.loadtxt(ecl50_file)*0.986923267,  # bar -> atm
+    'ecl10': np.loadtxt(ecl10_file)*0.986923267,    # bar -> atm
+    'ecl20': np.loadtxt(ecl20_file)*0.986923267,    # bar -> atm
+    'ecl50': np.loadtxt(ecl50_file)*0.986923267,    # bar -> atm
+    'mrst10': np.loadtxt(mrst10_file)*0.986923267,  # bar -> atm
+    'mrst20': np.loadtxt(mrst20_file)*0.986923267,  # bar -> atm
+    'mrst50': np.loadtxt(mrst50_file)*0.986923267,  # bar -> atm
 }
 
 props = {
@@ -98,15 +105,36 @@ def make_plots(props, p, r_eq, title):
     cntplot = ax2.contour(p, 20, colors='k')
     plt.clabel(cntplot, fontsize=9, inline=1)
 
+def r_eq_exact(props, p, M):
+    return np.sqrt(2.0) * M * np.exp(
+        - np.pi * props.get('k') * props.get('h')
+        / (props.get('q') * props.get('mu'))
+        * (p[-1,-1] - p[0,0])
+        - 0.6190
+    )
+
 
 p['ecl10'] = process_grid_pressures(p['ecl10'])
 p['ecl20'] = process_grid_pressures(p['ecl20'])
 p['ecl50'] = process_grid_pressures(p['ecl50'])
+p['mrst10'] = process_grid_pressures(p['mrst10'])
+p['mrst20'] = process_grid_pressures(p['mrst20'])
+p['mrst50'] = process_grid_pressures(p['mrst50'])
 r_eq = {
     'ecl10': r_eq_regression(props['ecl'], p['ecl10'])[0],
     'ecl20': r_eq_regression(props['ecl'], p['ecl20'])[0],
-    'ecl50': r_eq_regression(props['ecl'], p['ecl50'])[0]
+    'ecl50': r_eq_regression(props['ecl'], p['ecl50'])[0],
+    'mrst10': r_eq_regression(props['ecl'], p['mrst10'])[0],
+    'mrst20': r_eq_regression(props['ecl'], p['mrst20'])[0],
+    'mrst50': r_eq_regression(props['ecl'], p['mrst50'])[0],
 }
+
+print r_eq_exact(props['ecl'], p['ecl10'], 10)
+print r_eq_exact(props['ecl'], p['ecl20'], 20)
+print r_eq_exact(props['ecl'], p['ecl50'], 50)
+print r_eq_exact(props['ecl'], p['mrst10'], 10)
+print r_eq_exact(props['ecl'], p['mrst20'], 20)
+print r_eq_exact(props['ecl'], p['mrst50'], 50)
 
 
 print json.dumps(props, sort_keys=True, indent=2)
@@ -116,6 +144,9 @@ print json.dumps(r_eq, sort_keys=True, indent=2)
 make_plots(props['ecl'], p['ecl10'], r_eq['ecl10'], 'ECL100 Metric')
 make_plots(props['ecl'], p['ecl20'], r_eq['ecl20'], 'ECL100 Metric')
 make_plots(props['ecl'], p['ecl50'], r_eq['ecl50'], 'ECL100 Metric')
+make_plots(props['ecl'], p['mrst10'], r_eq['mrst10'], 'MRST Metric')
+make_plots(props['ecl'], p['mrst20'], r_eq['mrst20'], 'MRST Metric')
+make_plots(props['ecl'], p['mrst20'], r_eq['mrst20'], 'MRST Metric')
 
 plt.draw()
 plt.show()
