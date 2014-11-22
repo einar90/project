@@ -1,0 +1,35 @@
+% -*- root: ../../project.tex -*-
+
+\begin{tikzpicture}[scale=0.15]
+    \draw[] (0,0) to (45,0);
+    \draw[densely dashed] (45,0) to (50,0);
+    
+    \draw[] (0,0) to (0,45);
+    \draw[densely dashed] (0,45) to (0,50);
+
+    \draw[] (15,0) to (15,45);
+    \draw[densely dashed] (15,45) to (15,50);
+    
+    \draw[] (45,0) to (45,45);
+    \draw[densely dashed] (45,45) to (45,50);
+
+    \draw[] (0,15) to (45,15);
+    \draw[densely dashed] (45,15) to (50,15);
+
+    \draw[] (0,45) to (45,45);
+    \draw[densely dashed] (45,45) to (50,45);
+
+    \draw[] (3.75,0) to (3.75,45);
+    \draw[densely dashed] (3.75,45) to (3.75,50);
+
+    \draw[] (0,3.75) to (45,3.75);
+    \draw[densely dashed] (45,3.75) to (50,3.75);
+
+    \draw[fill=black] (1.875,1.875) circle (1);
+
+    \node at (1.875,-2) {$\frac{1}{8}\Delta x$};
+    \node at (9.5,-2) {$\frac{3}{8}\Delta x$};
+    \node at (30,-2) {$\Delta x$};
+
+
+\end{tikzpicture}
