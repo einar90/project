@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import json  # Only used for prettyprinting
 
 # Filenames
 ecl10_file = 'eclipse/10x10-pressure-corner.dat'
