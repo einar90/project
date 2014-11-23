@@ -1,41 +1,30 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import json  # Only used for prettyprinting
 
-pcm_file = 'peaceman/10x10-pressure.dat'        # Peaceman, dimensionless
-
-p = {
-    'pcm': np.loadtxt(pcm_file)               # Dimensionless
-}
-
-props = {
-    'pcm': {                      # Dimensionless
-        'M': int(np.sqrt(p['pcm'].size))-1,
-        'p_prod': p['pcm'][0, 0],
-        'p_inj':  p['pcm'][-1, -1],
-    }
-}
+p = np.loadtxt('peaceman/32x32-pressure.dat')  # Load pressure from file
+M = int(np.sqrt(p.size))-1  # Calculate M
 
 
-def r_eq_exact(props):
-    return np.sqrt(2.0) * float(props['M']) * np.exp(
-        - np.pi * (props['p_inj'] - props['p_prod']) - 0.6190)
+def r_eq_exact(p, M):
+    ''' Calculate equivalent wellbore radius using the 'exact' method. '''
+    return np.sqrt(2.0) * float(M) * np.exp(
+        - np.pi * (p[-1, -1] - p[0, 0]) - 0.6190
+        )
 
 
-def r_eq_regression(props, p):
-    # calculate dimensionless pressure and pressure difference
-    p_D = p
-    p_diff = (p_D - p_D[0, 0])[0:props['M']/2, 0:props['M']/2]
+def r_eq_regression(p, M):
+    ''' Calculate pressure using the regression method '''
+    p_diff = (p - p[0, 0])[0:M/2, 0:M/2]  # Calculate pressure difference
 
-    # compute radius matrix
-    r = np.zeros([props['M']/2, props['M']/2])
-    for i in range(props['M']/2):
-        for j in range(props['M']/2):
+    # Calculate radius matrix
+    r = np.zeros([M/2, M/2])
+    for i in range(M/2):
+        for j in range(M/2):
             r[i, j] = np.sqrt(i**2 + j**2)
 
-    # linearize matrices and remove well-block
-    r = r.reshape([(props['M']/2)**2, ])[1:]
-    p_diff = p_diff.reshape([(props['M']/2)**2, ])[1:]
+    # linearize matrices and remove wellblock
+    r = r.reshape([(M/2)**2, ])[1:]
+    p_diff = p_diff.reshape([(M/2)**2, ])[1:]
 
     # create regression line and -polynomial
     reg = np.polyfit(np.log(r), p_diff, deg=1)
@@ -44,54 +33,50 @@ def r_eq_regression(props, p):
     return (intersection, reg_poly, r, p_diff)
 
 
-def make_plots(props, p, r_eq, title):
-    # get regression results
-    (intersection, reg_poly, r_reg, p_diff) = r_eq_regression(props, p)
+def make_plots(p, M):
+    # Get regression results
+    (intersection, reg_poly, r_reg, p_diff) = r_eq_regression(p, M)
+
+    # Create extended radius vector for plotting the regression line
     r_reg_extended = range(1, 60, 1)
     r_reg_extended = [r/10.0 for r in r_reg_extended]
 
-    # compute full radius matrix
-    r = np.zeros([props['M'], props['M']])
-    for i in range(props['M']):
-        for j in range(props['M']):
+    # Calculate radius matrix
+    r = np.zeros([M, M])
+    for i in range(M):
+        for j in range(M):
             r[i, j] = np.sqrt(i**2 + j**2)
 
-    # plot regression
-    titlestring = title + ', M = ' + str(props['M']) \
-                        + '; exact: ' + str(r_eq['exact']) \
-                        + '; regression: ' + str(r_eq['regression'])
-    plt.figure(titlestring)
+    # Scatter plot pressure on semilogx axis
     ax1 = plt.subplot(1, 2, 1)
     ax1.scatter(r_reg, p_diff)
-    ax1.semilogx(r_reg_extended, reg_poly(np.log(r_reg_extended)))
-    ax1.set_title('Pressure drop')
-    ax1.set_xlabel('$r$')
-    ax1.set_ylabel('$\Delta p$')
     ax1.set_xscale('log')
+
+    #  Plot regression line
+    ax1.semilogx(r_reg_extended, reg_poly(np.log(r_reg_extended)))
+
+    # Set axis labels and title
+    ax1.set_title('Pressure drop')
+    ax1.set_xlabel('$r/\Delta x$')
+    ax1.set_ylabel('$\Delta p$')
+
+    # Set axis constraints
     ax1.set_xlim(1e-1, .6e1)
     ax1.set_ylim(0, .6)
 
-    # plot contour
+    # Create contour plot of the pressure
     ax2 = plt.subplot(1, 2, 2)
-    ax2.set_title('Pressure distribution')
     cntplot = ax2.contour(p, 20, colors='k')
     plt.clabel(cntplot, fontsize=9, inline=1)
+    ax2.set_title('Pressure distribution')
 
-r_eq = {
-    'pcm': {
-        'exact': r_eq_exact(props['pcm']),
-        'regression': r_eq_regression(
-            props['pcm'], p['pcm']
-        )[0]
-    }
-}
+    # Display plots
+    plt.draw()
+    plt.show()
 
+# Print solution values
+print 'Solution for M = ', str(M)
+print 'r_eq from exact method: ', r_eq_exact(p, M)
+print 'r_eq from regression method: ', r_eq_regression(p, M)[0]
 
-print json.dumps(props, sort_keys=True, indent=2)
-print 'Calculated r_eq: '
-print json.dumps(r_eq, sort_keys=True, indent=2)
-
-make_plots(props['pcm'], p['pcm'], r_eq['pcm'], 'Peaceman')
-
-plt.draw()
-plt.show()
+make_plots(p, M)
