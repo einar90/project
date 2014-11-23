@@ -3,20 +3,18 @@
 \section{Method} % (fold)
 \label{sec:method}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
-    \begin{subfigure}[c]{0.45\textwidth}
-            \includegraphics[width=\textwidth]{figures/grids/well-placement-paper.pdf}
-            \caption{Well placed as in the paper: in the corner of the lower-left block.}
-            \label{fig:well-placement-paper}
-    \end{subfigure}%
-    \quad
-    \begin{subfigure}[c]{0.45\textwidth}
-            \includegraphics[width=\textwidth]{figures/grids/well-placement-approximation.pdf}
-            \caption{Well placement as approximated in the ECL100 and MRST simulators.}
-            \label{fig:well-placement-simulator}
-    \end{subfigure}
-    \caption{An enlarged view of the lower left corner of the grid in Figure~\ref{fig:peaceman-grid}, as well as the grid used to approximate it in the ECL100 and MRST reservoir simulators. The simulators do not support placing wells anywhere but through the center of a grid block, so the outermost blocks were refined in order to approximate placement in the original paper.}
+    \includegraphics[]{figures/grids/well-placement-paper.pdf}
+    \caption{An enlarged view of the lower-left corner of Figure~\ref{fig:peaceman-grid}.}
+    \label{fig:well-placement-paper}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[]{figures/grids/well-placement-approximation.pdf}
+    \caption{An enlarged view of the lower-left corner of the grid used in the ECL100 and MRST reservoir simulators to approximate the grid in Figure~\ref{fig:peaceman-grid}.}
+    \label{fig:well-placement-approximation}
 \end{figure}
 
 % section method (end)
