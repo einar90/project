@@ -5,9 +5,10 @@
 --                     1 injector, 1 producer
 --                     metric units
 --
--- 10X10 in the filename is due to the convention used in the
--- Peaceman 1978 paper. MxM in the papers translates to a (M+1)x(M+1)
--- grid.
+-- 10X10 in the filename is due to this being an approximation of the
+-- 10X10 grid used in the Peaceman 1978 paper. The corners in this 
+-- simualation spec. are refined in order to approximate corner-placed
+-- wells.
 
 
 RUNSPEC ==================================================================
