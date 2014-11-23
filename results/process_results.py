@@ -2,55 +2,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import json  # Only used for prettyprinting
 
-ecl_file = 'eclipse/11x11-pressure.dat'         # ECL100, metric units
-ecll_file = 'eclipse/11x11-pressure-lab.dat'    # ECL100, lab units
-mrst_file = 'mrst/11x11-pressure.dat'           # MRST, metric units
 pcm_file = 'peaceman/10x10-pressure.dat'        # Peaceman, dimensionless
 
 p = {
-    'ecl': np.loadtxt(ecl_file)*0.986923267,  # bar -> atm
-    'ecll': np.loadtxt(ecll_file),            # atm
-    'mrst': np.loadtxt(mrst_file),            # atm
     'pcm': np.loadtxt(pcm_file)               # Dimensionless
 }
 
 props = {
-    'ecl': {
-        'k':  300.0/1000.0,       # mD -> D
-        'h':  30.0*100.0,         # m -> cm
-        'q':  150.0*11.5740741,   # m3/day -> cc/sec
-        'mu': 0.5,                # cP
-        'dx': 30.0*100.0,         # m -> cm
-        'M': int(np.sqrt(p['ecl'].size))-1,
-        'p_prod': p['ecl'][0, 0],
-        'p_inj':  p['ecl'][-1, -1],
-    },
-    'ecll': {
-        'k':  300.0/1000.0,       # mD -> D
-        'h':  30.0,               # cm
-        'q':  50000.0/60.0/60.0,  # cc/hr -> cc/sec
-        'mu': 0.5,                # cP
-        'dx': 30.0,               # cm
-        'M': int(np.sqrt(p['ecll'].size))-1,
-        'p_prod': p['ecll'][0, 0],
-        'p_inj':  p['ecll'][-1, -1],
-    },
-    'mrst': {
-        'k':  .3,                 # D
-        'h':  30.0*100.0,         # m -> cm
-        'q':  150.0*11.5740741,   # m3/day -> cc/sec
-        'mu': 0.5,                # cP
-        'dx': 30.0*100,           # m -> cm
-        'M': int(np.sqrt(p['mrst'].size))-1,
-        'p_prod': p['mrst'][0, 0],
-        'p_inj':  p['mrst'][-1, -1],
-    },
     'pcm': {                      # Dimensionless
-        'k':  1.0,
-        'h':  1.0,
-        'q':  1.0,
-        'mu': 1.0,
-        'dx': 1.0,
         'M': int(np.sqrt(p['pcm'].size))-1,
         'p_prod': p['pcm'][0, 0],
         'p_inj':  p['pcm'][-1, -1],
@@ -60,17 +19,12 @@ props = {
 
 def r_eq_exact(props):
     return np.sqrt(2.0) * float(props['M']) * np.exp(
-        - np.pi * props['k'] * props['h']
-        / (props['q'] * props['mu'])
-        * (props['p_inj'] - props['p_prod'])
-        - 0.6190
-    )
+        - np.pi * (props['p_inj'] - props['p_prod']) - 0.6190)
 
 
 def r_eq_regression(props, p):
     # calculate dimensionless pressure and pressure difference
-    p_D = p * props['k'] * props['h'] \
-        / (props['q'] * props['mu'])
+    p_D = p
     p_diff = (p_D - p_D[0, 0])[0:props['M']/2, 0:props['M']/2]
 
     # compute radius matrix
@@ -124,24 +78,6 @@ def make_plots(props, p, r_eq, title):
     plt.clabel(cntplot, fontsize=9, inline=1)
 
 r_eq = {
-    'ecl': {
-        'exact': r_eq_exact(props['ecl']),
-        'regression': r_eq_regression(
-            props['ecl'], p['ecl']
-        )[0]
-    },
-    'ecll': {
-        'exact': r_eq_exact(props['ecll']),
-        'regression': r_eq_regression(
-            props['ecll'], p['ecll']
-        )[0]
-    },
-    'mrst': {
-        'exact': r_eq_exact(props['mrst']),
-        'regression': r_eq_regression(
-            props['mrst'], p['mrst']
-        )[0]
-    },
     'pcm': {
         'exact': r_eq_exact(props['pcm']),
         'regression': r_eq_regression(
@@ -155,9 +91,6 @@ print json.dumps(props, sort_keys=True, indent=2)
 print 'Calculated r_eq: '
 print json.dumps(r_eq, sort_keys=True, indent=2)
 
-make_plots(props['ecl'], p['ecl'], r_eq['ecl'], 'ECL100 Metric')
-make_plots(props['ecll'], p['ecll'], r_eq['ecll'], 'ECL100 Lab')
-make_plots(props['mrst'], p['mrst'], r_eq['mrst'], 'MRST')
 make_plots(props['pcm'], p['pcm'], r_eq['pcm'], 'Peaceman')
 
 plt.draw()
