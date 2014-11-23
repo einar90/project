@@ -81,18 +81,51 @@ KRW
 KRWR
     169*1.0 /
 
-INCLUDE
-    'COMMON.PROP' /
+PVTW
+-- B_w = 1.0 rm3/sm3
+-- c_w = 4.0e-10 1/bars
+-- mu_w = 0.5 cP
+-- viscobility = 0.0
+--  P_ref  B_w   c_w      mu_w   "Viscosibility"
+    100.0  1.0   4.0E-10  0.5    0.0 /
+
+DENSITY
+-- oil = 600 kg/m3
+-- water = 1000 kg/m3
+-- gas = 1 kg/m3
+--  Oil  Water Gas
+    1*   1000    1*  /
+
+ROCK
+-- P_ref = 1.0132 barsa
+-- c_r = 4.934e-5 1/bars
+--  P_ref   c_r
+    1.0132  4.934e-5  /
+
 
 SOLUTION =================================================================
 
-INCLUDE
-    'COMMON.SOLN' /
+EQUIL
+-- Equilibriation data specifiaction
+--  1: Datum depth
+--  2: Pressure at datum depth
+--  3: Depth of WOC
+    1015.0  100 900 6* /
+
 
 SUMMARY ==================================================================
 
-INCLUDE
-    'COMMON.SMRY' /
+FWPR
+FWIR
+
+WBHP
+    'INJ'  'PROD'  /
+
+WBP
+    'INJ' 'PROD' /
+
+SEPARATE
+
 
 CTFAC
     'PROD' 1 1 1 /
