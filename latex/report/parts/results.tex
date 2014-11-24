@@ -51,6 +51,27 @@ A contour plot of the solution to the discretized differential flow equation on 
 % subsection chlumberger_ecl100_simulation(end)
 
 
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[]{figures/plots/ecl-regression.pdf}
+    \caption{Plot of regression line calculated from the pressure distribution from ECL100 on an approximation of Peaceman's $10\times 10$ grid. The DATA file is shown in Appendix~\ref{sub:peaceman_10x10_data}. There is no visible difference between the regression plots for other grid sizes, or from plots created from MRST simulation data; they are therefore not shown here.}
+    \label{fig:regression-ecl10}
+\end{figure}
+
+\begin{figure}
+    \begin{minipage}[b]{.5\linewidth}
+        \centering\scalebox{.53}{\input{figures/plots/ecl10-contour_10x10.pgf}}
+        \subcaption{Contour plot of simulated pressure from ECL100 on an approximation of Peaceman's $10\times 10$ grid.}
+        \label{fig:contour-ecl10}
+    \end{minipage}%
+    \begin{minipage}[b]{.5\linewidth}
+        \centering\scalebox{.53}{\input{figures/plots/mrst10-contour_10x10.pgf}}
+        \subcaption{Contour plot of simulated pressure from MRST on an approximation of Peaceman's $10\times 10$ grid.}
+        \label{fig:contour-mrst10}
+    \end{minipage}
+    \caption{Contour plots of simulated pressure. The differences in magnitude stem from the difference in initial pressure set for the models (higher for ECL100). The visible difference in the symmetry around the 10-10 diagonal is caused by the constraint in the number of contours to be drawn by the plotting library; if this number was set higher they would be quite identical.}
+    \label{fig:contours-ect10-mrst10}
+\end{figure}
 
 
 \subsection{Sintef MRST simulation} % (fold)
@@ -60,7 +81,7 @@ A contour plot of the solution to the discretized differential flow equation on 
 
 \begin{table}[htbp]
 \centering
-    \caption{Results from simulations using ECL100 and MRST. \hl{exact method not applicable because it is spesifically made for the five-point stencil}}
+    \caption{Results from simulations using ECL100 and MRST.}
     \begin{tabular}{c|cc|cc}
         \toprule
             & \multicolumn{2}{c|}{ECL100} & \multicolumn{2}{c}{MRST} \\
