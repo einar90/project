@@ -1,0 +1,30 @@
+% -*- root: ../project.tex -*-
+
+\section{Simulation Specifications} % (fold)
+\label{sec:ecl100_simulation_specifications}
+
+\subsection{ECL100 10-by-10: PEACEMAN\_10X10\_CORNER.DATA} % (fold)
+\label{sub:peaceman_10x10_data}
+{\footnotesize%
+\verbatiminput{../../eclipse/PEACEMAN_10X10_CORNER.DATA}}
+% subsection peaceman_10x10_data (end)
+\clearpage
+
+\subsection{ECL100 20-by-20: PEACEMAN\_20X20\_CORNER.DATA} % (fold)
+\label{sub:peaceman_20x20_data}
+{\footnotesize%
+\verbatiminput{../../eclipse/PEACEMAN_20X20_CORNER.DATA}}
+% subsection peaceman_10x10_data (end)
+\clearpage
+
+\subsection{MRST Simulation Specification} % (fold)
+\label{sub:mrst_simulation_specification}
+This is the script used for all mrst simulations. Changing the size of the grid simply requires you to change the value of the \emph{dim} variable.
+\lstinputlisting[%
+  caption={mrst\_11x11.m},
+  label={lst:mrst_11x11.m},
+  language={Matlab}]
+  {../../matlab/mrst_11x11.m}
+% subsection mrst_simulation_specification (end)
+
+% section ecl100_simulation_specifications (end)
