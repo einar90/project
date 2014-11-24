@@ -87,14 +87,6 @@ def make_plots(p, title):
     r_reg_extended = range(1, 60, 1)
     r_reg_extended = [r/10.0 for r in r_reg_extended]
 
-    half = p_diff.shape[0]/2
-
-    # Calculate radius matrix
-    r = np.zeros([half-1, half-1])
-    for i in range(1, half):
-        for j in range(1, half):
-            r[i-1, j-1] = np.sqrt(i**2 + j**2)
-
     # plot regression
     plt.figure(title)
     ax1 = plt.subplot(1, 2, 1)
