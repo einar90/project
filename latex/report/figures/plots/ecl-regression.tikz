@@ -1,5 +1,4 @@
 % -*- root: ../../project.tex -*-
-\pgfplotsset{width=.45\textwidth}
 \begin{tikzpicture}
     \begin{axis}[%
         xmode=log,
