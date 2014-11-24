@@ -3,13 +3,13 @@
 \begin{tikzpicture}[scale=0.1]
     \draw[] (0,0) to (45,0);
     \draw[densely dashed] (45,0) to (50,0);
-    
+
     \draw[] (0,0) to (0,45);
     \draw[densely dashed] (0,45) to (0,50);
 
     \draw[] (15,0) to (15,45);
     \draw[densely dashed] (15,45) to (15,50);
-    
+
     \draw[] (45,0) to (45,45);
     \draw[densely dashed] (45,45) to (45,50);
 
@@ -21,8 +21,8 @@
 
     \draw[fill=black] (0,0) circle (1);
 
-    \node at (7.5,-3) {$\frac{1}{2}\Delta x$};
-    \node at (30,-3) {$\Delta x$};
+    \node at (7.5,-4) {$\frac{1}{2}\Delta x$};
+    \node at (30,-4) {$\Delta x$};
 
     \draw[dotted] (-15,-15) to (50,-15);
     \draw[dotted] (-15,-15) to (-15,50);
