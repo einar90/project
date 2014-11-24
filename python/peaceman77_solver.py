@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
 M = 10
 A = np.zeros([(M+1)**2, (M+1)**2], dtype=float)
@@ -18,7 +17,7 @@ for i in range(M+1):
             [i-1, j], [i+1, j], [i, j-1], [i, j+1], [i, j]
         ])
 
-# Apply boundaries
+# Apply boundary conditions ===================================================
 for line in eq:
     for entry in range(5):
         if line[entry][0] == -1:
