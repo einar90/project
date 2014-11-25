@@ -28,19 +28,33 @@ What follows is a short step-by-step description of the program flow of the code
 
 \subsection{Using pressure distribution from numerical reservoir simulation software} % (fold)
 \label{sub:using_pressure_distribution_from_numerical_reservoir_simulation_software}
-Acquiring a pressure distribution suitable for calculating $r_{eq}$ using the methods outlined in Sections~\ref{ssub:approximate_calculation_of_equivalent_radius} and \ref{ssub:exact_calculation_of_equivalent_radius} posed some issues. Firstly, Peaceman's wells are placed in the corners of the corner blocks (Figure~\ref{fig:well-placement-paper}), but this is not possible in the ECL100 and MRST reservoir simulators. To approximate this well placement the grid was refined in the corners (as shown in Figure~\ref{fig:well-placement-approximation}), and the wells were placed in the center of a small block of size $\frac{1}{8}\Delta x\times \frac{1}{8}\Delta x$ in each corner. This results in a pressure distribution very similar to the one resulting from the numerical solution of the diffusivity equation outlined in Section~\ref{ssub:derivation}. However, the pressures in the new, smaller wellbocks are not equivalent to that of the wellblocks in Peaceman's model. Therefore the average pressure of the smaller blocks refined from the original wellblocks are used:
+Acquiring a pressure distribution suitable for calculating $r_{eq}$ using the methods outlined in Sections~\ref{ssub:approximate_calculation_of_equivalent_radius} and \ref{ssub:exact_calculation_of_equivalent_radius} posed some issues.
+
+Firstly, Peaceman's wells are placed in the corners of the corner blocks (Figure~\ref{fig:well-placement-paper}), but this is not possible in the ECL100 and MRST reservoir simulators.
+
+The second issue is that the exact approach outlined in Section~\ref{ssub:exact_calculation_of_equivalent_radius} is derived specifically for pressure distributions calculated by applying the five-spot pattern to the two-dimensional diffusivity equation on a uniform square grid. Because it relies exclusively on the wellblock pressures it is much more sensitive to any approximations made (wrt. well placement) and thus will not yield anywhere close to the correct value for $r_{eq}$ using the pressure distribution calculated using any of the two simulators.
+
+The post-processing of the results from the simulators are done using the Python script shown in Appendix~\ref{ssub:postprocessing_of_simulator_results}. The script is responsible calculating the new averaged wellblock pressures, as well as creating the plots in Figure~\ref{fig:contours-ect10-mrst10} and the data used to create the plot in Figure~\ref{fig:regression-ecl10}.
+
+\subsubsection{Approximating The Well Placement} % (fold)
+\label{ssub:approximating_the_well_placement}
+
+To approximate this well placement the grid was refined in the corners (as shown in Figure~\ref{fig:well-placement-approximation}), and the wells were placed in the center of a small block of size $\frac{1}{8}\Delta x\times \frac{1}{8}\Delta x$ in each corner. This results in a pressure distribution very similar to the one resulting from the numerical solution of the diffusivity equation outlined in Section~\ref{ssub:derivation}. However, the pressures in the new, smaller wellbocks are not equivalent to that of the wellblocks in Peaceman's model. Therefore the average pressure of the smaller blocks refined from the original wellblocks are used:
 \begin{equation}
     p_{0,0}' = \mathrm{avg}\left[ p_{0,0}, p_{1,0}, p_{0,1}, p_{1,1} \right]
 \end{equation}
 \begin{equation}
     p_{M,M}' = \mathrm{avg}\left[ p_{M,M}, p_{M-1,M}, p_{M,M-1}, p_{M-1,M-1} \right].
 \end{equation}
+\nomenclature{$\mathrm{avg}$}{averaging operator}
+\nomenclature{$p_{i,i}'$}{averaged wellblock pressure}
 The coordinates used are indicated in Figure~\ref{fig:well-placement-approximation}. Note that using this formulation the simulated wellblock pressure ($p_{0,0}$) and the pressure in the larger blocks are given equal influence of the resulting averaged wellblock pressure. This approach gives a result far closer to the results from numerical solution of the differential flow equation than if a weighted average is used.
 
-The second issue is that the exact approach outlined in Section~\ref{ssub:exact_calculation_of_equivalent_radius} is derived specifically for pressure distributions calculated by applying the five-spot pattern to the two-dimensional diffusivity equation on a uniform square grid. Because it relies exclusively on the wellblock pressures it is much more sensitive to any approximations made (wrt. well placement) and thus will not yield anywhere close to the correct value for $r_{eq}$ using the pressure distribution calculated using any of the two simulators.
-
-The post-processing of the results from the simulators are done using the Python script shown in Appendix~\ref{ssub:postprocessing_of_simulator_results}. The script is responsible calculating the new averaged wellblock pressures, as well as creating the plots in Figure~\ref{fig:contours-ect10-mrst10} and the data used to create the plot in Figure~\ref{fig:regression-ecl10}.
-
+Using this averaged wellblock pressure also poses some issues concerning the radius matrix used in the calculations. To alleviate this, the averaged wellblock pressures are assumed to be located \emph{exactly} in the corner. With this assumption the calculations are very straight-foreward, but it introduces an error term. We take the actual radial position of the averaged wellblock pressure to be the average of the center of blocks $(0,0)$ and $(1,1)$. This is the error term $e$ introduced by assuming the averaged wellblock pressure to be exactly in the corner:
+\begin{equation}
+    e = \sqrt{2\times \left( \frac{1/8+3/8}{2}\Delta x \right)^2} = \frac{1}{4}\sqrt{2}\Delta x
+\end{equation}
+Because this error term is quite large for blocks near the corner (35\% for block $(2,2)$), the decision was to drop the blocks nearest to the averaged wellblock. All blocks on rows and columns 0 and 1 were also dropped due to radius and averaging concerns. This is illustrated in Figure~\ref{fig:blocks-used}.
 
 \begin{figure}[htbp]
     \centering
@@ -56,10 +70,19 @@ The post-processing of the results from the simulators are done using the Python
     \label{fig:well-placement-approximation}
 \end{figure}
 
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[]{figures/grids/approximation-blocks-used.pdf}
+    \caption{The blocks actually used when creating the regression plot from the simulation results. The blocks with a diagonal pattern is not used.}
+    \label{fig:blocks-used}
+\end{figure}
+% subsubsection approximating_the_well_placement (end)
+
 \subsubsection{Simulation specification} % (fold)
 \label{ssub:simulation_specification}
+Except for the initial pressure and bottom-hole pressure control settings, the same parameters were used in both simulators and for all grid sizes. The relevant parameters are listed in Table~\ref{tbl:simulation-parameters}. The grids were structured as illustrated in Figure~\ref{fig:well-placement-approximation}. The full specifications for the ECL100 and MRST simulations are shown in Appendix~\ref{sec:ecl100_simulation_specifications}.
 
-Except for the initial pressure and bottom-hole pressure control settings, the same parameters were used in both simulators and for all grid sizes. These are listed in Table~\ref{tbl:simulation-parameters}. The full specifications for the ECL100 and MRST simulations are shown in Appendix~\ref{sec:ecl100_simulation_specifications}.
+Note that the ECL100 model has a quite high initial pressure, while the MRST model is initialized to 0 bar(g). This was done on purpose to highlight calculation errors between the models while developing the post-processing script.
 
 \begin{table}
     \caption{Parameters common for all ECL100 and MRST simulations.}
@@ -83,6 +106,27 @@ Except for the initial pressure and bottom-hole pressure control settings, the s
 
 \subsubsection{Post-processing} % (fold)
 \label{ssub:post_processing}
+What follows is a short step-by-step description of the program flow of the code in Appendix~\ref{ssub:postprocessing_of_simulator_results}. The method used is explained in Section~\ref{ssub:approximating_the_well_placement}.
+\begin{enumerate}
+    \item Load pressure data from files.
+    \item Set common properties.
+    \item Process the pressure grids.
+    \begin{enumerate}
+        \item Calculate averaged wellblock pressures.
+        \item Drop two outermost rows and columns.
+    \end{enumerate}
+    \item Calculate regression lines.
+    \begin{enumerate}
+        \item Calculate dimesionless pressure using equation~\eqref{eq:dimensionless-pressure}.
+        \item Calculate pressure difference $p_{i,j}-p_{0,0}'$.
+        \item Cut matrix, leaving only bottom-left quadrant.
+        \item Calculate radius matrix.
+        \item Linearize pressure- and radius matrices, and drop the first element (corresponding to block $(2,2)$).
+        \item Calculate regression line and -polynomial using NumPy's polyfit method.
+    \end{enumerate}
+    \item Calculate ``exact'' equivalent wellbore radius using equation~\eqref{eq:peaceman77-eqrad-exact}.
+    \item Create plots.
+\end{enumerate}
 
 % subsubsection post_processing (end)
 % subsection using_pressure_distribution_from_numerical_reservoir_simulation_software (end)
