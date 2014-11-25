@@ -7,13 +7,14 @@
         ymin=0,
         ymax=2.5,
         xlabel={$r/\Delta x$},
-        ylabel={$\frac{kh}{q\mu}\left( p_{i,j} - p_{0,0} \right)$}
+        ylabel={$\frac{kh}{q\mu}\left( p_{i,j} - p_{0,0} \right)$},
+        legend entries={ECL, PCM}
     ]
+        \addlegendimage{no markers, red}
+        \addlegendimage{no markers, blue}
         \addplot[scatter, only marks, scatter/use mapped color={fill=red}] table[x=r,y=dp, col sep=comma]{data/scatter-ecl-10x10.dat};
         \addplot[no marks,color=red] table[x=r,y=dp, col sep=comma]{data/regression-ecl-10x10.dat};
-        \addlegendentry{ECL100}
         \addplot[scatter, only marks, scatter/use mapped color={fill=blue}] table[x=r,y=dp, col sep=comma]{data/scatter-10x10.dat};
         \addplot[no marks,color=blue] table[x=r,y=dp, col sep=comma]{data/regression-10x10.dat};
-        \addlegendentry{PCM}
     \end{axis}
 \end{tikzpicture}

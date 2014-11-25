@@ -30,7 +30,7 @@ What follows is a short step-by-step description of the program flow of the code
 \label{sub:using_pressure_distribution_from_numerical_reservoir_simulation_software}
 Acquiring a pressure distribution suitable for calculating $r_{eq}$ using the methods outlined in Sections~\ref{ssub:approximate_calculation_of_equivalent_radius} and \ref{ssub:exact_calculation_of_equivalent_radius} posed some issues.
 
-Firstly, Peaceman's wells are placed in the corners of the corner blocks (Figure~\ref{fig:well-placement-paper}), but this is not possible in the ECL100 and MRST reservoir simulators.
+Firstly, Peaceman's wells are effectively placed in the corners of the corner blocks (Figure~\ref{fig:well-placement-paper}), but this is not possible in the ECL100 and MRST reservoir simulators.
 
 The second issue is that the exact approach outlined in Section~\ref{ssub:exact_calculation_of_equivalent_radius} is derived specifically for pressure distributions calculated by applying the five-spot pattern to the two-dimensional diffusivity equation on a uniform square grid. Because it relies exclusively on the wellblock pressures it is much more sensitive to any approximations made (wrt. well placement) and thus will not yield anywhere close to the correct value for $r_{eq}$ using the pressure distribution calculated using any of the two simulators.
 
@@ -39,7 +39,7 @@ The post-processing of the results from the simulators are done using the Python
 \subsubsection{Approximating The Well Placement} % (fold)
 \label{ssub:approximating_the_well_placement}
 
-To approximate this well placement the grid was refined in the corners (as shown in Figure~\ref{fig:well-placement-approximation}), and the wells were placed in the center of a small block of size $\frac{1}{8}\Delta x\times \frac{1}{8}\Delta x$ in each corner. This results in a pressure distribution very similar to the one resulting from the numerical solution of the diffusivity equation outlined in Section~\ref{ssub:derivation}. However, the pressures in the new, smaller wellbocks are not equivalent to that of the wellblocks in Peaceman's model. Therefore the average pressure of the smaller blocks refined from the original wellblocks are used:
+To approximate this well placement the grid was refined in the corners (as shown in Figure~\ref{fig:well-placement-approximation}), and the wells were placed in the center of a small block of size $\frac{1}{8}\Delta x\times \frac{1}{8}\Delta x$ in each corner. This results in a pressure distribution very similar to the one resulting from the numerical solution of the diffusivity equation outlined in Section~\ref{ssub:derivation}. However, the pressures in the new, smaller wellbocks are not equivalent to that of the wellblocks in Peaceman's model. Therefore a new \emph{averaged wellblock pressure}, $p'$, calculated from the smaller blocks refined from the original wellblocks, is defined:
 \begin{equation}
     p_{0,0}' = \mathrm{avg}\left[ p_{0,0}, p_{1,0}, p_{0,1}, p_{1,1} \right]
 \end{equation}
@@ -48,13 +48,13 @@ To approximate this well placement the grid was refined in the corners (as shown
 \end{equation}
 \nomenclature{$\mathrm{avg}$}{averaging operator}
 \nomenclature{$p_{i,i}'$}{averaged wellblock pressure}
-The coordinates used are indicated in Figure~\ref{fig:well-placement-approximation}. Note that using this formulation the simulated wellblock pressure ($p_{0,0}$) and the pressure in the larger blocks are given equal influence of the resulting averaged wellblock pressure. This approach gives a result far closer to the results from numerical solution of the differential flow equation than if a weighted average is used.
+The coordinates used are indicated in Figure~\ref{fig:well-placement-approximation}. Note that using this formulation the simulated wellblock pressures (i.e. $p_{0,0}$ and $p_{M,M}$) and the pressure in the larger blocks (e.g. $p_{1,1}$ and $p_{M-1,M-1}$) are given equal influence of the resulting averaged wellblock pressure, despite them not occupying as large an area.  This approach yields results far closer to the results from numerical solution of the differential flow equation than if an area-weighted average is used.
 
-Using this averaged wellblock pressure also poses some issues concerning the radius matrix used in the calculations. To alleviate this, the averaged wellblock pressures are assumed to be located \emph{exactly} in the corner. With this assumption the calculations are very straight-foreward, but it introduces an error term. We take the actual radial position of the averaged wellblock pressure to be the average of the center of blocks $(0,0)$ and $(1,1)$. This is the error term $e$ introduced by assuming the averaged wellblock pressure to be exactly in the corner:
+Using this averaged wellblock pressure also poses some issues concerning the radius matrix used in the calculations. This is handled by assuming that the averaged wellblock pressures are located \emph{exactly} in the corner (which they are not). With this assumption the calculations are very straight-foreward, but it introduces an error term. We take the actual radial position of the averaged wellblock pressure (i.e. the deviation from the assumed position) to be the average of the center of blocks $(0,0)$ and $(1,1)$. This is the error term $e$ introduced by assuming the averaged wellblock pressure to be exactly in the corner:
 \begin{equation}
     e = \sqrt{2\times \left( \frac{1/8+3/8}{2}\Delta x \right)^2} = \frac{1}{4}\sqrt{2}\Delta x
 \end{equation}
-Because this error term is quite large for blocks near the corner (35\% for block $(2,2)$), the decision was to drop the blocks nearest to the averaged wellblock. All blocks on rows and columns 0 and 1 were also dropped due to radius and averaging concerns. This is illustrated in Figure~\ref{fig:blocks-used}.
+Because this error term is quite large for blocks near the corner (35\% for block $(2,2)$), the  blocks nearest to the averaged wellblocks are ignored. All blocks on rows and columns 0 and 1 were also dropped due to radius and averaging concerns. This ignored blocks are shown in Figure~\ref{fig:blocks-used}.
 
 \begin{figure}[htbp]
     \centering
@@ -84,7 +84,7 @@ Except for the initial pressure and bottom-hole pressure control settings, the s
 
 Note that the ECL100 model has a quite high initial pressure, while the MRST model is initialized to 0 bar(g). This was done on purpose to highlight calculation errors between the models while developing the post-processing script.
 
-\begin{table}
+\begin{table}[H]
     \caption{Parameters common for all ECL100 and MRST simulations.}
     \centering
     \begin{tabular}{rll}
@@ -106,7 +106,7 @@ Note that the ECL100 model has a quite high initial pressure, while the MRST mod
 
 \subsubsection{Post-processing} % (fold)
 \label{ssub:post_processing}
-What follows is a short step-by-step description of the program flow of the code in Appendix~\ref{ssub:postprocessing_of_simulator_results}. The method used is explained in Section~\ref{ssub:approximating_the_well_placement}.
+What follows is a short step-by-step description of the program flow of the code used for post-processing of the simulation data. The code is shown in full in Appendix~\ref{ssub:postprocessing_of_simulator_results}. The method used is explained in Section~\ref{ssub:approximating_the_well_placement}.
 \begin{enumerate}
     \item Load pressure data from files.
     \item Set common properties.

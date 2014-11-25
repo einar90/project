@@ -2,17 +2,17 @@
 
 \section{Results} % (fold)
 \label{sec:results}
-A contour plot of the solution to the discretized differential flow equation on the $10 \times 10$ grid in Figure~\ref{fig:peaceman-grid} is shown in Figure~\ref{fig:pressure_drop_contour}. Table~\ref{tbl:peaceman-results} shows $r_{eq}$ found using the regression method outlined in Section~\ref{ssub:approximate_calculation_of_equivalent_radius}, as well as the exact value calculated using equation \eqref{eq:peaceman77-eqrad-exact} for various $M\times M$ grids. Note that the values for $r_{eq}$ calculated using the exact method is a perfect fit with the results listed in Peaceman's paper \cite{Peaceman1978Interpretation}, except for the value for $M=32$ which deviates by $0.0001$.
+A contour plot of the solution to the discretized differential flow equation on a $10 \times 10$ grid is shown in Figure~\ref{fig:pressure_drop_contour}. Table~\ref{tbl:peaceman-results} shows $r_{eq}$ found using the regression method outlined in Section~\ref{ssub:approximate_calculation_of_equivalent_radius}, as well as the exact value calculated using equation \eqref{eq:peaceman77-eqrad-exact} for various $M\times M$ grids.
 
 Contour plots of the simulated pressures from the ECL100 and MRST simulators on $13\times 13$ grids approximating Peaceman's $10\times 10$ grid are shown in Figure~\ref{fig:contours-ect10-mrst10}. Values of $r_{eq}$ calculated using the regression and exact methods on the simulated pressures for various values of $M$ are shown in Table~\ref{tbl:simulation-results}.
 
-A plot showing the regression lines calculated for both the numerical solution of the diffusivity equation with $M=10$ and simulated pressure from ECL100 on an approximation of the $10\times 10$ grid is shown in Figure~\ref{fig:regression-combined}.
+A plot showing the regression lines calculated from both the numerical solution of the diffusivity equation with $M=10$ and simulated pressure from ECL100 on an approximation of the $10\times 10$ grid is shown in Figure~\ref{fig:regression-combined}.
 
 
 
 \begin{table}[htbp]
     \centering
-    \caption{Computed equivalent radius of well-block $r_{eq}$ for various values of $M\times M$ grid sizes. $\Phi_{M,M} - \Phi_{0,0}$ is the dimensionless pressure drop between producer and injector; $r_{eq}/\Delta x$ (ex) refers to the exact solution using equation \eqref{eq:peaceman77-eqrad-exact}; $r_{eq} / \Delta x$ (reg) refers to the point where the regression line crosses the $x$-axis (see Figures~\ref{fig:peaceman77_pressure_vs_radius} and \ref{fig:regression-combined}).}
+    \caption{Computed equivalent radius of well-block $r_{eq}$ for various values of $M\times M$ grids. $\Phi_{M,M} - \Phi_{0,0}$ is the dimensionless pressure drop between producer and injector; $r_{eq}/\Delta x$ (ex) refers to the exact solution using equation \eqref{eq:peaceman77-eqrad-exact}; $r_{eq} / \Delta x$ (reg) refers to the point where the regression line crosses the $x$-axis (see Figures~\ref{fig:peaceman77_pressure_vs_radius} and \ref{fig:regression-combined}).}
     \begin{tabular}{r|ccc}
         \toprule
         $M$ & $\Phi_{M,M} - \Phi_{o,o}$ & $r_{eq}/\Delta x$ (ex) & $r_{eq} / \Delta x$ (reg)  \\
@@ -53,13 +53,6 @@ A plot showing the regression lines calculated for both the numerical solution o
     \label{fig:pressure_drop_contour}
 \end{figure}
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[]{figures/plots/regression-combined.pdf}
-    \caption{Plot of regression lines calculated from the pressure distribution from ECL100 on an approximation of Peaceman's $10\times 10$ grid (\emph{ECL100}); and from numerical solution of the difference equation (\emph{PCM}). There is no visible difference between the regression plots for varying grid sizes, nor between plots created from MRST or ECL100 simulation data. The PCM line is shown in more detail in Figure~\ref{fig:peaceman77_pressure_vs_radius}.}
-    \label{fig:regression-combined}
-\end{figure}
-
 \begin{figure}
     \begin{minipage}[b]{.5\linewidth}
         \centering\scalebox{.53}{\input{figures/plots/ecl10-contour_10x10.pgf}}
@@ -74,6 +67,15 @@ A plot showing the regression lines calculated for both the numerical solution o
     \caption{Contour plots of simulated pressure. The differences in magnitude stem from the difference in initial pressure set for the models (higher for ECL100). The visible difference in the symmetry near the 10-10 diagonal is caused by the constraint in the number of contour lines to be drawn by the plotting library.}
     \label{fig:contours-ect10-mrst10}
 \end{figure}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[]{figures/plots/regression-combined.pdf}
+    \caption{Plot of regression lines calculated from the pressure distribution simulated by ECL100 on an approximation of Peaceman's $10\times 10$ grid (\emph{ECL}); and from numerical solution of the difference equation (\emph{PCM}). For the ECL100 and MRST data sets, there is no visible difference between plots for varying grid sizes, nor between plots created from MRST or ECL100 simulation data. The PCM line is shown on more fitting axes in Figure~\ref{fig:peaceman77_pressure_vs_radius}.}
+    \label{fig:regression-combined}
+\end{figure}
+
 
 
 % section results (end)
