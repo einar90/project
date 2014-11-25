@@ -70,9 +70,9 @@ def r_eq_regression(p):
         for j in range(1, half):
             r[i-1, j-1] = np.sqrt(i**2 + j**2)
 
-    # linearize matrices and remove well-block
-    r = r.reshape([(half-1)**2, ])
-    p_diff = p_diff.reshape([(half-1)**2, ])
+    # linearize matrices and remove block 2,2
+    r = r.reshape([(half-1)**2, ])[1:]
+    p_diff = p_diff.reshape([(half-1)**2, ])[1:]
 
     # create regression line and -polynomial
     reg = np.polyfit(np.log(r), p_diff, deg=1)
