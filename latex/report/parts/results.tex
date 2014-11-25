@@ -8,16 +8,20 @@
 
 \subsection{Numerical solution of the differential flow equation} % (fold)
 \label{sub:numerical_solution_of_the_differential_flow_equation}
-All results in this section was computed using the a solver implemented in Python, using the Numpy library. The implementation is shown in Listing~\ref{lst:peaceman77_solver}, Appendix~\ref{sec:program_listings}.
+A contour plot of the solution to the discretized differential flow equation on the $10 \times 10$ grid in Figure~\ref{fig:peaceman-grid} is shown in Figure~\ref{fig:pressure_drop_contour}. Table~\ref{tbl:peaceman-results} shows $r_{eq}$ found using the regression method outlined in Section~\ref{ssub:approximate_calculation_of_equivalent_radius}, as well as the exact value calculated using equation \eqref{eq:peaceman77-eqrad-exact} for various $M\times M$ grids. Note that the values for $r_{eq}$ calculated using the exact method is a perfect fit with the results listed in Peaceman's paper \cite{Peaceman1978Interpretation}, except for the value for $M=32$ which deviates by $0.0001$.
 
-A contour plot of the solution to the discretized differential flow equation on the $10 \times 10$ grid in Figure~\ref{fig:peaceman-grid} is shown in Figure~\ref{fig:pressure_drop_contour}. Table~\ref{tbl:peaceman-results} shows $r_{eq}$ found using the regression method outlined in Section~\ref{ssub:approximate_calculation_of_equivalent_radius}, as well as caluculated using equation \eqref{eq:peaceman77-eqrad-exact} for various $M\times M$ grids.
+Contour plots of the simulated pressures from the ECL100 and MRST simulators on $13\times 13$ grids approximating Peaceman's $10\times 10$ grid are shown in Figure~\ref{fig:contours-ect10-mrst10}. Values of $r_{eq}$ calculated using the regression and exact methods on the simulated pressures for various values of $M$ are shown in Table~\ref{tbl:simulation-results}.
+
+A plot showing the regression lines calculated for both the numerical solution of the diffusivity equation with $M=10$ and simulated pressure from ECL100 on an approximation of the $10\times 10$ grid is shown in Figure~\ref{fig:regression-combined}.
+
+
 
 \begin{table}[htbp]
     \centering
-    \caption{Computed equivalent radius of well-block $r_{eq}$ for various values of $M\times M$ grid sizes. $\Phi_{M,M} - \Phi_{0,0}$ is the dimensionless pressure drop between producer and injector, calculated using using the program in Listing~\ref{lst:peaceman77_solver}; $r_{eq}/\Delta x$ (exact) refers to the solution using equation \eqref{eq:peaceman77-eqrad-exact}; $r_{eq} / \Delta x$ (regression) refers to the point where the regression line crosses the $x$-axis (see Figure~\ref{fig:peaceman77_pressure_vs_radius}).}
+    \caption{Computed equivalent radius of well-block $r_{eq}$ for various values of $M\times M$ grid sizes. $\Phi_{M,M} - \Phi_{0,0}$ is the dimensionless pressure drop between producer and injector; $r_{eq}/\Delta x$ (ex) refers to the exact solution using equation \eqref{eq:peaceman77-eqrad-exact}; $r_{eq} / \Delta x$ (reg) refers to the point where the regression line crosses the $x$-axis (see Figures~\ref{fig:peaceman77_pressure_vs_radius} and \ref{fig:regression-combined}).}
     \begin{tabular}{r|ccc}
         \toprule
-        $M$ & $\Phi_{M,M} - \Phi_{o,o}$ & $r_{eq}/\Delta x$ (exact) & $r_{eq} / \Delta x$ (regression)  \\
+        $M$ & $\Phi_{M,M} - \Phi_{o,o}$ & $r_{eq}/\Delta x$ (ex) & $r_{eq} / \Delta x$ (reg)  \\
         \midrule
         3   & 0.78571 & 0.1936 & 0.297 \\
         5   & 0.94346 & 0.1965 & 0.225 \\
@@ -32,30 +36,35 @@ A contour plot of the solution to the discretized differential flow equation on 
     \label{tbl:peaceman-results}
 \end{table}
 
+\begin{table}[htbp]
+\centering
+    \caption{Results from simulations using ECL100 and MRST. $r_{eq}/\Delta x$ (ex) refers to the exact solution using equation \eqref{eq:peaceman77-eqrad-exact}; $r_{eq} / \Delta x$ (reg) refers to the point where the regression line crosses the $x$-axis (see Figures~\ref{fig:peaceman77_pressure_vs_radius} and \ref{fig:regression-combined}).}
+    \begin{tabular}{c|cc|cc}
+        \toprule
+            & \multicolumn{2}{c|}{ECL100} & \multicolumn{2}{c}{MRST} \\
+        $M$ &  $r_{eq}/\Delta x$ (reg) & $r_{eq}/\Delta x$ (ex) & $r_{eq}/\Delta x$ (reg) & $r_{eq}/\Delta x$ (ex) \\
+        \midrule
+        10  & 0.212 & $3.4\times 10^{-06}$  &  0.211 & $4.2\times 10^{-06}$ \\
+        20  & 0.208 & $4.3\times 10^{-07}$  &  0.208 & $5.4\times 10^{-07}$ \\
+        50  & 0.207 & $2.8\times 10^{-08}$  &  0.208 & $3.6\times 10^{-08}$ \\
+        \bottomrule
+    \end{tabular}
+    \label{tbl:simulation-results}
+\end{table}
+
 \begin{figure}[htbp]
     \centering
     \scalebox{0.7}{\input{figures/plots/peaceman77-contour_10x10.pgf}}
-    \caption{Contour plot of the pressure difference calulated using equation \eqref{eq:differential-flow-discretzed-dimensionless} with $M=32$, solved using the program listing \ref{lst:peaceman77_solver}. The injector is placed in the upper right corner; the producer is placed in the lower left corner. The pressure difference is calculated relative to the block containing the producer.}
+    \caption{Contour plot of the pressure difference calulated using equation \eqref{eq:differential-flow-discretzed-dimensionless} with $M=10$, solved using the program listing \ref{lst:peaceman77_solver}. The injector is placed in the upper right corner; the producer is placed in the lower left corner. The pressure difference is calculated relative to the block containing the producer. The asymmetry near the 10-10 diagonal stems from the contraint in the number of countour lines to be drawn by the plotting library.}
     \label{fig:pressure_drop_contour}
 \end{figure}
 % subsection numerical_solution_of_the_differential_flow_equation (end)
 
-
-
-
-
-
-\subsection{Schlumberger ECL100 simulation} % (fold)
-\label{sub:schlumberger_ecl100_simulation_results}
-
-% subsection chlumberger_ecl100_simulation(end)
-
-
 \begin{figure}[htbp]
     \centering
-    \includegraphics[]{figures/plots/ecl-regression.pdf}
-    \caption{Plot of regression line calculated from the pressure distribution from ECL100 on an approximation of Peaceman's $10\times 10$ grid. The DATA file is shown in Appendix~\ref{sub:peaceman_10x10_data}. There is no visible difference between the regression plots for other grid sizes, or from plots created from MRST simulation data; they are therefore not shown here.}
-    \label{fig:regression-ecl10}
+    \includegraphics[]{figures/plots/regression-combined.pdf}
+    \caption{Plot of regression lines calculated from the pressure distribution from ECL100 on an approximation of Peaceman's $10\times 10$ grid (\emph{ECL100}); and from numerical solution of the difference equation (\emph{PCM}). There is no visible difference between the regression plots for varying grid sizes, nor between plots created from MRST or ECL100 simulation data. The PCM line is shown in more detail in Figure~\ref{fig:peaceman77_pressure_vs_radius}.}
+    \label{fig:regression-combined}
 \end{figure}
 
 \begin{figure}
@@ -69,31 +78,9 @@ A contour plot of the solution to the discretized differential flow equation on 
         \subcaption{Contour plot of simulated pressure from MRST on an approximation of Peaceman's $10\times 10$ grid.}
         \label{fig:contour-mrst10}
     \end{minipage}
-    \caption{Contour plots of simulated pressure. The differences in magnitude stem from the difference in initial pressure set for the models (higher for ECL100). The visible difference in the symmetry around the 10-10 diagonal is caused by the constraint in the number of contours to be drawn by the plotting library; if this number was set higher they would be quite identical.}
+    \caption{Contour plots of simulated pressure. The differences in magnitude stem from the difference in initial pressure set for the models (higher for ECL100). The visible difference in the symmetry near the 10-10 diagonal is caused by the constraint in the number of contour lines to be drawn by the plotting library.}
     \label{fig:contours-ect10-mrst10}
 \end{figure}
-
-
-\subsection{Sintef MRST simulation} % (fold)
-\label{sub:sintef_mrst_simulation}
-
-% subsection sintef_mrst_simulation (end)
-
-\begin{table}[htbp]
-\centering
-    \caption{Results from simulations using ECL100 and MRST.}
-    \begin{tabular}{c|cc|cc}
-        \toprule
-            & \multicolumn{2}{c|}{ECL100} & \multicolumn{2}{c}{MRST} \\
-        $M$ &  $r_{eq}/\Delta x$ (exact) & $r_{eq}/\Delta x$ (regression) & $r_{eq}/\Delta x$ (exact) & $r_{eq}/\Delta x$ (regression) \\
-        \midrule
-        10  & $3.4\times 10^{-06}$       & 0.204                          &  $4.2\times 10^{-06}$     & 0.204 \\
-        20  & $4.3\times 10^{-07}$       & 0.206                          &  $5.4\times 10^{-07}$     & 0.206 \\
-        50  & $2.8\times 10^{-08}$       & 0.207                          &  $3.6\times 10^{-08}$     & 0.207 \\
-        \bottomrule
-    \end{tabular}
-    \label{tbl:simulation-results}
-\end{table}
 
 
 % section results (end)

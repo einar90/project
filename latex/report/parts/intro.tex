@@ -2,12 +2,20 @@
 
 \section{Introduction} % (fold)
 \label{sec:introduction}
-In reservoir simulation, a number of differential equations are used to describe the flow of fluids. Solving these equations analytically is only feasible for very simple systems involving homogeneous reservoirs with regular boundaries \cite{Peaceman1977Fundamentals}. Because of this, it is necessary to create discrete models for the reservoirs we want to model, and solve the flow equations numerically.
+\subsection{Purpose And Scope} % (fold)
+\label{sub:purpose_and_scope}
+The purpose of this project is to \hl{investigate} Peaceman's well model, including the concepts of a ``well index'' and ``equivalent wellbore radius''. The value of the equivalent wellbore radius is calculated using different sets of initial data:
+\begin{itemize}
+    \item pressure distribution from numerical solution of the diffusivity equation.
+    \item simulated pressure distributions from the Schlumberger ECL100 and Sintef MRST numerical reservoir simulators.
+\end{itemize}
 
-For simplicity, this project is restricted to cases concerning single-phase, two-dimensional, steady-state flow under isotropic conditions.
+For simplicity, this project is restricted to cases concerning single-phase, two-dimensional, steady-state flow under isotropic conditions, but extensions to other cases are discussed in the Litterature Review (Section~\ref{sec:literature_review}).
+% subsection purpose_and_scope (end)
 
-\subsection{Numerical reservoir simulation} % (fold)
+\subsection{Numerical Reservoir Simulation} % (fold)
 \label{sub:numerical_reservoir_simulation}
+In reservoir simulation, a number of differential equations are used to describe the flow of fluids. Solving these equations analytically is only feasible for very simple systems involving homogeneous reservoirs with regular boundaries \cite{Peaceman1977Fundamentals}. Because of this, it is necessary to create discrete models for the reservoirs we want to model, and solve the flow equations numerically.
 
 
 The reservoir is discretized by dividing it into \emph{grid blocks}. Each block is associated with a set of properties (porosity, permeability, saturations etc.) approximating the properties in the corresponding area of the original reservoir; this is illustrated in Figure~\ref{fig:grid-discretization}. This discretization allows us to calculate the flow within the model using a set of easily solved equations, each of which describe the state of each block, including the flow into- or out of it, at some point in time.
@@ -21,6 +29,7 @@ The reservoir is discretized by dividing it into \emph{grid blocks}. Each block 
 
 
 Wells in a numerical reservoir simulation model are placed inside grid blocks, often called \emph{well blocks}. The horizontal dimension of a well block may be hundreds of meters\footnote{This may be remedied by using local grid refinement (LGR) around the well.}, \emph{much} larger than the wellbore radius. This means that the pressure calculated for the well block will differ greatly from the bottom-hole pressure of the well. This pressure difference is important, because it is needed to calculate the fluid flow  from the well block into the wellbore.
+% subsection numerical_reservoir_simulation (end)
 
 \subsection{Well Models} % (fold)
 \label{sub:well_models}
@@ -30,7 +39,6 @@ In numerical reservoir simulation, well models are used to relate the wellblock 
     p_{wb} = p_{wf} + \frac{q\mu}{2\pi k h} \ln \frac{r_{eq}}{r_{w}}
 \end{equation}
 where $p_{wb}$ is the wellblock pressure and $p_{wf}$ is the flowing wellbore pressure \cite{Peaceman1990Interpretation}.
-% subsection well_models (end)
 
 \subsubsection{Well Index (WI)} % (fold)
 \label{ssub:well_index_}
@@ -48,7 +56,7 @@ Substituting equation \eqref{eq:well-index-intro} into equation \eqref{eq:intro-
 The user can often define the values of $WI$ or $r_{eq}$ for each well block in commercial simulators, or let the simulator calculate it using a default expression \cite{Peaceman2003New}.
 % subsubsection well_index_ (end)
 
-\subsubsection{Equivalent wellbore radius} % (fold)
+\subsubsection{Equivalent Wellbore Radius} % (fold)
 \label{ssub:equivalent_wellbore_radius}
 The equivalent wellbore radius, $r_{eq}$, used in Peaceman's well model, is the radius at which the steady-state flowing pressure for the actual well is equal to the numerically calculated pressure for the well block. Examination of the pressures obtained by numerical solution of single-phase flow into a single well at steady state shows that $r_{eq} \approx 0.2 \Delta x$; i.e. that the well block pressure is approximately equal to the actual flowing pressure calculated using the radial flow equation \cite{Dake1978Developments}
 \begin{equation}
@@ -57,7 +65,7 @@ The equivalent wellbore radius, $r_{eq}$, used in Peaceman's well model, is the 
  at a radius $r = 0.2 \Delta x$ \cite{Peaceman1978Interpretation}.
 % subsubsection equivalent_wellbore_radius (end)
 
-\subsubsection{ECL100 and MRST implementation} % (fold)
+\subsubsection{ECL100 And MRST Implementation} % (fold)
 \label{ssub:ecl100_implementation}
 Schlumberger's ECL100 reservoir simulator uses the following default relationship to calculate the well index:
 \begin{equation}
@@ -80,7 +88,14 @@ which for isotropic conditions $k_x=k_y$ on a square grid $\Delta x= \Delta y$ r
     r_{eq} = 0.1980 \Delta x
 \end{equation}
 % subsubsection ecl100_implementation (end)
+% subsection well_models (end)
 
-% subsection numerical_reservoir_simulation (end)
+\subsection{About The ECL100 And MRST Reservoir Simulators} % (fold)
+\label{sub:about_the_ecl100_and_mrst_reservoir_simulators}
+The ECL100 (or ECLIPSE 100) reservoir simulator is a fully-implicit, three phase, three dimensional, general purpose black oil simulator with gas condensate options. The program is written in the FORTRAN programming language and operate on any computer with a compatible FORTRAN90 compiler. It can also run simulation in parallel using MPI (message passing interface) \cite{Schlumberger2013Eclipse}. The name ECLIPSE was originally an acronym for ``ECL's Implicit Program for Simulation Englineering'', and was developed by ECL, a division of Schlumberger \cite{Wikipedia2014Eclipse}.
+
+The MRST (MATLAB Reservoir Simulation Toolbox) is developed by SINTEF Applied Mathematics. It provides multiple solvers suitable for a range of systems. It is mainly intended as a toolbox for rapid prototyping and demonstration of new simulation methods and modeling concepts on unstructured grids \cite{Sintef2014Mrst}. As indicated by the acronym, it is developed in the MATLAB programming language. Parallel simulations are not provided by the toolbox, but MATLAB does support it.
+% subsection about_the_ecl100_and_mrst_reservoir_simulators (end)
+
 
 % section introduction (end)
