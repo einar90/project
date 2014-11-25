@@ -1,0 +1,49 @@
+% -*- root: ../../project.tex -*-
+
+\begin{tikzpicture}[scale=0.075]
+    \draw[] (0,0) to (105,0);
+    \draw[] (0,0) to (0,105);
+
+    \draw[] (15,0) to (15,105);
+    \draw[] (45,0) to (45,105);
+    \draw[] (105,0) to (105,105);
+
+    \draw[] (0,15) to (105,15);
+    \draw[] (0,45) to (105,45);
+    \draw[] (0,45) to (105,45);
+    \draw[] (0,75) to (105,75);
+    \draw[] (0,105) to (105,105);
+    \draw[] (75,0) to (75,105);
+
+    \draw[dashed] (105,0) to (110,0);
+    \draw[dashed] (0,105) to (0,110);
+
+    \draw[dashed] (15,105) to (15,110);
+    \draw[dashed] (45,105) to (45,110);
+    \draw[dashed] (105,105) to (105,110);
+
+    \draw[dashed] (105,15) to (110,15);
+    \draw[dashed] (105,45) to (110,45);
+    \draw[dashed] (105,105) to (110,105);
+
+    \draw[dashed] (75,105) to (75,110);
+    \draw[dashed] (105,75) to (110,75);
+
+    \draw[pattern=north east lines] (0,15) rectangle (15,45);
+    \draw[pattern=north east lines] (0,45) rectangle (15,75);
+    \draw[pattern=north east lines] (15,0) rectangle (45,15);
+    \draw[pattern=north east lines] (45,0) rectangle (75,15);
+    \draw[pattern=north east lines] (15,15) rectangle (45,45);
+    \draw[pattern=north east lines] (75,0) rectangle (105,15);
+    \draw[pattern=north east lines] (0,75) rectangle (15,105);
+
+    \node at (30,60) {$p_{2,3}$};
+    \node at (30,90) {$p_{2,4}$};
+    \node at (60,90) {$p_{3,4}$};
+    \node at (7.5,7.5) {$p_{0,0}'$};
+    \node at (60,30) {$p_{3,2}$};
+    \node at (90,60) {$p_{4,3}$};
+    \node at (90,30) {$p_{4,2}$};
+    \node at (60,60) {$p_{3,3}$};
+    \node at (90,90) {$p_{4,4}$};
+\end{tikzpicture}
