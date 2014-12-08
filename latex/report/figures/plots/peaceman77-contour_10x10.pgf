@@ -520,7 +520,7 @@
 \end{pgfscope}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=0.750000in,y=0.509444in,,top]{{\sffamily\fontsize{12.000000}{14.400000}\selectfont 0}}%
+\pgftext[x=0.750000in,y=0.509444in,,top]{{\sffamily\fontsize{16.000000}{18.400000}\selectfont 0}}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
@@ -561,7 +561,7 @@
 \end{pgfscope}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=1.680000in,y=0.509444in,,top]{{\sffamily\fontsize{12.000000}{14.400000}\selectfont 2}}%
+\pgftext[x=1.680000in,y=0.509444in,,top]{{\sffamily\fontsize{16.000000}{18.400000}\selectfont 2}}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
@@ -602,7 +602,7 @@
 \end{pgfscope}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=2.610000in,y=0.509444in,,top]{{\sffamily\fontsize{12.000000}{14.400000}\selectfont 4}}%
+\pgftext[x=2.610000in,y=0.509444in,,top]{{\sffamily\fontsize{16.000000}{18.400000}\selectfont 4}}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
@@ -643,7 +643,7 @@
 \end{pgfscope}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=3.540000in,y=0.509444in,,top]{{\sffamily\fontsize{12.000000}{14.400000}\selectfont 6}}%
+\pgftext[x=3.540000in,y=0.509444in,,top]{{\sffamily\fontsize{16.000000}{18.400000}\selectfont 6}}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
@@ -684,7 +684,7 @@
 \end{pgfscope}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=4.470000in,y=0.509444in,,top]{{\sffamily\fontsize{12.000000}{14.400000}\selectfont 8}}%
+\pgftext[x=4.470000in,y=0.509444in,,top]{{\sffamily\fontsize{16.000000}{18.400000}\selectfont 8}}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
@@ -725,7 +725,7 @@
 \end{pgfscope}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=5.400000in,y=0.509444in,,top]{{\sffamily\fontsize{12.000000}{14.400000}\selectfont 10}}%
+\pgftext[x=5.400000in,y=0.509444in,,top]{{\sffamily\fontsize{16.000000}{18.400000}\selectfont 10}}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
@@ -766,7 +766,7 @@
 \end{pgfscope}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=0.694444in,y=0.565000in,right,]{{\sffamily\fontsize{12.000000}{14.400000}\selectfont 0}}%
+\pgftext[x=0.694444in,y=0.565000in,right,]{{\sffamily\fontsize{16.000000}{18.400000}\selectfont 0}}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
@@ -807,7 +807,7 @@
 \end{pgfscope}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=0.694444in,y=1.469000in,right,]{{\sffamily\fontsize{12.000000}{14.400000}\selectfont 2}}%
+\pgftext[x=0.694444in,y=1.469000in,right,]{{\sffamily\fontsize{16.000000}{18.400000}\selectfont 2}}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
@@ -848,7 +848,7 @@
 \end{pgfscope}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=0.694444in,y=2.373000in,right,]{{\sffamily\fontsize{12.000000}{14.400000}\selectfont 4}}%
+\pgftext[x=0.694444in,y=2.373000in,right,]{{\sffamily\fontsize{16.000000}{18.400000}\selectfont 4}}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
@@ -889,7 +889,7 @@
 \end{pgfscope}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=0.694444in,y=3.277000in,right,]{{\sffamily\fontsize{12.000000}{14.400000}\selectfont 6}}%
+\pgftext[x=0.694444in,y=3.277000in,right,]{{\sffamily\fontsize{16.000000}{18.400000}\selectfont 6}}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
@@ -930,7 +930,7 @@
 \end{pgfscope}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=0.694444in,y=4.181000in,right,]{{\sffamily\fontsize{12.000000}{14.400000}\selectfont 8}}%
+\pgftext[x=0.694444in,y=4.181000in,right,]{{\sffamily\fontsize{16.000000}{18.400000}\selectfont 8}}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
@@ -971,7 +971,7 @@
 \end{pgfscope}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=0.694444in,y=5.085000in,right,]{{\sffamily\fontsize{12.000000}{14.400000}\selectfont 10}}%
+\pgftext[x=0.694444in,y=5.085000in,right,]{{\sffamily\fontsize{16.000000}{18.400000}\selectfont 10}}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
@@ -1018,43 +1018,40 @@
 \pgfusepath{stroke}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=0.587409in,y=1.081185in,left,base,rotate=322.253195]{{\sffamily\fontsize{9.000000}{10.800000}\selectfont 0.240}}%
+\pgftext[x=0.587409in,y=1.081185in,left,base,rotate=322.253195]{{\sffamily\fontsize{14.000000}{16.400000}\selectfont 0.240}}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=0.919519in,y=1.080746in,left,base,rotate=328.613653]{{\sffamily\fontsize{9.000000}{10.800000}\selectfont 0.300}}%
+\pgftext[x=0.919519in,y=1.080746in,left,base,rotate=328.613653]{{\sffamily\fontsize{14.000000}{16.400000}\selectfont 0.300}}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=1.039643in,y=1.342092in,left,base,rotate=333.319048]{{\sffamily\fontsize{9.000000}{10.800000}\selectfont 0.360}}%
+\pgftext[x=1.039643in,y=1.342092in,left,base,rotate=333.319048]{{\sffamily\fontsize{14.000000}{16.400000}\selectfont 0.360}}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=1.456453in,y=1.545082in,left,base,rotate=324.411882]{{\sffamily\fontsize{9.000000}{10.800000}\selectfont 0.420}}%
+\pgftext[x=1.456453in,y=1.545082in,left,base,rotate=324.411882]{{\sffamily\fontsize{14.000000}{16.400000}\selectfont 0.420}}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=1.810865in,y=1.994466in,left,base,rotate=325.314065]{{\sffamily\fontsize{9.000000}{10.800000}\selectfont 0.480}}%
+\pgftext[x=1.810865in,y=1.994466in,left,base,rotate=325.314065]{{\sffamily\fontsize{14.000000}{16.400000}\selectfont 0.480}}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=2.446746in,y=2.484963in,left,base,rotate=322.718950]{{\sffamily\fontsize{9.000000}{10.800000}\selectfont 0.540}}%
+\pgftext[x=2.446746in,y=2.484963in,left,base,rotate=322.718950]{{\sffamily\fontsize{14.000000}{16.400000}\selectfont 0.540}}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=3.339255in,y=2.903839in,left,base,rotate=323.454189]{{\sffamily\fontsize{9.000000}{10.800000}\selectfont 0.600}}%
+\pgftext[x=3.339255in,y=2.903839in,left,base,rotate=323.454189]{{\sffamily\fontsize{14.000000}{16.400000}\selectfont 0.600}}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=3.837163in,y=3.590793in,left,base,rotate=326.175635]{{\sffamily\fontsize{9.000000}{10.800000}\selectfont 0.660}}%
+\pgftext[x=3.837163in,y=3.590793in,left,base,rotate=326.175635]{{\sffamily\fontsize{14.000000}{16.400000}\selectfont 0.660}}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=4.299067in,y=4.038261in,left,base,rotate=328.821169]{{\sffamily\fontsize{9.000000}{10.800000}\selectfont 0.720}}%
+\pgftext[x=4.299067in,y=4.038261in,left,base,rotate=328.821169]{{\sffamily\fontsize{14.000000}{16.400000}\selectfont 0.720}}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=4.363569in,y=4.752389in,left,base,rotate=308.155905]{{\sffamily\fontsize{9.000000}{10.800000}\selectfont 0.780}}%
+\pgftext[x=4.363569in,y=4.752389in,left,base,rotate=308.155905]{{\sffamily\fontsize{14.000000}{16.400000}\selectfont 0.780}}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=4.771171in,y=4.687977in,left,base,rotate=323.128606]{{\sffamily\fontsize{9.000000}{10.800000}\selectfont 0.840}}%
+\pgftext[x=4.771171in,y=4.687977in,left,base,rotate=323.128606]{{\sffamily\fontsize{14.000000}{16.400000}\selectfont 0.840}}%
 \end{pgfscope}%
 \begin{pgfscope}%
-\pgftext[x=4.780566in,y=5.101772in,left,base,rotate=317.034511]{{\sffamily\fontsize{9.000000}{10.800000}\selectfont 0.900}}%
-\end{pgfscope}%
-\begin{pgfscope}%
-\pgftext[x=4.861529in,y=5.167265in,left,base,rotate=322.253195]{{\sffamily\fontsize{9.000000}{10.800000}\selectfont 0.960}}%
+\pgftext[x=4.780566in,y=5.101772in,left,base,rotate=317.034511]{{\sffamily\fontsize{14.000000}{16.400000}\selectfont 0.900}}%
 \end{pgfscope}%
 \end{pgfpicture}%
 \makeatother%

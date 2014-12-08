@@ -1,6 +1,6 @@
 % -*- root: ../../project.tex -*-
 
-\begin{tikzpicture}[scale=0.075]
+\begin{tikzpicture}[scale=0.045]
     \draw[] (0,0) to (105,0);
     \draw[] (0,0) to (0,105);
 
@@ -37,13 +37,13 @@
     \draw[pattern=north east lines] (75,0) rectangle (105,15);
     \draw[pattern=north east lines] (0,75) rectangle (15,105);
 
-    \node at (30,60) {$p_{2,3}$};
-    \node at (30,90) {$p_{2,4}$};
-    \node at (60,90) {$p_{3,4}$};
-    \node at (7.5,7.5) {$p_{0,0}'$};
-    \node at (60,30) {$p_{3,2}$};
-    \node at (90,60) {$p_{4,3}$};
-    \node at (90,30) {$p_{4,2}$};
-    \node at (60,60) {$p_{3,3}$};
-    \node at (90,90) {$p_{4,4}$};
+    \node at (30,60) {\footnotesize$p_{2,3}$};
+    \node at (30,90) {\footnotesize$p_{2,4}$};
+    \node at (60,90) {\footnotesize$p_{3,4}$};
+    \node at (7.5,7.5) {\footnotesize$p_{0,0}'$};
+    \node at (60,30) {\footnotesize$p_{3,2}$};
+    \node at (90,60) {\footnotesize$p_{4,3}$};
+    \node at (90,30) {\footnotesize$p_{4,2}$};
+    \node at (60,60) {\footnotesize$p_{3,3}$};
+    \node at (90,90) {\footnotesize$p_{4,4}$};
 \end{tikzpicture}
