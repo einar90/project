@@ -6,6 +6,7 @@
         xmax=.6e1,
         ymin=0,
         ymax=2,
+        grid=both,
         xlabel={$r/\Delta x$},
         ylabel={$\frac{kh}{q\mu}\left( p_{i,j} - p_{0,0} \right)$}
     ]
