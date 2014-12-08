@@ -12,7 +12,7 @@ A plot showing the regression lines calculated from both the numerical solution 
 
 \begin{table}[htbp]
     \centering
-    \caption{Computed equivalent radius of well-block $r_{eq}$ for various values of $M\times M$ grids. $\Phi_{M,M} - \Phi_{0,0}$ is the dimensionless pressure drop between producer and injector; $r_{eq}/\Delta x$ (ex) refers to the exact solution using equation \eqref{eq:peaceman77-eqrad-exact}; $r_{eq} / \Delta x$ (reg) refers to the point where the regression line crosses the $x$-axis (see Figures~\ref{fig:peaceman77_pressure_vs_radius} and \ref{fig:regression-combined}).}
+    \caption{Computed equivalent radius of well-block $r_{eq}$ for various values of $M$. $\Phi_{M,M} - \Phi_{0,0}$ is the dimensionless pressure drop between producer and injector; $r_{eq}/\Delta x$ (ex) refers to the exact solution using equation \eqref{eq:peaceman77-eqrad-exact}; $r_{eq} / \Delta x$ (reg) refers to the point where the regression line crosses the $x$-axis (see Figures~\ref{fig:peaceman77_pressure_vs_radius} and \ref{fig:regression-combined}).}
     \begin{tabular}{r|ccc}
         \toprule
         $M$ & $\Phi_{M,M} - \Phi_{o,o}$ & $r_{eq}/\Delta x$ (ex) & $r_{eq} / \Delta x$ (reg)  \\
@@ -72,8 +72,29 @@ A plot showing the regression lines calculated from both the numerical solution 
 \begin{figure}[htbp]
     \centering
     \includegraphics[]{figures/plots/regression-combined.pdf}
-    \caption{Plot of regression lines calculated from the pressure distribution simulated by ECL100 on an approximation of Peaceman's $10\times 10$ grid (\emph{ECL}); and from numerical solution of the diffusivity equation (\emph{PCM}).}
+    \caption{Regression lines calculated from the pressure distribution simulated by ECL100 and MRST on an approximation of Peaceman's $10\times 10$ grid (\emph{ECL} and \emph{MRST}); and from numerical solution of the diffusivity equation (\emph{PCM}) with $M=10$.}
     \label{fig:regression-combined}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/plots/regression-pcm-grid-sizes.pdf}
+    \caption{Regression lines calculated from numerical solution of the diffusivity equation with $M=10,20$ and $50$.}
+    \label{fig:regression-pcm-grid-sizes}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/plots/regression-ecl-grid-sizes.pdf}
+    \caption{Regression lines calculated from the pressure distribution simulated by ECL100 for grid sizes $10\times 10$, $20\times 20$ and $50\times 50$.}
+    \label{fig:regression-ecl-grid-sizes}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/plots/regression-mrst-grid-sizes.pdf}
+    \caption{Regression lines calculated from the pressure distribution simulated by MRST for grid sizes $10\times 10$, $20\times 20$ and $50\times 50$.}
+    \label{fig:regression-mrst-grid-sizes}
 \end{figure}
 
 
