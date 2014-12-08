@@ -48,19 +48,19 @@ A plot showing the regression lines calculated from both the numerical solution 
 
 \begin{figure}[htbp]
     \centering
-    \scalebox{0.7}{\input{figures/plots/peaceman77-contour_10x10.pgf}}
+    \scalebox{0.52}{\input{figures/plots/peaceman77-contour_10x10.pgf}}
     \caption{Contour plot of the pressure difference calulated using equation \eqref{eq:differential-flow-discretzed-dimensionless} with $M=10$, solved using the program listing \ref{lst:peaceman77_solver}. The injector is placed in the upper right corner; the producer is placed in the lower left corner. The pressure difference is calculated relative to the block containing the producer. The asymmetry near the 10-10 diagonal stems from the contraint in the number of countour lines to be drawn by the plotting library.}
     \label{fig:pressure_drop_contour}
 \end{figure}
 
 \begin{figure}
     \begin{minipage}[b]{.5\linewidth}
-        \centering\scalebox{.53}{\input{figures/plots/ecl10-contour_10x10.pgf}}
+        \centering\scalebox{.52}{\input{figures/plots/ecl10-contour_10x10.pgf}}
         \subcaption{Contour plot of simulated pressure from ECL100 on an approximation of Peaceman's $10\times 10$ grid.}
         \label{fig:contour-ecl10}
     \end{minipage}%
     \begin{minipage}[b]{.5\linewidth}
-        \centering\scalebox{.53}{\input{figures/plots/mrst10-contour_10x10.pgf}}
+        \centering\scalebox{.52}{\input{figures/plots/mrst10-contour_10x10.pgf}}
         \subcaption{Contour plot of simulated pressure from MRST on an approximation of Peaceman's $10\times 10$ grid.}
         \label{fig:contour-mrst10}
     \end{minipage}
@@ -72,7 +72,7 @@ A plot showing the regression lines calculated from both the numerical solution 
 \begin{figure}[htbp]
     \centering
     \includegraphics[]{figures/plots/regression-combined.pdf}
-    \caption{Plot of regression lines calculated from the pressure distribution simulated by ECL100 on an approximation of Peaceman's $10\times 10$ grid (\emph{ECL}); and from numerical solution of the difference equation (\emph{PCM}). For the ECL100 and MRST data sets, there is no visible difference between plots for varying grid sizes, nor between plots created from MRST or ECL100 simulation data. The PCM line is shown on more fitting axes in Figure~\ref{fig:peaceman77_pressure_vs_radius}.}
+    \caption{Plot of regression lines calculated from the pressure distribution simulated by ECL100 on an approximation of Peaceman's $10\times 10$ grid (\emph{ECL}); and from numerical solution of the diffusivity equation (\emph{PCM}).}
     \label{fig:regression-combined}
 \end{figure}
 
