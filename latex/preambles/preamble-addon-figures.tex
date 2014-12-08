@@ -15,18 +15,22 @@
 \tikzstyle{axis}   = [-latex,black!55]
 
 % Default plot settings
-\pgfplotsset{legend style={fill=black!8!white,
-                           at={(0.5,-0.20)},
-                           anchor=north,
+\pgfplotsset{legend style={%fill=black!8!white,
+                           at={(0,1)},
+                           anchor=north west,
                            legend cell align=left,
-                           legend columns=3,
-                           font=\sffamily,
+                           legend columns=1,
+                           font=\footnotesize,
                            column sep=0.3cm}}
 \pgfplotsset{width=.95\textwidth, height=8cm}
 \pgfplotsset{
 every axis label/.append style={font=\sffamily},
 tick label style={font=\sffamily},
 }
+
+\pgfplotsset{grid style={very thin,dotted,gray}}
+\pgfplotsset{minor grid style={dotted,gray!20!white}}
+\pgfplotsset{major grid style={dotted,gray!50!white}}
 
 \definecolor{red}{RGB}{255,50,50}  % ---|Color for line-numbers.
 \definecolor{green}{RGB}{50,200,50} % Background color for listings.
