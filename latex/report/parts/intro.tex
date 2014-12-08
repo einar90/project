@@ -4,13 +4,13 @@
 \label{sec:introduction}
 \subsection{Purpose And Scope} % (fold)
 \label{sub:purpose_and_scope}
-The purpose of this project is to investigate Peaceman's well model, including the concepts of a \emph{well index} and an \emph{equivalent wellbore radius}. The value of the equivalent wellbore radius is calculated using different sets of initial pressure data:
+The purpose of this project is to investigate Peaceman's well model, including the concepts of a \emph{well index} and an \emph{equivalent wellbore radius}. The value of the equivalent wellbore radius is calculated using different sets of steady-state pressure data:
 \begin{itemize}
-    \item pressure distribution from numerical solution of the diffusivity equation.
-    \item simulated pressure distributions from the Schlumberger ECL100 and Sintef MRST numerical reservoir simulators.
+    \item pressure distribution from numerical solution of the diffusivity equation at steady state.
+    \item simulated pressure distributions from the Schlumberger ECL100 and SINTEF MRST numerical reservoir simulators.
 \end{itemize}
 
-For simplicity, this project is restricted to cases concerning single-phase, two-dimensional, steady-state flow under isotropic conditions, but extensions to other cases are discussed in the Litterature Review (Section~\ref{sec:literature_review}).
+For simplicity, this project is restricted to cases concerning single-phase, two-dimensional, steady-state flow under isotropic conditions. Extensions to other cases are discussed in the Literature Review (Section~\ref{sec:literature_review}).
 % subsection purpose_and_scope (end)
 
 \subsection{Numerical Reservoir Simulation} % (fold)
@@ -18,22 +18,22 @@ For simplicity, this project is restricted to cases concerning single-phase, two
 In reservoir simulation, a number of differential equations are used to describe the flow of fluids. Solving these equations analytically is only feasible for very simple systems involving homogeneous reservoirs with regular boundaries \cite{Peaceman1977Fundamentals}. Because of this, it is necessary to create discrete models for the reservoirs we want to model, so that the flow equations may be solved numerically.
 
 
-The reservoir is discretized by dividing it into \emph{grid blocks}. Each block is associated with a set of properties (porosity, permeability, saturations etc.) approximating the properties in the corresponding area of the original, continous reservoir. This is illustrated in Figure~\ref{fig:grid-discretization}. This discretization allows us to calculate the flow within the model using a set of easily solved equations, each of which describe the state of each block, including the flow into- or out of it, at some point in time.
+The reservoir is discretized by dividing it into \emph{grid blocks}. Each block is associated with a set of properties (porosity, permeability, saturations etc.) approximating the properties in the corresponding area of the original, continuous reservoir. This is illustrated in Figure~\ref{fig:grid-discretization}. This discretization allows us to calculate the flow within the model using a set of easily solved equations, each of which describe the state of each block, including the flow into- or out of it, at some point in time.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[]{figures/grids/3d_grid_4x3x2.pdf}
-    \caption{Illustration of a continuous reservoir and a $4\times 4\times 2$ discretization of it. In the continuous reservoir, the properties are continuous functions in the spatial dimensions; in the discretized reservoir, each block has a set of properties that does not vary within the it, approximating the properties in the corresponding area of the continuous reservoir.}
+    \caption{Illustration of a continuous reservoir and a $4\times 3\times 2$ discretization of it at one point in time. In the continuous reservoir, the properties are continuous functions of the spatial dimensions. In the discretized reservoir, each block has a set of constant properties approximating the properties in the corresponding area of the continuous reservoir.}
     \label{fig:grid-discretization}
 \end{figure}
 
 
-Wells in a numerical reservoir simulation model are placed inside grid blocks, often called \emph{well blocks}. The horizontal dimension of a well block may be hundreds of meters, \emph{much} larger than the wellbore radius. This means that the pressure calculated for the well block will differ greatly from the bottom-hole pressure of the well. This pressure difference is important, because it is needed to calculate the fluid flow  from the well block into the wellbore.
+Wells in a numerical reservoir simulation model are placed inside grid blocks. Grid blocks containing a well, or parts of a well, are often often called \emph{well blocks}. The horizontal dimension of a well block may be hundreds of meters, \emph{much} larger than the wellbore radius. This means that the pressure calculated for the well block will differ greatly from the bottom-hole pressure of the well. This pressure difference is important, because it is needed to calculate the fluid flow  from the well block into the wellbore. The relationship between a well block and the well it contains is modeled using a \emph{well model}.
 % subsection numerical_reservoir_simulation (end)
 
 \subsection{Well Models} % (fold)
 \label{sub:well_models}
-In numerical reservoir simulation, well models are used to relate the well block pressure to the actual wellbore pressure. The most commonly used model is Peaceman's model, utilizing the concept of an ``equivalent wellbore radius'', $r_{eq}$. This model may be stated as
+In numerical reservoir simulation, well models are used to relate the well block pressure to the actual wellbore pressure. The most commonly used model is Peaceman's model, utilizing the concept of an \emph{equivalent wellbore radius}, $r_{eq}$. This model may be stated as
 \begin{equation}
     \label{eq:intro-well-model}
     p_{wb} = p_{wf} + \frac{q\mu}{2\pi k h} \ln \frac{r_{eq}}{r_{w}}
@@ -47,22 +47,13 @@ The components of Peaceman's well model accounting the geometry of the well bloc
     \label{eq:well-index-intro}
     WI = \frac{2\pi kh}{\ln \left(r_{eq}/r_{w}\right)}
 \end{equation}
-Substituting equation \eqref{eq:well-index-intro} into equation \eqref{eq:intro-well-model} and solving for the flow rate, $q$, yields the expression commonly used to calculate the flow rate from a well block into the well:
-\begin{equation}
-    \label{eq:wolfsteiner-well-index-multiple-blocks}
-    q = \frac{WI}{\mu} \left( p_{wb} - p_{wf} \right)
-\end{equation}
 
-The user can often define the values of $WI$ or $r_{eq}$ for each well block in commercial simulators, or let the simulator calculate them using a default expression \cite{Peaceman2003New}.
+The user can often define the value of $WI$ for each well block in commercial simulators, or let the simulator calculate it using a default expression.
 % subsubsection well_index_ (end)
 
 \subsubsection{Equivalent Wellbore Radius} % (fold)
 \label{ssub:equivalent_wellbore_radius}
-The equivalent wellbore radius, $r_{eq}$, used in Peaceman's well model, is the radius at which the steady-state flowing pressure for the actual well is equal to the numerically calculated pressure for the well block. Examination of the pressures obtained by numerical solution of single-phase flow into a single well at steady state shows that $r_{eq} \approx 0.2 \Delta x$; i.e. that the well block pressure is approximately equal to the actual flowing pressure calculated using the radial flow equation \cite{Dake1978Developments}
-\begin{equation}
-    p = p_{wf} + \frac{q\mu}{2\pi kh} \ln{\frac{r}{r_w}}
-\end{equation}
- at a radius $r = 0.2 \Delta x$ \cite{Peaceman1978Interpretation}.
+The equivalent wellbore radius used in Peaceman's well model is the radius at which the steady-state flowing pressure for the actual well is equal to the numerically calculated pressure for the well block. Examination of the pressures obtained by numerical solution of single-phase flow into a single well at steady state shows that $r_{eq} \approx 0.2 \Delta x$; i.e. that the well block pressure is approximately equal to the actual flowing pressure calculated using the radial flow equation at a radius $r = 0.2 \Delta x$ \cite{Peaceman1978Interpretation}.
 % subsubsection equivalent_wellbore_radius (end)
 
 \subsubsection{ECL100 And MRST Implementation} % (fold)
@@ -72,12 +63,12 @@ Schlumberger's ECL100 reservoir simulator uses the following default relationshi
     \label{eq:wi_ecl}
     WI = \frac{c\theta K h}{\ln \left(r_{eq}/r_w\right)+S}
 \end{equation}
-where $c$ is a unit conversion factor; $\theta$ is the angle of the segment connecting the well in radians ($2\pi$ for a Cartesian grid); $K$ is the geometric mean of the permeabilities in $x$- and $y$-directions, $K=\sqrt{k_x k_y}$;and $S$ is the skin factor \cite{Schlumberger2013Eclipse}. For dimensionless units in a Cartesian grid and no skin effect, it reduces to equation \eqref{eq:well-index-intro}.
+where $c$ is a unit conversion factor; $\theta$ is the angle of the segment connecting the well in radians ($2\pi$ for a Cartesian grid); $K$ is the geometric mean of the permeabilities in $x$- and $y$-directions, $K=\sqrt{k_x k_y}$; and $S$ is the skin factor \cite{Schlumberger2013Eclipse}. For dimensionless units in a Cartesian grid and no skin effect, it reduces to equation \eqref{eq:well-index-intro}.
 \nomenclature{$c$}{unit conversion factor}
 \nomenclature{$\theta$}{angle of segment connecting the well, rad}
 \nomenclature{$S$}{skin factor}
 
-The expression MRST uses to calculate the well index is not stated explicitly in the manual \cite{Lie2014Introduction}, but it is likely the same as equation \eqref{eq:wi_ecl} because both ECL100 and MRST use Peaceman's well model \cite{Lie2014Introduction,Schlumberger2013Eclipse}.
+The expression MRST uses to calculate the well index is not stated explicitly in the manual \cite{Lie2014Introduction}, but it is likely the same as or similar to equation \eqref{eq:wi_ecl} as both ECL100 and MRST utilize Peaceman's well model \cite{Lie2014Introduction}.
 
 The equivalent wellbore radius for both ECL100 and MRST is by default calculated using the following expression \cite{Schlumberger2013Eclipse,Lie2014Introduction} originally derived by Peaceman \cite{Peaceman1983Interpretation}:
 \begin{equation}
@@ -87,7 +78,7 @@ which for isotropic conditions ($k_x=k_y$) on a square grid ($\Delta x= \Delta y
 \begin{equation}
     r_{eq} = 0.1980 \Delta x
 \end{equation}
-which is the value for the equivalent wellbore radius found using Peaceman's exact method, discussed later in this report.
+which is the value for the equivalent wellbore radius found using Peaceman's exact method, discussed in Section~\ref{ssub:exact_calculation_of_equivalent_radius}.
 % subsubsection ecl100_implementation (end)
 % subsection well_models (end)
 

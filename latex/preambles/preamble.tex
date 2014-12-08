@@ -1,4 +1,4 @@
-\documentclass[english,11pt,a4paper,twoside, titlepage]{article}
+\documentclass[english,11pt,a4paper,twoside]{article}
 \usepackage[T1]{fontenc} % --------------| More characters.
 \usepackage[utf8]{inputenc} % ---------| Direct use of scandinavian letters.
 \usepackage{float} % --------------------| More options for floats.
@@ -19,6 +19,7 @@
 \usepackage{mathptmx}
 \usepackage{bm} % Bold math symbols
 \usepackage{verbatim}
+\usepackage{pdfpages}
 
 % Styling captions.
 \usepackage{caption}
@@ -38,12 +39,16 @@
 \fancyheadoffset{0cm}
 \renewcommand{\headrulewidth}{.4pt}
 \renewcommand{\footrulewidth}{0pt}
-\fancyhead[R]{\thepage}
-\fancyhead[L]{\nouppercase{\leftmark}}
+\fancyhead[RE]{\thepage}
+\fancyhead[LE]{\nouppercase{\leftmark}}
+\fancyhead[LO]{\thepage}
+\fancyhead[RO]{\nouppercase{\leftmark}}
 \fancypagestyle{plain}{%
   \fancyhf{}%
-  \fancyhead[R]{\thepage}%
-  \fancyhead[L]{\nouppercase{\leftmark}}
+  \fancyhead[RE]{\thepage}%
+  \fancyhead[LE]{\nouppercase{\leftmark}}
+  \fancyhead[RO]{\thepage}%
+  \fancyhead[LO]{\nouppercase{\leftmark}}
 }
 
 % Increase headheight to make room for fancy header.

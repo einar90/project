@@ -1,0 +1,14 @@
+% -*- root: ../project.tex -*-
+
+% Circle on the side
+\definecolor{covergreen}{RGB}{183,200,156}
+\begin{tikzpicture}[remember picture, overlay]
+    \draw[fill=covergreen,draw=none] ($ (current page.east) + (0,7) $) circle (4.2cm);
+\end{tikzpicture}
+
+
+% NTNU logo
+\vskip 21cm
+\hskip -1cm
+\thispagestyle{empty}
+\includegraphics[scale=0.9]{figures/cover/logo_ntnu_eng.pdf}

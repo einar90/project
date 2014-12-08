@@ -17,10 +17,11 @@
 
 \begin{document}
 
-\input{parts/frontpage.tex}
-\input{parts/abstract.tex}
+\input{parts/frontpage.tex} \clearpage
+
+\input{parts/abstract.tex} \clearpage
 \input{parts/preface.tex}\clearpage
-% \input{parts/acknowledgement.tex}\clearpage
+\input{parts/acknowledgement.tex}\clearpage
 \input{parts/content-lists.tex}
 
 % BEGIN main contents =========================================================
@@ -52,6 +53,7 @@
 
 % BEGIN Bibliography ==========================================================
 \clearpage
+\addcontentsline{toc}{section}{References}
 \bibliography{Remote}{}
 \bibliographystyle{apalike}
 % END Bibliography ============================================================
@@ -66,7 +68,10 @@
 \vfuzz=5pt
 \input{parts/appendix-listings.tex} \clearpage
 \input{parts/appendix-simulations.tex} \clearpage
-\input{parts/appendix-data.tex}
+\input{parts/appendix-data.tex} \clearpage
+\input{parts/appendix-risk-assesment.tex} \clearpage
 % END Appendix ================================================================
+
+\input{parts/back.tex}
 
 \end{document}
