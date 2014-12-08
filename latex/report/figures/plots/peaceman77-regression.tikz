@@ -7,6 +7,7 @@
         xmax=.6e1,
         ymin=0,
         ymax=.6,
+        grid=both,
         xlabel={$r/\Delta x = \sqrt{i^2 + j^2}$},
         ylabel={$\frac{kh}{q\mu}\left( p_{i,j} - p_{0,0} \right) = \Phi_{i,j} - \Phi_{0,0}$}
     ]

@@ -9,16 +9,16 @@
         grid=both,
         xlabel={$r/\Delta x$},
         ylabel={$\frac{kh}{q\mu}\left( p_{i,j} - p_{0,0} \right)$},
-        legend entries={ECL, PCM, MRST}
+        legend entries={10, 20, 50}
     ]
         \addlegendimage{no markers, red}
         \addlegendimage{no markers, blue}
         \addlegendimage{no markers, green}
         \addplot[scatter, only marks, scatter/use mapped color={fill=red}] table[x=r,y=dp, col sep=comma]{data/scatter-ecl-10x10.dat};
         \addplot[no marks,color=red] table[x=r,y=dp, col sep=comma]{data/regression-ecl-10x10.dat};
-        \addplot[scatter, only marks, scatter/use mapped color={fill=blue}] table[x=r,y=dp, col sep=comma]{data/scatter-10x10.dat};
-        \addplot[no marks,color=blue] table[x=r,y=dp, col sep=comma]{data/regression-10x10.dat};
-        \addplot[scatter, only marks, scatter/use mapped color={fill=green}] table[x=r,y=dp, col sep=comma]{data/scatter-mrst-10x10.dat};
-        \addplot[no marks,color=green] table[x=r,y=dp, col sep=comma]{data/regression-mrst-10x10.dat};
+        \addplot[scatter, only marks, scatter/use mapped color={fill=blue}] table[x=r,y=dp, col sep=comma]{data/scatter-ecl-20x20.dat};
+        \addplot[no marks,color=blue] table[x=r,y=dp, col sep=comma]{data/regression-ecl-20x20.dat};
+        \addplot[scatter, only marks, scatter/use mapped color={fill=green}] table[x=r,y=dp, col sep=comma]{data/scatter-ecl-50x50.dat};
+        \addplot[no marks,color=green] table[x=r,y=dp, col sep=comma]{data/regression-ecl-50x50.dat};
     \end{axis}
 \end{tikzpicture}
