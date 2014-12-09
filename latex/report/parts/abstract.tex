@@ -3,9 +3,9 @@
 \begin{abstract}
 In reservoir simulation, a number of differential equations are used to describe a system. For practical applications, we need to create discrete, numerical models for these systems. The numerical models include the concept of a well model to account for the flow from the reservoir into a well. This report presents Peaceman's well model, including the concepts of a well index and equivalent wellbore radius.
 
-Peaceman's calculation of the value for the equivalent wellbore radius for single-phase flow in two dimensions is performed using both a numerical solver for the differential flow equation and simulated pressure distributions from the ECL100 and MRST reservoir simulators.
+We perform Peaceman's calculation of the value for the equivalent wellbore radius for single-phase flow in two dimensions using both a numerical solver for the differential flow equation and simulated pressure distributions from the ECL100 and MRST reservoir simulators.
 
 A perfect fit with Peaceman's results was achieved using the pressure distribution acquired from numerical solution of the differential flow equation.
 
-Recreating Peaceman's results using the simulated pressure distributions proved problematic due to the inability to place the wells in the corner of the wellblocks, as was done by Peaceman. A model approximating corner-placed wells was created by refining the grid in the corners and calculating a new averaged wellblock pressure. A good fit with Peaceman's results was then achieved.
+Recreating Peaceman's results using the simulated pressure distributions proved difficult due to the inability to place the wells in the corner of the wellblocks, as was done by Peaceman. A model approximating corner-placed wells was created by refining the grid in the corners and calculating a new averaged wellblock pressure. A good fit with Peaceman's results was then achieved.
 \end{abstract}

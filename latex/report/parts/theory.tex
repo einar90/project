@@ -2,7 +2,7 @@
 
 \section{Theory} % (fold)
 \label{sec:theory}
-This section contains a thorough review of the equations discussed in Section~\ref{sec:introduction}. This includes derivations of the expressions for the well index and equivalent wellbore radius, as well as  the discretized form of the  diffusivity equation originally used by Peaceman to calculate the value of the equivalent wellbore radius.
+This section contains a thorough review of the equations discussed in Section~\ref{sec:introduction}. This includes a derivation of Peaceman's well model; the expressions for the well index and equivalent wellbore radius; and the discretized form of the  diffusivity equation originally used by Peaceman to calculate the value of the equivalent wellbore radius.
 
 \subsection{Peaceman's Well Model And The Well Index} % (fold)
 \label{sub:well_indices}
@@ -22,7 +22,7 @@ Substituting $r=r_{eq}$ into equation \eqref{eq:dake-radial-pressure}, where $r_
     \label{eq:peaceman-pwb}
     p_{wb} = p_{wf} + \frac{q\mu}{2\pi kh} \ln{\frac{r_{eq}}{r_w}}
 \end{equation}
-which is the expression commonly associated with Peaceman's well model \cite{Peaceman1978Interpretation}.
+which is the expression commonly associated with Peaceman's well model.
 
 Solving \eqref{eq:peaceman-pwb} for $q$ gives
 \begin{equation}
@@ -103,7 +103,7 @@ substituting Darcy's law in the $x$- and $y$-directions \cite{Peaceman1977Fundam
         v_y = -\frac{k}{\mu} \frac{\partial p}{\partial y}
     \end{equation}
 \end{subequations}
-and taking $h,\rho,k$ and $\mu$ as constants gives us the diffusivity equation for 2-dimensional incompressible steady-state flow in a homogeneous reservoir
+and taking $h,\rho,k$ and $\mu$ as constants gives us the diffusivity equation for two-dimensional incompressible, steady-state flow in a homogeneous reservoir
 \begin{equation}
     \label{eq:differential-flow}
     \frac{khA}{\mu} \frac{\partial^2 p}{\partial x^2}  + \frac{khA}{\mu} \frac{\partial^2 p}{\partial y^2} = -q
@@ -118,7 +118,7 @@ To acquire a discretized form of equation \eqref{eq:differential-flow}, central 
         \frac{\partial^2 p_{i,j}}{\partial y^2} = \frac{p_{i,j-1} -2p_{i,j} + p_{i,j+1}}{\Delta y^2} + O(\Delta y^2)
     \end{equation}
 \end{subequations}
-where $O(\Delta x^2)$ and $O(\Delta x^2)$ are error-terms and subscript $i,j$ indicate the coordinates on the computational grid. Substituting this and $A=\Delta x \Delta y$ into \eqref{eq:differential-flow}, and taking $\Delta x = \Delta y$, gives us the discretized form of the diffusivity equation on a square grid
+where $O(\Delta x^2)$ and $O(\Delta x^2)$ are error-terms which are ignored from this point on. Subscript $i,j$ indicate the coordinates on the computational grid. Substituting this and $A=\Delta x \Delta y$ into \eqref{eq:differential-flow}, and taking $\Delta x = \Delta y$, gives us the discretized form of the diffusivity equation on a square grid
 \begin{equation}
     \label{eq:differential-flow-discretized}
     \frac{kh}{\mu} \left( p_{i-1,j} + p_{i+1,j} + p_{i,j-1} + p_{i,j+1} -4p_{i,j} \right) = -q_{i,j}
@@ -151,8 +151,8 @@ where the production and injection wells in $(0,0)$ and $(M,M)$ are represented 
     \end{equation}
 \end{subequations}
 
-\nomenclature{$\Psi$}{dimensionless pressure}
-\nomenclature{$\Psi_{i,j}$}{dimensionless pressure in block $(i,j)$}
+\nomenclature{$\Phi$}{dimensionless pressure}
+\nomenclature{$\Phi_{i,j}$}{dimensionless pressure in block $(i,j)$}
 
 The following reflection conditions are applied:
 \begin{subequations}
@@ -252,7 +252,7 @@ which fits well with value of $r_{eq}$ acquired from inspecting the intersection
 
 \subsubsection{Exact Calculation Of Equivalent Radius} % (fold)
 \label{ssub:exact_calculation_of_equivalent_radius}
-It is also possible to calculate $r_{eq}$ exactly without using the regression method discussed in Section~\ref{ssub:approximate_calculation_of_equivalent_radius} \cite{Peaceman1978Interpretation}. This is done by solving the numerical dimensionless steady-state pressure equation \eqref{eq:differential-flow-discretized} to acquire the pressure difference between the producer and the injector, $p_{M,M}-p_{0,0}=\Delta p$. We then use the equation for the pressure drop between injector and producer in a repeated five-spot pattern \cite{Muskat1946Flow}
+It is also possible to calculate $r_{eq}$ exactly without using the regression plot \cite{Peaceman1978Interpretation}. This is done by solving the numerical dimensionless steady-state pressure equation \eqref{eq:differential-flow-discretized} to acquire the pressure difference between the producer and the injector, $p_{M,M}-p_{0,0}=\Delta p$. We then use the equation for the pressure drop between injector and producer in a repeated five-spot pattern \cite{Muskat1946Flow}
 \begin{equation}
     \label{eq:muskat-pressure-drop}
     \Delta p = \frac{q\mu}{\pi k h} \left( \ln \frac{d}{r_w} - 0.6190 \right)

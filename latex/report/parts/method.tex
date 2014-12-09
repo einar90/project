@@ -5,13 +5,13 @@
 
 \subsection{Numerical Solution Of The Diffusivity Equation} % (fold)
 \label{sub:numerical_solution_of_the_diffusivity_equation}
-The solver for the discrete diffusivity equation was implemented in Python\footnote{\emph{Python} is a general purpose, high-level, open source programming language.} using the NumPy\footnote{\emph{NumPy} is a package for scientific computing with Python. It provides N-dimensional arrays and linear algebra tools/solvers similar to Matlab.} library. The implementation is shown in Appendix~\ref{sub:numerical_solver_for_the_steady_state_pressure_distribution_using_repeated_five_spot_pattern}.
+The solver for the discrete diffusivity equation was implemented in Python\footnote{\emph{Python} is a general purpose, high-level, open source programming language.} using the NumPy\footnote{\emph{NumPy} is a package for scientific computing with Python. It provides N-dimensional arrays and linear algebra tools/solvers similar to MATLAB.} library. The implementation is shown in Appendix~\ref{sub:numerical_solver_for_the_steady_state_pressure_distribution_using_repeated_five_spot_pattern}.
 
 The post-processing of the calculated pressures, including approximate calculation of equivalent wellbore radius as outlined in Section~\ref{ssub:approximate_calculation_of_equivalent_radius} and exact calculation of equivalent wellbore radius as outlined in Section~\ref{ssub:exact_calculation_of_equivalent_radius} was also implemented in Python. The implementation is shown in Appendix~\ref{ssub:postprocessing_of_peaceman_results}.
 
 \subsubsection{Implementation} % (fold)
 \label{ssub:implementation}
-What follows is a short step-by-step description of the program flow of the discrete diffusivity equation solver program. The equation solved is outlined is outlined in Section~\ref{ssub:derivation}.
+What follows is a short step-by-step description of the program flow of the discrete diffusivity equation solver program. The equation solved is outlined in Section~\ref{ssub:derivation}.
 \begin{enumerate}
     \item Set $M$-value (i.e. grid size) to solve the system for.
     \item Initialize $A$ and $\delta$ matrices. Sizes are, respectively, $(M+1)^2 \times (M+1)^2$ and $(M+1)^2$. The matrices are zero-filled.
@@ -31,9 +31,7 @@ What follows is a short step-by-step description of the program flow of the disc
 
 \subsubsection{Issues} % (fold)
 \label{ssub:issues_and_approximations}
-Acquiring a pressure distribution suitable for calculating $r_{eq}$ using the methods outlined in Sections~\ref{ssub:approximate_calculation_of_equivalent_radius} and \ref{ssub:exact_calculation_of_equivalent_radius} posed some issues.
-
-Firstly, Peaceman's wells are, as illustrated in Figure~\ref{fig:well-placement-paper}, effectively placed in the corners of the corner-blocks. This is, however, not possible in the ECL100 and MRST reservoir simulators and has to be approximated using grid refinement and post-processing of the pressure data.
+Acquiring a pressure distribution suitable for calculating $r_{eq}$ using the methods outlined in Sections~\ref{ssub:approximate_calculation_of_equivalent_radius} and \ref{ssub:exact_calculation_of_equivalent_radius} posed some issues. Firstly, Peaceman's wells are, as illustrated in Figure~\ref{fig:well-placement-paper}, effectively placed in the corners of the corner-blocks. This is, however, not possible in the ECL100 and MRST reservoir simulators and has to be approximated using grid refinement and post-processing of the pressure data.
 
 The second issue is that the exact approach outlined in Section~\ref{ssub:exact_calculation_of_equivalent_radius} is derived specifically for pressure distributions calculated by applying the five-spot pattern to the two-dimensional diffusivity equation on a uniform square grid. Because it relies exclusively on the well block pressures it is also much more sensitive to any approximations made. Due to this it will not yield results anywhere close to the correct value for $r_{eq}$ when using the pressure distribution from simulators.
 % subsubsection issues_and_approximations (end)
@@ -43,7 +41,7 @@ The second issue is that the exact approach outlined in Section~\ref{ssub:exact_
 
 \paragraph{Grid Refinement And Averaged Well Block Pressure} % (fold)
 \label{par:grid_refinement_and_averaged_well_block_pressure}
-To approximate Peaceman's well placement, the grid was refined in the corners as shown in Figure~\ref{fig:well-placement-approximation}. The wells were placed at the center of a small block of size $\frac{1}{8}\Delta x\times \frac{1}{8}\Delta x$ in each corner. This results in a pressure distribution very similar to the one resulting from the numerical solution of the diffusivity equation outlined in Section~\ref{ssub:derivation}. However, the pressures in the new, smaller wellbocks are not equivalent to that of the well blocks in Peaceman's model. Therefore a new \emph{averaged well block pressure}, $\bar{p}$ is defined. It is calculated from the smaller blocks refined from the original well block:
+To approximate Peaceman's well placement, the grid was refined in the corners as shown in Figure~\ref{fig:well-placement-approximation}. The wells were placed at the center of a small block of size $\frac{1}{8}\Delta x\times \frac{1}{8}\Delta x$ in each corner. This results in a pressure distribution very similar to the one resulting from the numerical solution of the diffusivity equation. However, the pressures in the new, smaller wellbocks are not equivalent to that of the well blocks in Peaceman's model. Therefore a new \emph{averaged well block pressure}, $\bar{p}$ is defined. It is calculated from the smaller blocks that are refined from the original well block:
 \begin{equation}
     \bar{p}_{0,0} = \mathrm{avg}\left[ p_{0,0}, p_{1,0}, p_{0,1}, p_{1,1} \right]
 \end{equation}
@@ -52,6 +50,7 @@ To approximate Peaceman's well placement, the grid was refined in the corners as
 \end{equation}
 \nomenclature{$\mathrm{avg}$}{averaging operator}
 \nomenclature{$\bar{p}_{i,i}$}{averaged well block pressure}
+\nomenclature{$e$}{error term in radius approximation}
 The coordinates used are indicated in Figure~\ref{fig:well-placement-approximation}. Note that using this formulation the simulated well block pressures (i.e. $p_{0,0}$ and $p_{M,M}$) and the pressure in the larger blocks (e.g. $p_{1,1}$ and $p_{M-1,M-1}$) are given equal influence of the resulting averaged well block pressure, despite them not occupying as large an area.  This approach yields results far closer Peaceman's results than if an area-weighted average is used.
 % paragraph grid_refinement_and_averaged_well_block_pressure (end)
 
@@ -64,30 +63,30 @@ Using the proposed averaged well block pressure poses some issues concerning the
 \label{par:error_in_radius_approximation}
 We take the actual radial position of the averaged well block pressure, i.e. the deviation from the assumed position in the corner, to be the average of the distance from the corner to the center of blocks $(0,0)$ and $(1,1)$ in Figure~\ref{fig:well-placement-approximation}. This is the error term $e$ introduced by that the well is placed in the corner:
 \begin{equation}
-    e = \sqrt{2\times \left( \frac{1/8+3/8}{2}\Delta x \right)^2} = \frac{1}{4}\sqrt{2}\Delta x
+    e = \sqrt{2\times \left( \frac{1/8+3/8}{2}\Delta x \right)^2} = \frac{\sqrt{2}}{4}\Delta x
 \end{equation}
 
-Because $e$ is quite large for blocks near the corner (35\% for block $(2,2)$), the  blocks nearest to the averaged well blocks are ignored. All blocks on rows and columns 0 and 1 were also dropped due to radius and averaging concerns. The ignored blocks are shown in Figure~\ref{fig:blocks-used}.
+Because $e$ is quite large for blocks near the corner (35\% for block $(2,2)$), the  blocks nearest to the averaged well blocks are ignored. All blocks on the two outermost rows and columns were also dropped due to radius and averaging concerns. The ignored blocks are shown in Figure~\ref{fig:blocks-used}.
 % paragraph error_in_radius_approximation (end)
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[]{figures/grids/well-placement-paper.pdf}
     \caption{An enlarged view of the lower-left corner of Figure~\ref{fig:peaceman-grid}. The solid lines indicate parts of the grid representing the reservoir. The dotted lines are parts that are used when calculating the pressure numerically, but due to the reflection conditions are not actually part of reservoir.}
     \label{fig:well-placement-paper}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[]{figures/grids/well-placement-approximation.pdf}
     \caption{An enlarged view of the lower-left corner of the grid used in the ECL100 and MRST reservoir simulators to approximate the grid in Figure~\ref{fig:peaceman-grid}. The goal is to approximate the well being placed in the lower-left corner of the grid as closely as possible. The same refinement is used in all corners.}
     \label{fig:well-placement-approximation}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[]{figures/grids/approximation-blocks-used.pdf}
-    \caption{The blocks actually used when creating the regression plot from the simulation results. The blocks with a diagonal pattern are not used.}
+    \caption{The blocks actually used when creating the regression plot from the simulation results. The blocks with a diagonal pattern are not used. Blocks are ignored in the same pattern in the opposite corner.}
     \label{fig:blocks-used}
 \end{figure}
 % subsubsection approximating_the_well_placement (end)
@@ -96,7 +95,7 @@ Because $e$ is quite large for blocks near the corner (35\% for block $(2,2)$), 
 \label{ssub:simulation_specification}
 Except for the initial pressure and bottom-hole pressure control settings, the same parameters were used in both simulators and for all grid sizes. The relevant parameters are listed in Table~\ref{tbl:simulation-parameters}. The grids were structured as illustrated in Figure~\ref{fig:well-placement-approximation}. The full specifications for the ECL100 and MRST simulations are shown in Appendix~\ref{sec:ecl100_simulation_specifications}.
 
-Note that the ECL100 model has a quite high initial pressure, while the MRST model is initialized to 0 bar(g). This was done on purpose to highlight calculation errors between the models while developing the post-processing script.
+Note that the ECL100 model has a quite high initial pressure, while the MRST model is initialized to 0 bar(g). This was done on purpose to highlight calculation errors between the models while developing the post-processing program.
 
 \begin{table}[H]
     \caption{Parameters common for all ECL100 and MRST simulations.}

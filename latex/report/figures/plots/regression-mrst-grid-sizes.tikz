@@ -9,7 +9,7 @@
         grid=both,
         xlabel={$r/\Delta x$},
         ylabel={$\frac{kh}{q\mu}\left( p_{i,j} - p_{0,0} \right)$},
-        legend entries={10, 20, 50}
+        legend entries={$10\times 10$ grid, $20\times 20$ grid, $50\times 50$ grid}
     ]
         \addlegendimage{no markers, red}
         \addlegendimage{no markers, blue}

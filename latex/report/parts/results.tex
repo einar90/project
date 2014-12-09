@@ -2,17 +2,41 @@
 
 \section{Results} % (fold)
 \label{sec:results}
-A contour plot of the solution to the discretized differential flow equation on a $10 \times 10$ grid is shown in Figure~\ref{fig:pressure_drop_contour}. Table~\ref{tbl:peaceman-results} shows $r_{eq}$ found using the regression method outlined in Section~\ref{ssub:approximate_calculation_of_equivalent_radius}, as well as the exact value calculated using equation \eqref{eq:peaceman77-eqrad-exact} for various $M\times M$ grids.
+Contour plots of the pressure distributions resulting from the diffusivity equation and simulations on $10\times 10$ grids are shown in Figures~\ref{fig:pressure_drop_contour} and \ref{fig:contours-ect10-mrst10}. Note that the plot from the diffusivity equation solution shows the pressure drop relative to the producer while the others just show the pressure.
 
-Contour plots of the simulated pressures from the ECL100 and MRST simulators on $13\times 13$ grids approximating Peaceman's $10\times 10$ grid are shown in Figure~\ref{fig:contours-ect10-mrst10}. Values of $r_{eq}$ calculated using the regression and exact methods on the simulated pressures for various values of $M$ are shown in Table~\ref{tbl:simulation-results}.
+Tables~\ref{tbl:peaceman-results} and \ref{tbl:simulation-results} show the equivalent wellbore radius value found using the regression method outlined in Section~\ref{ssub:approximate_calculation_of_equivalent_radius}, as well as the exact value calculated using equation \eqref{eq:peaceman77-eqrad-exact} for various $M\times M$ grids.
 
-A plot showing the regression lines calculated from both the numerical solution of the diffusivity equation with $M=10$ and simulated pressure from ECL100 on an approximation of the $10\times 10$ grid is shown in Figure~\ref{fig:regression-combined}.
+A plot showing the regression lines calculated from the three pressure data sources on $10\times 10$ grids is shown in Figure~\ref{fig:regression-combined}. Plots showing the regression lines calculated for various grid sizes are shown in Figures~\ref{fig:regression-pcm-grid-sizes}-\ref{fig:regression-mrst-grid-sizes}.
 
+The raw pressure data used to create the contour plots and calculate the regression lines is shown in Appendix~\ref{sec:data}. For reference, Peaceman's original results are shown in Appendix~\ref{sec:results_from_peaceman_s_1978_paper}.
+
+\begin{figure}[htbp]
+    \centering
+    \scalebox{0.52}{\input{figures/plots/peaceman77-contour_10x10.pgf}}
+    \caption{Contour plot of the pressure difference calculated using the dicretized diffusivity equation with $M=10$. The injector is placed in the upper right corner and the producer is placed in the lower left corner. The pressure difference is calculated relative to the block containing the producer.}
+    \label{fig:pressure_drop_contour}
+\end{figure}
+
+\begin{figure}
+    \begin{minipage}[b]{.5\linewidth}
+        \centering\scalebox{.52}{\input{figures/plots/ecl10-contour_10x10.pgf}}
+        \subcaption{Contour plot of simulated pressure from ECL100 on an approximation of Peaceman's $10\times 10$ grid.}
+        \label{fig:contour-ecl10}
+    \end{minipage}%
+    \hskip 0.5cm
+    \begin{minipage}[b]{.5\linewidth}
+        \centering\scalebox{.52}{\input{figures/plots/mrst10-contour_10x10.pgf}}
+        \subcaption{Contour plot of simulated pressure from MRST on an approximation of Peaceman's $10\times 10$ grid.}
+        \label{fig:contour-mrst10}
+    \end{minipage}
+    \caption{Contour plots of simulated pressure from the ECL100 and MRST reservoir simulators. The producer is placed in the lower-left corner and the injector in the upper-right corner.}
+    \label{fig:contours-ect10-mrst10}
+\end{figure}
 
 
 \begin{table}[htbp]
     \centering
-    \caption{Computed equivalent radius of well-block $r_{eq}$ for various values of $M$. $\Phi_{M,M} - \Phi_{0,0}$ is the dimensionless pressure drop between producer and injector; $r_{eq}/\Delta x$ (ex) refers to the exact solution using equation \eqref{eq:peaceman77-eqrad-exact}; $r_{eq} / \Delta x$ (reg) refers to the point where the regression line crosses the $x$-axis (see Figures~\ref{fig:peaceman77_pressure_vs_radius} and \ref{fig:regression-combined}).}
+    \caption{Values for equivalent radius $r_{eq}$ computed from the solution to the dicretized diffusivity equation for various values of $M$. $\Phi_{M,M} - \Phi_{0,0}$ is the dimensionless pressure drop between producer and injector; $r_{eq}/\Delta x$ (ex) refers to the exact solution using equation \eqref{eq:peaceman77-eqrad-exact}; $r_{eq} / \Delta x$ (reg) refers to the point where the regression line crosses the line where $p_{i,j}-p_{0,0}=0$ (see Figures~\ref{fig:peaceman77_pressure_vs_radius} and \ref{fig:regression-combined}-\ref{fig:regression-mrst-grid-sizes}).}
     \begin{tabular}{r|ccc}
         \toprule
         $M$ & $\Phi_{M,M} - \Phi_{o,o}$ & $r_{eq}/\Delta x$ (ex) & $r_{eq} / \Delta x$ (reg)  \\
@@ -32,7 +56,7 @@ A plot showing the regression lines calculated from both the numerical solution 
 
 \begin{table}[htbp]
 \centering
-    \caption{Results from simulations using ECL100 and MRST. $r_{eq}/\Delta x$ (ex) refers to the exact solution using equation \eqref{eq:peaceman77-eqrad-exact}; $r_{eq} / \Delta x$ (reg) refers to the point where the regression line crosses the $x$-axis (see Figures~\ref{fig:peaceman77_pressure_vs_radius} and \ref{fig:regression-combined}).}
+    \caption{Results from simulations using ECL100 and MRST. $r_{eq}/\Delta x$ (ex) refers to the exact solution using equation \eqref{eq:peaceman77-eqrad-exact}; $r_{eq} / \Delta x$ (reg) refers to the point where the regression line crosses the line where $p_{i,j}-p_{0,0}=0$ (see Figures~\ref{fig:peaceman77_pressure_vs_radius} \ref{fig:regression-combined}-\ref{fig:regression-mrst-grid-sizes}).}
     \begin{tabular}{c|cc|cc}
         \toprule
             & \multicolumn{2}{c|}{ECL100} & \multicolumn{2}{c}{MRST} \\
@@ -46,27 +70,7 @@ A plot showing the regression lines calculated from both the numerical solution 
     \label{tbl:simulation-results}
 \end{table}
 
-\begin{figure}[htbp]
-    \centering
-    \scalebox{0.52}{\input{figures/plots/peaceman77-contour_10x10.pgf}}
-    \caption{Contour plot of the pressure difference calulated using equation \eqref{eq:differential-flow-discretzed-dimensionless} with $M=10$, solved using the program listing \ref{lst:peaceman77_solver}. The injector is placed in the upper right corner; the producer is placed in the lower left corner. The pressure difference is calculated relative to the block containing the producer. The asymmetry near the 10-10 diagonal stems from the contraint in the number of countour lines to be drawn by the plotting library.}
-    \label{fig:pressure_drop_contour}
-\end{figure}
 
-\begin{figure}
-    \begin{minipage}[b]{.5\linewidth}
-        \centering\scalebox{.52}{\input{figures/plots/ecl10-contour_10x10.pgf}}
-        \subcaption{Contour plot of simulated pressure from ECL100 on an approximation of Peaceman's $10\times 10$ grid.}
-        \label{fig:contour-ecl10}
-    \end{minipage}%
-    \begin{minipage}[b]{.5\linewidth}
-        \centering\scalebox{.52}{\input{figures/plots/mrst10-contour_10x10.pgf}}
-        \subcaption{Contour plot of simulated pressure from MRST on an approximation of Peaceman's $10\times 10$ grid.}
-        \label{fig:contour-mrst10}
-    \end{minipage}
-    \caption{Contour plots of simulated pressure. The differences in magnitude stem from the difference in initial pressure set for the models (higher for ECL100). The visible difference in the symmetry near the 10-10 diagonal is caused by the constraint in the number of contour lines to be drawn by the plotting library.}
-    \label{fig:contours-ect10-mrst10}
-\end{figure}
 
 
 \begin{figure}[htbp]
@@ -79,21 +83,21 @@ A plot showing the regression lines calculated from both the numerical solution 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{figures/plots/regression-pcm-grid-sizes.pdf}
-    \caption{Regression lines calculated from numerical solution of the diffusivity equation with $M=10,20$ and $50$.}
+    \caption{Regression lines calculated from numerical solution of the diffusivity equation with $M=10,20$ and $50$. The lines for $M=10$ and $20$ are almost completely covered by the line for $M=50$.}
     \label{fig:regression-pcm-grid-sizes}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{figures/plots/regression-ecl-grid-sizes.pdf}
-    \caption{Regression lines calculated from the pressure distribution simulated by ECL100 for grid sizes $10\times 10$, $20\times 20$ and $50\times 50$.}
+    \caption{Regression lines calculated from the pressure distribution simulated by ECL100 for grid sizes $10\times 10$, $20\times 20$ and $50\times 50$. The lines for $10\times 10$ and $20\times 20$ grids are almost completely covered by the line for the $50 \times 50$ grid.}
     \label{fig:regression-ecl-grid-sizes}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{figures/plots/regression-mrst-grid-sizes.pdf}
-    \caption{Regression lines calculated from the pressure distribution simulated by MRST for grid sizes $10\times 10$, $20\times 20$ and $50\times 50$.}
+    \caption{Regression lines calculated from the pressure distribution simulated by MRST for grid sizes $10\times 10$, $20\times 20$ and $50\times 50$. The lines for $10\times 10$ and $20\times 20$ grids are almost completely covered by the line for the $50 \times 50$ grid.}
     \label{fig:regression-mrst-grid-sizes}
 \end{figure}
 
