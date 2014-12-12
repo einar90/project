@@ -84,8 +84,8 @@ To derive the discrete form of the diffusivity equation, we  start with the cont
 \nomenclature{$v_x$}{flow velocity in $x$-direction}
 \nomenclature{$v_y$}{flow velocity in $y$-direction}
 \nomenclature{$\phi$}{porosity}
-\nomenclature{$Q$}{mass rate of injection per unit volume of reservoir $[\mathrm{kg/m^3s}]$}
-where $Q$ is the mass rate of injection or production per unit volume of reservoir
+\nomenclature{$Q$}{mass flow rate of injection/production per unit volume of reservoir $[\mathrm{kg/m^3s}]$}
+where $Q$ is the mass flow rate of injection or production per unit volume of reservoir
 \begin{equation}
     \label{eq:mass-rate}
     Q = \frac{q\rho}{Ah}.
@@ -118,7 +118,7 @@ To acquire a discretized form of equation \eqref{eq:differential-flow}, central 
         \frac{\partial^2 p_{i,j}}{\partial y^2} = \frac{p_{i,j-1} -2p_{i,j} + p_{i,j+1}}{\Delta y^2} + O(\Delta y^2)
     \end{equation}
 \end{subequations}
-where $O(\Delta x^2)$ and $O(\Delta x^2)$ are error-terms which are ignored from this point on. Subscript $i,j$ indicate the coordinates on the computational grid. Substituting this and $A=\Delta x \Delta y$ into \eqref{eq:differential-flow}, and taking $\Delta x = \Delta y$, gives us the discretized form of the diffusivity equation on a square grid
+where $O(\Delta x^2)$ and $O(\Delta x^2)$ are error-terms which are neglected from this point on. Subscript $i,j$ indicate the coordinates on the computational grid. Substituting this and $A=\Delta x \Delta y$ into \eqref{eq:differential-flow}, and taking $\Delta x = \Delta y$, gives us the discretized form of the diffusivity equation on a square grid
 \begin{equation}
     \label{eq:differential-flow-discretized}
     \frac{kh}{\mu} \left( p_{i-1,j} + p_{i+1,j} + p_{i,j-1} + p_{i,j+1} -4p_{i,j} \right) = -q_{i,j}
@@ -142,7 +142,7 @@ where the production and injection wells in $(0,0)$ and $(M,M)$ are represented 
     \label{eq:well-conditions}
     \begin{equation}
         \delta_{i,j} = 0 \;\mathrm{for}\; i,j \neq 0,0 \;\mathrm{or}\; M,M,
-    \end{equation}    
+    \end{equation}
     \begin{equation}
         \delta_{0,0} = 1,
     \end{equation}
@@ -162,7 +162,7 @@ The following reflection conditions are applied:
             p_{-1,j} &= p_{1,j} \\
             p_{M+1,j} &= p_{M-1,j}
         \end{rcases} \; \mathrm{for} \; 0\leq j \leq M
-    \end{equation}    
+    \end{equation}
     \begin{equation}
         \begin{rcases}
             p_{i,-1} &= p_{i,1} \\
@@ -171,7 +171,7 @@ The following reflection conditions are applied:
     \end{equation}
 \end{subequations}
 
-Combined, these reflection conditions constitute a no-flow boundary through the center of the edge-blocks. 
+Combined, these reflection conditions constitute a no-flow boundary through the center of the edge-blocks.
 
 Equation~\eqref{eq:differential-flow-discretzed-dimensionless}, along with conditions \eqref{eq:well-conditions} and \eqref{eq:reflection-conditions}, gives an $(M+1)\times (M+1)$ equation system
 \begin{equation}
@@ -210,7 +210,7 @@ This result is used by Peaceman for a new interpretation of the well block press
 \paragraph{Semi-analytical Approximation} % (fold)
 \label{par:semi_analytical_approximation}
 
-We can also see from Figure~\ref{fig:peaceman77_pressure_vs_radius} that the pressure calculated for the block adjacent to the well block, i.e. at $r/\Delta x=1$, is almost exactly on the straight line. Thus we can substitute $r=\Delta x$ into the radial flow equation \eqref{eq:dake-radial-pressure} to obtain the equation for the pressure in the adjacent block (using the block numbering shown in Figure~\ref{fig:peaceman-block-numbering})
+We can also see from Figure~\ref{fig:peaceman77_pressure_vs_radius} that the pressure calculated for the block adjacent to the well block, i.e. at $r/\Delta x=1$, is approximately on on the straight line. Thus we can substitute $r=\Delta x$ into the radial flow equation \eqref{eq:dake-radial-pressure} to obtain the equation for the pressure in the adjacent block (using the block numbering shown in Figure~\ref{fig:peaceman-block-numbering})
 \begin{equation}
     \label{eq:peaceman-pressure-adjacent}
     p_1 = p_{wb} + \frac{q\mu}{2\pi kh} \ln{\frac{\Delta x}{r_{eq}}}
