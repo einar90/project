@@ -17,7 +17,7 @@ For simplicity, this project is restricted to cases concerning single-phase, two
 \label{sub:report_structure}
 We begin this report by discussing numerical reservoir simulation in general in Section~\ref{sub:numerical_reservoir_simulation}, and continue with a discussion about Peaceman's well model in Section~\ref{sub:well_models}. Section~\ref{sub:about_the_ecl100_and_mrst_reservoir_simulators} presents a brief introduction to the reservoir simulators used.
 
-The development of well models and well indexes is discussed in Section~\ref{sec:literature_review}. We start with Peaceman's original model for very simple systems, and end with more recent extensions for three dimensional grids containing horizontal wells.
+The development of well models and well indices is discussed in Section~\ref{sec:literature_review}. We start with Peaceman's original model for very simple systems, and end with more recent extensions for three dimensional grids containing horizontal wells.
 
 In Section~\ref{sec:theory} we present a derivation of Peaceman's well model and the well index extracted from it. We also derive the discrete form of the diffusivity equation, and present three methods that utilize its solution to calculate the value of the equivalent wellbore radius.
 
@@ -40,7 +40,7 @@ The reservoir is discretized by dividing it into \emph{grid blocks}. Each block 
 \end{figure}
 
 
-Wells in a numerical reservoir simulation model are placed inside grid blocks. Grid blocks containing a well, or parts of a well, are often often called \emph{well blocks}. The horizontal dimension of a well block may be hundreds of meters, \emph{much} larger than the wellbore radius. This means that the pressure calculated for the well block will differ greatly from the bottom-hole pressure of the well. This pressure difference is important, because it is needed to calculate the fluid flow  from the well block into the wellbore. The relationship between a well block and the well it contains is modeled using a \emph{well model}, discussed in the next section.
+Wells in a numerical reservoir simulation model are placed inside grid blocks. Grid blocks containing a well, or parts of a well, are often often called \emph{well blocks}. The horizontal dimension of a well block may be hundreds of meters, significantly larger than the wellbore radius. This means that the pressure calculated for the well block will differ greatly from the bottom-hole pressure of the well. This pressure difference is important, because it is needed to calculate the fluid flow  from the well block into the wellbore. The relationship between a well block and the well it contains is modeled using a \emph{well model}, discussed in the next section.
 % subsection numerical_reservoir_simulation (end)
 
 \subsection{Well Models} % (fold)
@@ -54,7 +54,7 @@ where $p_{wb}$ is the well block pressure and $p_{wf}$ is the flowing wellbore p
 
 \subsubsection{Well Index (WI)} % (fold)
 \label{ssub:well_index_}
-The components of Peaceman's well model accounting the geometry of the well block, location and orientation of the well segment within the well block and rock properties have been used by several authors (although not Peaceman himself) to define a \emph{well index} ($WI$)\footnote{The term ``connection transmissibility factor'' (CF) is also used by some authors\cite{Peaceman2003New,Schlumberger2013Eclipse}.} \cite{Wolfsteiner2003Calculation}:
+The components of Peaceman's well model accounting for the geometry of the well block, location and orientation of the well segment within the well block and rock properties have been used by several authors (although not Peaceman himself) to define a \emph{well index} ($WI$)\footnote{The term ``connection transmissibility factor'' (CF) is also used by some authors\cite{Peaceman2003New,Schlumberger2013Eclipse}.} \cite{Wolfsteiner2003Calculation}:
 \begin{equation}
     \label{eq:well-index-intro}
     WI = \frac{2\pi kh}{\ln \left(r_{eq}/r_{w}\right)}
